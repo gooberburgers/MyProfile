@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>omegadogey</title>
+  <style>
+    body {
+      margin: 0;
+      background: radial-gradient(circle at center, #2c001e 0%, #0f0008 100%);
+      overflow: hidden;
+      color: #f0e6f6;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 80px auto;
+      padding: 20px;
+      background: rgba(30, 0, 20, 0.75);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(100, 0, 80, 0.5);
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    header img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 3px solid #a2005c;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin: 0;
+      color: #ffb3d9;
+    }
+
+    p, li {
+      font-size: 1.1em;
+      line-height: 1.6;
+    }
+
+    ul {
+      margin: 10px 0 20px 20px;
+    }
+
+    section {
+      margin-top: 30px;
+    }
+
+    h2 {
+      font-size: 1.5em;
+      color: #ff99cc;
+      margin-bottom: 10px;
+    }
+
+    .socials {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .socials a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #ffcce5;
+      transition: transform 0.3s ease;
+    }
+
+    .socials a:hover {
+      transform: scale(1.05);
+    }
+
+    .socials img {
+      width: 28px;
+      height: 28px;
+    }
+
+    #pronounceBtn {
+      margin-top: 10px;
+      padding: 8px 14px;
+      background-color: #a2005c;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s ease;
+    }
+
+    #pronounceBtn:hover {
+      background-color: #c21875;
+    }
+  </style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div class="container">
+  <header>
+    <img src="assets/hellome.png" alt="profile image">
+    <div>
+      <h1>omegadogey</h1>
+      <button id="pronounceBtn">click me for the holly jolly pronunciation of my name 😊😊😊</button>
+      <audio id="nameAudio" src="assets/my name.mp3"></audio>
+    </div>
+  </header>
+  <p>hello fella, im more likely to go about dogey but older aliases are used by my trusted friends, not really intending to be a popular face but i like to be more social with people on different platforms & such, expect me to update this site rarely, discord profiles are way too short in terms of actual description, i have tastes for old 2016-2019 roblox and other genuinely stable fandoms, hamgurger... i live in the US btw vro.</p>
+  
+  <section>
+    <h2>dni (do not interact if you are under any of this or supportive of it.):</h2>
+    <ul>
+      <li>anybody who has a passion of ruining happiness for whatever reason with no goal at all.</li>
+      <li>and if you are here to talk to me with the idea of being a creep/weirdo.</li>
+      <li>i'd be less likely to talk to if you have no common sense</li>
+      <li>if you're immature and can't understand your surroundings nor be a functional member of society 🥀</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>talents:</h2>
+    <p>html coder, blender, digital art, lua/luau.</p>
+  </section>
+
+  <p>i'm likely to send you friend requests because i find you cool, or i'm likely to accept your fq.</p>
+
+  <div class="socials">
+    <a href="https://www.roblox.com/users/2938203100/profile" target="_blank">
+      <img src="assets/roblox.png" alt="roblox"> rblx account 1/4
+    </a>
+    <a href="https://www.roblox.com/users/1269656918/profile" target="_blank">
+      <img src="assets/roblox.png" alt="roblox"> rblx account 2/4
+    </a>
+    <a href="https://www.roblox.com/users/3613822810/profile" target="_blank">
+      <img src="assets/roblox.png" alt="roblox"> rblx account 3/4
+    </a>
+    <a href="https://www.roblox.com/users/3010382631/profile" target="_blank">
+      <img src="assets/roblox.png" alt="roblox"> rblx account 4/4
+    </a>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+let dots = [];
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+window.addEventListener("resize", resize);
+resize();
+
+for (let i = 0; i < 250; i++) {
+  dots.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.5 + 0.5,
+    dx: Math.random() * 0.6 - 0.3,
+    dy: Math.random() * 0.6 - 0.3
+  });
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for (let dot of dots) {
+    ctx.beginPath();
+    ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(255, 200, 240, 0.2)";
+    ctx.fill();
+    dot.x += dot.dx;
+    dot.y += dot.dy;
+
+    if (dot.x < 0 || dot.x > canvas.width) dot.dx *= -1;
+    if (dot.y < 0 || dot.y > canvas.height) dot.dy *= -1;
+  }
+  requestAnimationFrame(animate);
+}
+animate();
+
+document.getElementById("pronounceBtn").addEventListener("click", function() {
+  const audio = document.getElementById("nameAudio");
+  const allElements = document.querySelectorAll("body *");
+
+  audio.play();
+
+  let startTime = performance.now();
+
+  function shakeFrame(currentTime) {
+    let elapsed = currentTime - startTime;
+
+    if (elapsed < 1000) {
+      requestAnimationFrame(shakeFrame); // wait first second
+      return;
+    }
+
+    let shakeProgress = (elapsed - 1000) / 4000; // from 0 to 1
+    if (shakeProgress > 1) shakeProgress = 1;
+
+    let intensity = shakeProgress * 10;
+
+    allElements.forEach(el => {
+      el.style.transform = `translate(${(Math.random() - 0.5) * intensity}px, ${(Math.random() - 0.5) * intensity}px) rotate(${(Math.random() - 0.5) * intensity}deg)`;
+    });
+
+    if (elapsed < 5000) {
+      requestAnimationFrame(shakeFrame);
+    } else {
+      allElements.forEach(el => el.style.transform = "none");
+    }
+  }
+
+  requestAnimationFrame(shakeFrame);
+});
+</script>
+</body>
+</html>
