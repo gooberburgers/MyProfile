@@ -233,7 +233,7 @@ document.getElementById("pronounceBtn").addEventListener("click", function() {
     let intensity = shakeProgress * 10;
 
     allElements.forEach(el => {
-      el.style.transform = `translate(${(Math.random() - 0.5) * intensity}px, ${(Math.random() - 0.5) * intensity}px) rotate(${(Math.random() - 0.5) * intensity}deg)`;
+      el.style.transform = `translate(${(Math.random() - 0.5) * intensity}px, ${(Math.random() - 0.5) * intensity}px)`;
     });
 
     if (elapsed < 5000) {
@@ -245,6 +245,7 @@ document.getElementById("pronounceBtn").addEventListener("click", function() {
 
   requestAnimationFrame(shakeFrame);
 });
+
 </script>
 </body>
 </html>
