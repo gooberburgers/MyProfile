@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>omegadogey</title>
   <style>
-    body {
-      margin: 0;
-      background: radial-gradient(circle at center, #2c001e 0%, #0f0008 100%);
-      overflow: hidden;
-      color: #f0e6f6;
-      font-family: 'Segoe UI', sans-serif;
-    }
-
+body {
+  margin: 0;
+  background: radial-gradient(circle at center, #2c001e 0%, #0f0008 100%);
+  overflow-x: hidden; /* Prevents horizontal scroll only */
+  overflow-y: auto;   /* Allows vertical scrolling */
+  color: #f0e6f6;
+  font-family: 'Segoe UI', sans-serif;
+}
     canvas {
       position: fixed;
       top: 0;
