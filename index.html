@@ -722,67 +722,44 @@ drawingCanvas.addEventListener('touchend', function(e) {
 });
 
 // Submit art functionality
-document.getElementById('submitArt').addEventListener('click', function() {
+document.getElementById('submitArt').addEventListener('click', function () {
   const artStatus = document.getElementById('artStatus');
   const submitBtn = document.getElementById('submitArt');
-  
-  // Check if canvas is mostly empty (just white background)
+
   const imageData = drawingCtx.getImageData(0, 0, drawingCanvas.width, drawingCanvas.height);
   const data = imageData.data;
   let hasDrawing = false;
-  
+
   for (let i = 0; i < data.length; i += 4) {
     if (data[i] !== 255 || data[i + 1] !== 255 || data[i + 2] !== 255) {
       hasDrawing = true;
       break;
     }
   }
-  
+
   if (!hasDrawing) {
     artStatus.innerHTML = '<div class="status-warning">Please draw something before submitting!</div>';
     return;
   }
-  
-  // Disable button and show loading state
+
   submitBtn.disabled = true;
   submitBtn.innerHTML = '<span class="loading-spinner"></span>Sending...';
   artStatus.innerHTML = '';
-  
-  // Convert canvas to base64 PNG
+
   const dataURL = drawingCanvas.toDataURL('image/png');
-  
-  // Send to Discord webhook
-  const webhookURL = 'https://discord.com/api/webhooks/1393066700819136534/Zxxk4H5Ug4nrKypLhRBIShUQTS-Q9yu0C0QDSqvMmLZlYUIElCdu70owYQEUFc3frRQ1';
-  
-  const payload = {
-    content: "@here New anonymous art submission!",
-    embeds: [{
-      title: "Anonymous Art",
-      image: {
-        url: "attachment://art.png"
-      },
-      color: 0x00ff00,
-      timestamp: new Date().toISOString()
-    }]
-  };
-  
-  // Convert base64 to blob
-  fetch(dataURL)
-    .then(res => res.blob())
-    .then(blob => {
-      const formData = new FormData();
-      formData.append('file', blob, 'doodle.png');
-      formData.append('payload_json', JSON.stringify(payload));
-      
-      return fetch(webhookURL, {
-        method: 'POST',
-        body: formData
-      });
+
+  fetch("https://myprofilesenders.burgergwarf.workers.dev/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      image: dataURL
     })
+  })
     .then(response => {
       if (response.ok) {
         artStatus.innerHTML = '<div class="status-success">Your doodle has been sent to ME...!</div>';
-        // Clear canvas after successful submission
         drawingCtx.fillStyle = 'white';
         drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
         saveCanvasState();
@@ -795,65 +772,53 @@ document.getElementById('submitArt').addEventListener('click', function() {
       console.error('Error:', error);
     })
     .finally(() => {
-      // Re-enable button and restore original text
       submitBtn.disabled = false;
       submitBtn.innerHTML = 'Send Doodle';
     });
 });
 
 // Submit message functionality
-document.getElementById('submitMessage').addEventListener('click', function() {
+document.getElementById('submitMessage').addEventListener('click', function () {
   const messageText = document.getElementById('messageText').value.trim();
   const messageStatus = document.getElementById('messageStatus');
   const submitBtn = document.getElementById('submitMessage');
-  
+
   if (messageText.length <= 1) {
     messageStatus.innerHTML = '<div class="status-error">Message must be longer than one character!</div>';
     return;
   }
-  
-  // Disable button and show loading state
+
   submitBtn.disabled = true;
   submitBtn.innerHTML = '<span class="loading-spinner"></span>Sending...';
   messageStatus.innerHTML = '';
-  
-  const webhookURL = 'https://discord.com/api/webhooks/1393066902078886022/Tl6aTvXeDh8Fp1UwLSwQp1vG-Fng1WA5WBBKARSzV8K_ZIyTheYi2JzoXRl156WU6oEc';
-  
-  const payload = {
-    content: "@here New anonymous message!",
-    embeds: [{
-      title: "Anonymous Message",
-      description: messageText,
-      color: 0x0099ff,
-      timestamp: new Date().toISOString()
-    }]
-  };
-  
-  fetch(webhookURL, {
-    method: 'POST',
+
+  fetch("https://myprofilesenders.burgergwarf.workers.dev/", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json"
     },
-    body: JSON.stringify(payload)
+    body: JSON.stringify({
+      message: messageText
+    })
   })
-  .then(response => {
-    if (response.ok) {
-      messageStatus.innerHTML = '<div class="status-success">Your message has been sent to ME...!</div>';
-      document.getElementById('messageText').value = '';
-    } else {
-      throw new Error('Failed to send message');
-    }
-  })
-  .catch(error => {
-    messageStatus.innerHTML = '<div class="status-error">Failed to send message. Please try again.</div>';
-    console.error('Error:', error);
-  })
-  .finally(() => {
-    // Re-enable button and restore original text
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = 'Send Message';
-  });
+    .then(response => {
+      if (response.ok) {
+        messageStatus.innerHTML = '<div class="status-success">Your message has been sent to ME...!</div>';
+        document.getElementById('messageText').value = '';
+      } else {
+        throw new Error('Failed to send message');
+      }
+    })
+    .catch(error => {
+      messageStatus.innerHTML = '<div class="status-error">Failed to send message. Please try again.</div>';
+      console.error('Error:', error);
+    })
+    .finally(() => {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Send Message';
+    });
 });
+
 
 // Set pen as default tool
 document.getElementById('penTool').classList.add('active');
