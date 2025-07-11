@@ -362,7 +362,7 @@
 
       <!-- Art Section -->
       <div class="art-section">
-        <h2>🎨 Send Art Anonymously</h2>
+        <h2>🎨 Send Doodle Anonymously</h2>
         
         <div class="canvas-container">
           <canvas id="drawingCanvas" width="500" height="400"></canvas>
@@ -388,10 +388,11 @@
           
           <button class="tool-btn" id="penTool">Pen</button>
           <button class="tool-btn" id="fillTool">Fill</button>
+          <button class="tool-btn" id="undoBtn">Undo</button>
           <button class="tool-btn" id="clearCanvas">Clear</button>
         </div>
         
-        <button class="submit-art-btn" id="submitArt">Send Art</button>
+        <button class="submit-art-btn" id="submitArt">Send Doodle</button>
         <div id="artStatus"></div>
       </div>
 
@@ -492,10 +493,13 @@ let isDrawing = false;
 let currentTool = 'pen';
 let lastX = 0;
 let lastY = 0;
+let canvasHistory = [];
+let historyIndex = -1;
 
-// Initialize canvas with white background
+// Initialize canvas with white background and save initial state
 drawingCtx.fillStyle = 'white';
 drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+saveCanvasState();
 
 // Tool selection
 document.getElementById('penTool').addEventListener('click', function() {
@@ -513,7 +517,41 @@ document.getElementById('fillTool').addEventListener('click', function() {
 document.getElementById('clearCanvas').addEventListener('click', function() {
   drawingCtx.fillStyle = 'white';
   drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+  saveCanvasState();
 });
+
+// Undo functionality
+document.getElementById('undoBtn').addEventListener('click', function() {
+  if (historyIndex > 0) {
+    historyIndex--;
+    restoreCanvasState();
+  }
+});
+
+// Save canvas state to history
+function saveCanvasState() {
+  historyIndex++;
+  if (historyIndex < canvasHistory.length) {
+    canvasHistory.length = historyIndex;
+  }
+  canvasHistory.push(drawingCanvas.toDataURL());
+  
+  // Limit history to 50 states to prevent memory issues
+  if (canvasHistory.length > 50) {
+    canvasHistory.shift();
+    historyIndex--;
+  }
+}
+
+// Restore canvas state from history
+function restoreCanvasState() {
+  const img = new Image();
+  img.onload = function() {
+    drawingCtx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+    drawingCtx.drawImage(img, 0, 0);
+  };
+  img.src = canvasHistory[historyIndex];
+}
 
 // Brush controls
 document.getElementById('brushSize').addEventListener('input', function() {
@@ -557,7 +595,10 @@ function draw(e) {
 }
 
 function stopDrawing() {
-  isDrawing = false;
+  if (isDrawing) {
+    isDrawing = false;
+    saveCanvasState();
+  }
 }
 
 // Flood fill algorithm
@@ -593,6 +634,7 @@ function floodFill(x, y) {
   }
   
   drawingCtx.putImageData(imageData, 0, 0);
+  saveCanvasState();
 }
 
 function hexToRgb(hex) {
@@ -707,7 +749,7 @@ document.getElementById('submitArt').addEventListener('click', function() {
     .then(res => res.blob())
     .then(blob => {
       const formData = new FormData();
-      formData.append('file', blob, 'art.png');
+      formData.append('file', blob, 'doodle.png');
       formData.append('payload_json', JSON.stringify(payload));
       
       return fetch(webhookURL, {
@@ -717,16 +759,17 @@ document.getElementById('submitArt').addEventListener('click', function() {
     })
     .then(response => {
       if (response.ok) {
-        artStatus.innerHTML = '<div class="status-success">Your art has been sent to ME...!</div>';
+        artStatus.innerHTML = '<div class="status-success">Your doodle has been sent to ME...!</div>';
         // Clear canvas after successful submission
         drawingCtx.fillStyle = 'white';
         drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+        saveCanvasState();
       } else {
-        throw new Error('Failed to send art');
+        throw new Error('Failed to send doodle');
       }
     })
     .catch(error => {
-      artStatus.innerHTML = '<div class="status-error">Failed to send art. Please try again.</div>';
+      artStatus.innerHTML = '<div class="status-error">Failed to send doodle. Please try again.</div>';
       console.error('Error:', error);
     });
 });
