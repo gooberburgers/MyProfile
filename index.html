@@ -410,415 +410,44 @@
 
 <script src="canvas-encoder.js"></script>
 <script>
-// Background animation
-const canvas = document.getElementById("bg");
-const ctx = canvas.getContext("2d");
-let dots = [];
+// play doctor with me i'm sick doc, my heart and lungs aren't feeling to good! :>
+const _0x4a8b=['canvas','getContext','addEventListener','resize','width','innerWidth','height','innerHeight','push','random','beginPath','arc','PI','fillStyle','fill','clearRect','requestAnimationFrame','getElementById','click','play','querySelectorAll','forEach','style','transform','translate','performance','now','none','2d','globalCompositeOperation','lineWidth','lineCap','strokeStyle','globalAlpha','moveTo','lineTo','stroke','getImageData','data','putImageData','toDataURL','value','textContent','preventDefault','touches','getBoundingClientRect','clientX','clientY','MouseEvent','dispatchEvent','length','innerHTML','trim','fetch','method','headers','body','JSON','stringify','then','catch','classList','add','remove','ok','error','log'];const _0x2f1c=function(_0x4a8b3d,_0x2f1c89){_0x4a8b3d=_0x4a8b3d-0x0;let _0x3f2a1a=_0x4a8b[_0x4a8b3d];return _0x3f2a1a;};
 
-function resize() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
+(function(){const _0x1a2b3c=setInterval(()=>{if(window.devtools&&window.devtools.open){window.location.reload();}},100);const _0x4d5e6f=new Date().getTime();if(_0x4d5e6f-window.performance.timing.navigationStart>3000){console.clear();console.log('%cDetected tampering attempt','color:red;font-size:20px');}})();
 
-window.addEventListener("resize", resize);
-resize();
+const _0x7h9k=['aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTM5MzA2NjcwMDgxOTEzNjUzNC9aeHhrNEg1VWc0bnJLeXBMaFJCSVNoUVRTLVE5eXUwQzBRRFNqdk1tTFpsWVVJRWxDZHU3MG93WVFFVUZjM2ZyUVEx','aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTM5MzA2NjkwMjA3ODg4NjAyMi9UbDZhVHZYZUR4OEZwMVV3TFN3UXAxdkctRm5nMVdBNVdCQkFSU3pWOEtfWkl5VGhlWWkySnpvWFJsZzE1NldVNm9FYw=='];
 
-for (let i = 0; i < 150; i++) {
-  dots.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    r: Math.random() * 1.5 + 0.5,
-    dx: Math.random() * 0.4 - 0.2,
-    dy: Math.random() * 0.4 - 0.2
-  });
-}
+const _0xDecrypt=(_0x5a1b,_0x3c2d)=>{const _0x8e4f=atob(_0x5a1b);let _0x9g5h='';for(let _0x1i=0;_0x1i<_0x8e4f.length;_0x1i++){_0x9g5h+=String.fromCharCode(_0x8e4f.charCodeAt(_0x1i)^_0x3c2d.charCodeAt(_0x1i%_0x3c2d.length));}return _0x9g5h;};
 
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  for (let dot of dots) {
-    ctx.beginPath();
-    ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(255, 255, 255, 0.15)";
-    ctx.fill();
-    dot.x += dot.dx;
-    dot.y += dot.dy;
+const _0xVerify=()=>{const _0x2k3l=document.querySelector('script').innerText;const _0x4m5n=_0x2k3l.replace(/\s/g,'').length;if(_0x4m5n<5000||_0x4m5n>15000){console.warn('Script integrity compromised');return false;}return true;};
 
-    if (dot.x < 0 || dot.x > canvas.width) dot.dx *= -1;
-    if (dot.y < 0 || dot.y > canvas.height) dot.dy *= -1;
-  }
-  requestAnimationFrame(animate);
-}
-animate();
+const _0x1c=document[_0x2f1c(0x11)]('bg');const _0x2c=_0x1c[_0x2f1c(0x1)]('2d');let _0x3d=[];function _0x4r(){_0x1c[_0x2f1c(0x4)]=window[_0x2f1c(0x5)];_0x1c[_0x2f1c(0x6)]=window[_0x2f1c(0x7)];}window[_0x2f1c(0x2)](_0x2f1c(0x3),_0x4r);_0x4r();for(let _0x5i=0;_0x5i<150;_0x5i++){_0x3d[_0x2f1c(0x8)]({x:Math[_0x2f1c(0x9)]()*_0x1c[_0x2f1c(0x4)],y:Math[_0x2f1c(0x9)]()*_0x1c[_0x2f1c(0x6)],r:Math[_0x2f1c(0x9)]()*1.5+0.5,dx:Math[_0x2f1c(0x9)]()*0.4-0.2,dy:Math[_0x2f1c(0x9)]()*0.4-0.2});}function _0x6a(){_0x2c[_0x2f1c(0x15)](0,0,_0x1c[_0x2f1c(0x4)],_0x1c[_0x2f1c(0x6)]);for(let _0x7d of _0x3d){_0x2c[_0x2f1c(0xa)]();_0x2c[_0x2f1c(0xb)](_0x7d.x,_0x7d.y,_0x7d.r,0,Math[_0x2f1c(0xc)]*2);_0x2c[_0x2f1c(0xd)]='rgba(255,255,255,0.15)';_0x2c[_0x2f1c(0xe)]();_0x7d.x+=_0x7d.dx;_0x7d.y+=_0x7d.dy;if(_0x7d.x<0||_0x7d.x>_0x1c[_0x2f1c(0x4)])_0x7d.dx*=-1;if(_0x7d.y<0||_0x7d.y>_0x1c[_0x2f1c(0x6)])_0x7d.dy*=-1;}_0x2f1c(0x10)(_0x6a);}_0x6a();
 
-// Pronounce button functionality
-document.getElementById("pronounceBtn").addEventListener("click", function() {
-  const audio = document.getElementById("nameAudio");
-  const allElements = document.querySelectorAll("body *");
+document[_0x2f1c(0x11)]('pronounceBtn')[_0x2f1c(0x2)](_0x2f1c(0x12),function(){const _0x8a=document[_0x2f1c(0x11)]('nameAudio');const _0x9b=document[_0x2f1c(0x14)]('body *');_0x8a[_0x2f1c(0x13)]();let _0x1s=_0x2f1c(0x18)[_0x2f1c(0x19)]();function _0x2s(_0x3s){let _0x4e=_0x3s-_0x1s;if(_0x4e<1000){_0x2f1c(0x10)(_0x2s);return;}let _0x5s=(_0x4e-1000)/4000;if(_0x5s>1)_0x5s=1;let _0x6i=_0x5s*10;_0x9b[_0x2f1c(0x15)](_0x7e=>{_0x7e[_0x2f1c(0x16)][_0x2f1c(0x17)]=_0x2f1c(0x18)((Math[_0x2f1c(0x9)]()-0.5)*_0x6i+'px,'+(Math[_0x2f1c(0x9)]()-0.5)*_0x6i+'px)');});if(_0x4e<5000){_0x2f1c(0x10)(_0x2s);}else{_0x9b[_0x2f1c(0x15)](_0x8e=>_0x8e[_0x2f1c(0x16)][_0x2f1c(0x17)]=_0x2f1c(0x1a));}}_0x2f1c(0x10)(_0x2s);});
 
-  audio.play();
+const _0x9dc=document[_0x2f1c(0x11)]('drawingCanvas');const _0x8dc=_0x9dc[_0x2f1c(0x1)](_0x2f1c(0x1b));let _0x7id=false,_0x6ct='pen',_0x5lx=0,_0x4ly=0,_0x3ch=[],_0x2hi=-1;_0x8dc[_0x2f1c(0xd)]='white';_0x8dc.fillRect(0,0,_0x9dc[_0x2f1c(0x4)],_0x9dc[_0x2f1c(0x6)]);function _0x1scs(){_0x2hi++;if(_0x2hi<_0x3ch[_0x2f1c(0x2f)]){_0x3ch[_0x2f1c(0x2f)]=_0x2hi;}_0x3ch[_0x2f1c(0x8)](_0x9dc[_0x2f1c(0x29)]());if(_0x3ch[_0x2f1c(0x2f)]>50){_0x3ch.shift();_0x2hi--;}}function _0x2rcs(){const _0x1img=new Image();_0x1img.onload=function(){_0x8dc[_0x2f1c(0x15)](0,0,_0x9dc[_0x2f1c(0x4)],_0x9dc[_0x2f1c(0x6)]);_0x8dc.drawImage(_0x1img,0,0);};_0x1img.src=_0x3ch[_0x2hi];}_0x1scs();
 
-  let startTime = performance.now();
+document[_0x2f1c(0x11)]('penTool')[_0x2f1c(0x2)](_0x2f1c(0x12),function(){_0x6ct='pen';document[_0x2f1c(0x14)]('.tool-btn')[_0x2f1c(0x15)](_0x1b=>_0x1b[_0x2f1c(0x34)][_0x2f1c(0x36)]('active'));this[_0x2f1c(0x34)][_0x2f1c(0x35)]('active');});document[_0x2f1c(0x11)]('fillTool')[_0x2f1c(0x2)](_0x2f1c(0x12),function(){_0x6ct='fill';document[_0x2f1c(0x14)]('.tool-btn')[_0x2f1c(0x15)](_0x2b=>_0x2b[_0x2f1c(0x34)][_0x2f1c(0x36)]('active'));this[_0x2f1c(0x34)][_0x2f1c(0x35)]('active');});document[_0x2f1c(0x11)]('clearCanvas')[_0x2f1c(0x2)](_0x2f1c(0x12),function(){_0x8dc[_0x2f1c(0xd)]='white';_0x8dc.fillRect(0,0,_0x9dc[_0x2f1c(0x4)],_0x9dc[_0x2f1c(0x6)]);_0x1scs();});document[_0x2f1c(0x11)]('undoBtn')[_0x2f1c(0x2)](_0x2f1c(0x12),function(){if(_0x2hi>0){_0x2hi--;_0x2rcs();}});
 
-  function shakeFrame(currentTime) {
-    let elapsed = currentTime - startTime;
+document[_0x2f1c(0x11)]('brushSize')[_0x2f1c(0x2)]('input',function(){document[_0x2f1c(0x11)]('brushSizeDisplay')[_0x2f1c(0x2b)]=this[_0x2f1c(0x2a)];});document[_0x2f1c(0x11)]('brushOpacity')[_0x2f1c(0x2)]('input',function(){document[_0x2f1c(0x11)]('brushOpacityDisplay')[_0x2f1c(0x2b)]=this[_0x2f1c(0x2a)]+'%';});
 
-    if (elapsed < 1000) {
-      requestAnimationFrame(shakeFrame);
-      return;
-    }
+function _0x3sd(_0x1e){if(_0x6ct==='fill'){_0x4ff(_0x1e.offsetX,_0x1e.offsetY);return;}_0x7id=true;[_0x5lx,_0x4ly]=[_0x1e.offsetX,_0x1e.offsetY];}function _0x4dr(_0x2e){if(!_0x7id||_0x6ct!=='pen')return;const _0x3bs=document[_0x2f1c(0x11)]('brushSize')[_0x2f1c(0x2a)];const _0x4bc=document[_0x2f1c(0x11)]('brushColor')[_0x2f1c(0x2a)];const _0x5bo=document[_0x2f1c(0x11)]('brushOpacity')[_0x2f1c(0x2a)]/100;_0x8dc[_0x2f1c(0x1c)]='source-over';_0x8dc[_0x2f1c(0x1d)]=_0x3bs;_0x8dc[_0x2f1c(0x1e)]='round';_0x8dc[_0x2f1c(0x1f)]=_0x4bc;_0x8dc[_0x2f1c(0x20)]=_0x5bo;_0x8dc[_0x2f1c(0xa)]();_0x8dc[_0x2f1c(0x21)](_0x5lx,_0x4ly);_0x8dc[_0x2f1c(0x22)](_0x2e.offsetX,_0x2e.offsetY);_0x8dc[_0x2f1c(0x23)]();[_0x5lx,_0x4ly]=[_0x2e.offsetX,_0x2e.offsetY];}function _0x5sd(){if(_0x7id){_0x7id=false;_0x1scs();}}
 
-    let shakeProgress = (elapsed - 1000) / 4000;
-    if (shakeProgress > 1) shakeProgress = 1;
+function _0x4ff(_0x6x,_0x7y){const _0x8bc=document[_0x2f1c(0x11)]('brushColor')[_0x2f1c(0x2a)];const _0x9fc=_0x6h2r(_0x8bc);const _0x1id=_0x8dc[_0x2f1c(0x24)](0,0,_0x9dc[_0x2f1c(0x4)],_0x9dc[_0x2f1c(0x6)]);const _0x2dt=_0x1id[_0x2f1c(0x25)];const _0x3tc=_0x7gpc(_0x2dt,_0x6x,_0x7y,_0x9dc[_0x2f1c(0x4)]);if(_0x8cm(_0x3tc,_0x9fc))return;const _0x4st=[[_0x6x,_0x7y]];while(_0x4st[_0x2f1c(0x2f)]>0){const[_0x5cx,_0x6cy]=_0x4st.pop();if(_0x5cx<0||_0x5cx>=_0x9dc[_0x2f1c(0x4)]||_0x6cy<0||_0x6cy>=_0x9dc[_0x2f1c(0x6)])continue;const _0x7cc=_0x7gpc(_0x2dt,_0x5cx,_0x6cy,_0x9dc[_0x2f1c(0x4)]);if(!_0x8cm(_0x7cc,_0x3tc))continue;_0x9spc(_0x2dt,_0x5cx,_0x6cy,_0x9dc[_0x2f1c(0x4)],_0x9fc);_0x4st[_0x2f1c(0x8)]([_0x5cx+1,_0x6cy]);_0x4st[_0x2f1c(0x8)]([_0x5cx-1,_0x6cy]);_0x4st[_0x2f1c(0x8)]([_0x5cx,_0x6cy+1]);_0x4st[_0x2f1c(0x8)]([_0x5cx,_0x6cy-1]);}_0x8dc[_0x2f1c(0x26)](_0x1id,0,0);_0x1scs();}function _0x6h2r(_0x1hex){const _0x2res=/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(_0x1hex);return _0x2res?{r:parseInt(_0x2res[1],16),g:parseInt(_0x2res[2],16),b:parseInt(_0x2res[3],16),a:255}:null;}function _0x7gpc(_0x3dt,_0x4x,_0x5y,_0x6w){const _0x7idx=(_0x5y*_0x6w+_0x4x)*4;return{r:_0x3dt[_0x7idx],g:_0x3dt[_0x7idx+1],b:_0x3dt[_0x7idx+2],a:_0x3dt[_0x7idx+3]};}function _0x9spc(_0x8dt,_0x9x,_0x1y,_0x2w,_0x3clr){const _0x4idx=(_0x1y*_0x2w+_0x9x)*4;_0x8dt[_0x4idx]=_0x3clr.r;_0x8dt[_0x4idx+1]=_0x3clr.g;_0x8dt[_0x4idx+2]=_0x3clr.b;_0x8dt[_0x4idx+3]=_0x3clr.a;}function _0x8cm(_0x5c1,_0x6c2){return _0x5c1.r===_0x6c2.r&&_0x5c1.g===_0x6c2.g&&_0x5c1.b===_0x6c2.b&&_0x5c1.a===_0x6c2.a;}
 
-    let intensity = shakeProgress * 10;
+_0x9dc[_0x2f1c(0x2)]('mousedown',_0x3sd);_0x9dc[_0x2f1c(0x2)]('mousemove',_0x4dr);_0x9dc[_0x2f1c(0x2)]('mouseup',_0x5sd);_0x9dc[_0x2f1c(0x2)]('mouseout',_0x5sd);_0x9dc[_0x2f1c(0x2)]('touchstart',function(_0x7e){_0x7e[_0x2f1c(0x2c)]();const _0x8t=_0x7e[_0x2f1c(0x2d)][0];const _0x9r=_0x9dc[_0x2f1c(0x2e)]();const _0x1me=new _0x2f1c(0x31)('mousedown',{clientX:_0x8t[_0x2f1c(0x2f)],clientY:_0x8t[_0x2f1c(0x30)]});_0x9dc[_0x2f1c(0x32)](_0x1me);});_0x9dc[_0x2f1c(0x2)]('touchmove',function(_0x2e){_0x2e[_0x2f1c(0x2c)]();const _0x3t=_0x2e[_0x2f1c(0x2d)][0];const _0x4r=_0x9dc[_0x2f1c(0x2e)]();const _0x5me=new _0x2f1c(0x31)('mousemove',{clientX:_0x3t[_0x2f1c(0x2f)],clientY:_0x3t[_0x2f1c(0x30)]});_0x9dc[_0x2f1c(0x32)](_0x5me);});_0x9dc[_0x2f1c(0x2)]('touchend',function(_0x6e){_0x6e[_0x2f1c(0x2c)]();const _0x7me=new _0x2f1c(0x31)('mouseup',{});_0x9dc[_0x2f1c(0x32)](_0x7me);});
 
-    allElements.forEach(el => {
-      el.style.transform = `translate(${(Math.random() - 0.5) * intensity}px, ${(Math.random() - 0.5) * intensity}px)`;
-    });
+function _0x1sub(){if(!_0xVerify())return;const _0x2as=document[_0x2f1c(0x11)]('artStatus');const _0x3id=_0x8dc[_0x2f1c(0x24)](0,0,_0x9dc[_0x2f1c(0x4)],_0x9dc[_0x2f1c(0x6)]);const _0x4dt=_0x3id[_0x2f1c(0x25)];let _0x5hd=false;for(let _0x6i=0;_0x6i<_0x4dt[_0x2f1c(0x2f)];_0x6i+=4){if(_0x4dt[_0x6i]!==255||_0x4dt[_0x6i+1]!==255||_0x4dt[_0x6i+2]!==255){_0x5hd=true;break;}}if(!_0x5hd){_0x2as[_0x2f1c(0x30)]='<div class="status-warning">Please draw something before submitting!</div>';return;}const _0x7du=_0x9dc[_0x2f1c(0x29)]('image/png');const _0x8wu=_0xDecrypt(_0x7h9k[0],'k3yM4st3r');const _0x9pl={content:"@here New anonymous art submission!",embeds:[{title:"Anonymous Art",image:{url:"attachment://art.png"},color:0x00ff00,timestamp:new Date().toISOString()}]};_0x2f1c(0x31)(_0x7du)[_0x2f1c(0x33)](_0x1r=>_0x1r.blob())[_0x2f1c(0x33)](_0x2b=>{const _0x3fd=new FormData();_0x3fd.append('file',_0x2b,'doodle.png');_0x3fd.append('payload_json',_0x2f1c(0x38)[_0x2f1c(0x39)](_0x9pl));return _0x2f1c(0x31)(_0x8wu,{method:'POST',body:_0x3fd});})[_0x2f1c(0x33)](_0x4r=>{if(_0x4r[_0x2f1c(0x37)]){_0x2as[_0x2f1c(0x30)]='<div class="status-success">Your doodle has been sent to ME...!</div>';_0x8dc[_0x2f1c(0xd)]='white';_0x8dc.fillRect(0,0,_0x9dc[_0x2f1c(0x4)],_0x9dc[_0x2f1c(0x6)]);_0x1scs();}else{throw new Error('Failed to send doodle');}})[_0x2f1c(0x34)](_0x5e=>{_0x2as[_0x2f1c(0x30)]='<div class="status-error">Failed to send doodle. Please try again.</div>';console[_0x2f1c(0x3b)]('Error:',_0x5e);});}function _0x2subm(){if(!_0xVerify())return;const _0x3mt=document[_0x2f1c(0x11)]('messageText')[_0x2f1c(0x2a)][_0x2f1c(0x31)]();const _0x4ms=document[_0x2f1c(0x11)]('messageStatus');if(_0x3mt[_0x2f1c(0x2f)]<=1){_0x4ms[_0x2f1c(0x30)]='<div class="status-error">Message must be longer than one character!</div>';return;}const _0x5wu=_0xDecrypt(_0x7h9k[1],'k3yM4st3r');const _0x6pl={content:"@here New anonymous message!",embeds:[{title:"Anonymous Message",description:_0x3mt,color:0x0099ff,timestamp:new Date().toISOString()}]};_0x2f1c(0x31)(_0x5wu,{method:'POST',headers:{'Content-Type':'application/json'},body:_0x2f1c(0x38)[_0x2f1c(0x39)](_0x6pl)})[_0x2f1c(0x33)](_0x7r=>{if(_0x7r[_0x2f1c(0x37)]){_0x4ms[_0x2f1c(0x30)]='<div class="status-success">Your message has been sent to ME...!</div>';document[_0x2f1c(0x11)]('messageText')[_0x2f1c(0x2a)]='';}else{throw new Error('Failed to send message');}})[_0x2f1c(0x34)](_0x8e=>{_0x4ms[_0x2f1c(0x30)]='<div class="status-error">Failed to send message. Please try again.</div>';console[_0x2f1c(0x3b)]('Error:',_0x8e);});}
 
-    if (elapsed < 5000) {
-      requestAnimationFrame(shakeFrame);
-    } else {
-      allElements.forEach(el => el.style.transform = "none");
-    }
-  }
+document[_0x2f1c(0x11)]('submitArt')[_0x2f1c(0x2)](_0x2f1c(0x12),_0x1sub);document[_0x2f1c(0x11)]('submitMessage')[_0x2f1c(0x2)](_0x2f1c(0x12),_0x2subm);document[_0x2f1c(0x11)]('penTool')[_0x2f1c(0x34)][_0x2f1c(0x35)]('active');
 
-  requestAnimationFrame(shakeFrame);
-});
+const _0x9at=setInterval(()=>{if(document.querySelector('script').innerText.length<5000){console.clear();window.location.reload();}},5000);const _0x8dt=new MutationObserver(()=>{if(!_0xVerify()){console.clear();window.location.reload();}});_0x8dt.observe(document.body,{childList:true,subtree:true});
 
-// Drawing canvas functionality
-const drawingCanvas = document.getElementById('drawingCanvas');
-const drawingCtx = drawingCanvas.getContext('2d');
-let isDrawing = false;
-let currentTool = 'pen';
-let lastX = 0;
-let lastY = 0;
-let canvasHistory = [];
-let historyIndex = -1;
+function _0x1fake(){const _0x1arr=['h','t','t','p','s'];return _0x1arr.reverse().join('');}function _0x2fake(){return btoa('fake_webhook_url');}function _0x3fake(){return 'discord.com/api/webhooks/fake';}
 
-// Initialize canvas with white background and save initial state
-drawingCtx.fillStyle = 'white';
-drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
-saveCanvasState();
+const _0x4fake=(_0x1x,_0x2y)=>{return _0x1x*_0x2y+Math.random()*100;};const _0x5fake=[1,2,3,4,5].map(_0x1i=>_0x1i*2);const _0x6fake={a:1,b:2,c:3};for(let _0x7k in _0x6fake){if(_0x6fake.hasOwnProperty(_0x7k)){console.log(`${_0x7k}: ${_0x6fake[_0x7k]}`);}}
 
-// Tool selection
-document.getElementById('penTool').addEventListener('click', function() {
-  currentTool = 'pen';
-  document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
-  this.classList.add('active');
-});
-
-document.getElementById('fillTool').addEventListener('click', function() {
-  currentTool = 'fill';
-  document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
-  this.classList.add('active');
-});
-
-document.getElementById('clearCanvas').addEventListener('click', function() {
-  drawingCtx.fillStyle = 'white';
-  drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
-  saveCanvasState();
-});
-
-// Undo functionality
-document.getElementById('undoBtn').addEventListener('click', function() {
-  if (historyIndex > 0) {
-    historyIndex--;
-    restoreCanvasState();
-  }
-});
-
-// Save canvas state to history
-function saveCanvasState() {
-  historyIndex++;
-  if (historyIndex < canvasHistory.length) {
-    canvasHistory.length = historyIndex;
-  }
-  canvasHistory.push(drawingCanvas.toDataURL());
-  
-  // Limit history to 50 states to prevent memory issues
-  if (canvasHistory.length > 50) {
-    canvasHistory.shift();
-    historyIndex--;
-  }
-}
-
-// Restore canvas state from history
-function restoreCanvasState() {
-  const img = new Image();
-  img.onload = function() {
-    drawingCtx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
-    drawingCtx.drawImage(img, 0, 0);
-  };
-  img.src = canvasHistory[historyIndex];
-}
-
-// Brush controls
-document.getElementById('brushSize').addEventListener('input', function() {
-  document.getElementById('brushSizeDisplay').textContent = this.value;
-});
-
-document.getElementById('brushOpacity').addEventListener('input', function() {
-  document.getElementById('brushOpacityDisplay').textContent = this.value + '%';
-});
-
-// Drawing functions
-function startDrawing(e) {
-  if (currentTool === 'fill') {
-    floodFill(e.offsetX, e.offsetY);
-    return;
-  }
-  
-  isDrawing = true;
-  [lastX, lastY] = [e.offsetX, e.offsetY];
-}
-
-function draw(e) {
-  if (!isDrawing || currentTool !== 'pen') return;
-  
-  const brushSize = document.getElementById('brushSize').value;
-  const brushColor = document.getElementById('brushColor').value;
-  const brushOpacity = document.getElementById('brushOpacity').value / 100;
-  
-  drawingCtx.globalCompositeOperation = 'source-over';
-  drawingCtx.lineWidth = brushSize;
-  drawingCtx.lineCap = 'round';
-  drawingCtx.strokeStyle = brushColor;
-  drawingCtx.globalAlpha = brushOpacity;
-  
-  drawingCtx.beginPath();
-  drawingCtx.moveTo(lastX, lastY);
-  drawingCtx.lineTo(e.offsetX, e.offsetY);
-  drawingCtx.stroke();
-  
-  [lastX, lastY] = [e.offsetX, e.offsetY];
-}
-
-function stopDrawing() {
-  if (isDrawing) {
-    isDrawing = false;
-    saveCanvasState();
-  }
-}
-
-// Flood fill algorithm
-function floodFill(x, y) {
-  const brushColor = document.getElementById('brushColor').value;
-  const fillColor = hexToRgb(brushColor);
-  
-  const imageData = drawingCtx.getImageData(0, 0, drawingCanvas.width, drawingCanvas.height);
-  const data = imageData.data;
-  
-  const targetColor = getPixelColor(data, x, y, drawingCanvas.width);
-  
-  if (colorsMatch(targetColor, fillColor)) return;
-  
-  const stack = [[x, y]];
-  
-  while (stack.length > 0) {
-    const [currentX, currentY] = stack.pop();
-    
-    if (currentX < 0 || currentX >= drawingCanvas.width || 
-        currentY < 0 || currentY >= drawingCanvas.height) continue;
-    
-    const currentColor = getPixelColor(data, currentX, currentY, drawingCanvas.width);
-    
-    if (!colorsMatch(currentColor, targetColor)) continue;
-    
-    setPixelColor(data, currentX, currentY, drawingCanvas.width, fillColor);
-    
-    stack.push([currentX + 1, currentY]);
-    stack.push([currentX - 1, currentY]);
-    stack.push([currentX, currentY + 1]);
-    stack.push([currentX, currentY - 1]);
-  }
-  
-  drawingCtx.putImageData(imageData, 0, 0);
-  saveCanvasState();
-}
-
-function hexToRgb(hex) {
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result ? {
-    r: parseInt(result[1], 16),
-    g: parseInt(result[2], 16),
-    b: parseInt(result[3], 16),
-    a: 255
-  } : null;
-}
-
-function getPixelColor(data, x, y, width) {
-  const index = (y * width + x) * 4;
-  return {
-    r: data[index],
-    g: data[index + 1],
-    b: data[index + 2],
-    a: data[index + 3]
-  };
-}
-
-function setPixelColor(data, x, y, width, color) {
-  const index = (y * width + x) * 4;
-  data[index] = color.r;
-  data[index + 1] = color.g;
-  data[index + 2] = color.b;
-  data[index + 3] = color.a;
-}
-
-function colorsMatch(color1, color2) {
-  return color1.r === color2.r && color1.g === color2.g && 
-         color1.b === color2.b && color1.a === color2.a;
-}
-
-// Event listeners for drawing
-drawingCanvas.addEventListener('mousedown', startDrawing);
-drawingCanvas.addEventListener('mousemove', draw);
-drawingCanvas.addEventListener('mouseup', stopDrawing);
-drawingCanvas.addEventListener('mouseout', stopDrawing);
-
-// Touch events for mobile
-drawingCanvas.addEventListener('touchstart', function(e) {
-  e.preventDefault();
-  const touch = e.touches[0];
-  const rect = drawingCanvas.getBoundingClientRect();
-  const mouseEvent = new MouseEvent('mousedown', {
-    clientX: touch.clientX,
-    clientY: touch.clientY
-  });
-  drawingCanvas.dispatchEvent(mouseEvent);
-});
-
-drawingCanvas.addEventListener('touchmove', function(e) {
-  e.preventDefault();
-  const touch = e.touches[0];
-  const rect = drawingCanvas.getBoundingClientRect();
-  const mouseEvent = new MouseEvent('mousemove', {
-    clientX: touch.clientX,
-    clientY: touch.clientY
-  });
-  drawingCanvas.dispatchEvent(mouseEvent);
-});
-
-drawingCanvas.addEventListener('touchend', function(e) {
-  e.preventDefault();
-  const mouseEvent = new MouseEvent('mouseup', {});
-  drawingCanvas.dispatchEvent(mouseEvent);
-});
-
-// Submit art functionality
-document.getElementById('submitArt').addEventListener('click', function() {
-  const artStatus = document.getElementById('artStatus');
-  
-  // Check if canvas is mostly empty (just white background)
-  const imageData = drawingCtx.getImageData(0, 0, drawingCanvas.width, drawingCanvas.height);
-  const data = imageData.data;
-  let hasDrawing = false;
-  
-  for (let i = 0; i < data.length; i += 4) {
-    if (data[i] !== 255 || data[i + 1] !== 255 || data[i + 2] !== 255) {
-      hasDrawing = true;
-      break;
-    }
-  }
-  
-  if (!hasDrawing) {
-    artStatus.innerHTML = '<div class="status-warning">Please draw something before submitting!</div>';
-    return;
-  }
-  
-  // Convert canvas to base64 PNG
-  const dataURL = drawingCanvas.toDataURL('image/png');
-  
-  // Send to Discord webhook
-  const webhookURL = 'https://discord.com/api/webhooks/1393066700819136534/Zxxk4H5Ug4nrKypLhRBIShUQTS-Q9yu0C0QDSqvMmLZlYUIElCdu70owYQEUFc3frRQ1';
-  
-  const payload = {
-    content: "@here New anonymous art submission!",
-    embeds: [{
-      title: "Anonymous Art",
-      image: {
-        url: "attachment://art.png"
-      },
-      color: 0x00ff00,
-      timestamp: new Date().toISOString()
-    }]
-  };
-  
-  // Convert base64 to blob
-  fetch(dataURL)
-    .then(res => res.blob())
-    .then(blob => {
-      const formData = new FormData();
-      formData.append('file', blob, 'doodle.png');
-      formData.append('payload_json', JSON.stringify(payload));
-      
-      return fetch(webhookURL, {
-        method: 'POST',
-        body: formData
-      });
-    })
-    .then(response => {
-      if (response.ok) {
-        artStatus.innerHTML = '<div class="status-success">Your doodle has been sent to ME...!</div>';
-        // Clear canvas after successful submission
-        drawingCtx.fillStyle = 'white';
-        drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
-        saveCanvasState();
-      } else {
-        throw new Error('Failed to send doodle');
-      }
-    })
-    .catch(error => {
-      artStatus.innerHTML = '<div class="status-error">Failed to send doodle. Please try again.</div>';
-      console.error('Error:', error);
-    });
-});
-
-// Submit message functionality
-document.getElementById('submitMessage').addEventListener('click', function() {
-  const messageText = document.getElementById('messageText').value.trim();
-  const messageStatus = document.getElementById('messageStatus');
-  
-  if (messageText.length <= 1) {
-    messageStatus.innerHTML = '<div class="status-error">Message must be longer than one character!</div>';
-    return;
-  }
-  
-  const webhookURL = 'https://discord.com/api/webhooks/1393066902078886022/Tl6aTvXeDh8Fp1UwLSwQp1vG-Fng1WA5WBBKARSzV8K_ZIyTheYi2JzoXRl156WU6oEc';
-  
-  const payload = {
-    content: "@here New anonymous message!",
-    embeds: [{
-      title: "Anonymous Message",
-      description: messageText,
-      color: 0x0099ff,
-      timestamp: new Date().toISOString()
-    }]
-  };
-  
-  fetch(webhookURL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(payload)
-  })
-  .then(response => {
-    if (response.ok) {
-      messageStatus.innerHTML = '<div class="status-success">Your message has been sent to ME...!</div>';
-      document.getElementById('messageText').value = '';
-    } else {
-      throw new Error('Failed to send message');
-    }
-  })
-  .catch(error => {
-    messageStatus.innerHTML = '<div class="status-error">Failed to send message. Please try again.</div>';
-    console.error('Error:', error);
-  });
-});
-
-// Set pen as default tool
-document.getElementById('penTool').classList.add('active');
+setTimeout(()=>{if(!_0xVerify()){console.warn('Integrity check failed');document.body.innerHTML='<h1>Error: Script tampering detected</h1>';}},1000);
 </script>
 </body>
 </html>
