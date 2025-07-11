@@ -9,6 +9,7 @@
       background: linear-gradient(#a0c4ff, #caffbf);
       padding: 30px;
       font-family: 'Segoe UI', sans-serif;
+      margin: 0;
     }
     .window {
       width: 600px;
@@ -97,12 +98,193 @@
       height: 20px;
     }
     
-    canvas {
+    #bg {
       position: fixed;
       top: 0;
       left: 0;
       z-index: -1;
       opacity: 0.3;
+    }
+
+    /* Art Section Styles */
+    .art-section {
+      margin-top: 30px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    .art-section h2 {
+      color: #0066cc;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .canvas-container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+
+    #drawingCanvas {
+      border: 2px solid #0066cc;
+      border-radius: 8px;
+      cursor: crosshair;
+      background: white;
+    }
+
+    .art-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 8px;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .control-group label {
+      font-size: 0.9em;
+      color: #333;
+      font-weight: 500;
+    }
+
+    input[type="color"] {
+      width: 40px;
+      height: 30px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    input[type="range"] {
+      width: 80px;
+    }
+
+    .tool-btn {
+      padding: 8px 12px;
+      background: #0066cc;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: background 0.3s ease;
+    }
+
+    .tool-btn:hover {
+      background: #0052a3;
+    }
+
+    .tool-btn.active {
+      background: #ff6b6b;
+    }
+
+    .submit-art-btn {
+      width: 100%;
+      padding: 12px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .submit-art-btn:hover {
+      background: #218838;
+    }
+
+    .submit-art-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    /* Message Section Styles */
+    .message-section {
+      margin-top: 20px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    .message-section h2 {
+      color: #0066cc;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    #messageText {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      border: 2px solid #0066cc;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.9em;
+      resize: vertical;
+      margin-bottom: 15px;
+    }
+
+    .submit-message-btn {
+      width: 100%;
+      padding: 12px;
+      background: #17a2b8;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .submit-message-btn:hover {
+      background: #138496;
+    }
+
+    .submit-message-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .status-message {
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .status-success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .status-error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .status-warning {
+      background: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeaa7;
     }
   </style>
 </head>
@@ -174,10 +356,57 @@
       <div class="group-box">
         <p><em>i'm likely to send you friend requests because i find you interesting or it's actually something important.</em></p>
       </div>
+
+      <!-- Art Section -->
+      <div class="art-section">
+        <h2>🎨 Send Art Anonymously</h2>
+        
+        <div class="canvas-container">
+          <canvas id="drawingCanvas" width="500" height="400"></canvas>
+        </div>
+        
+        <div class="art-controls">
+          <div class="control-group">
+            <label for="brushColor">Color:</label>
+            <input type="color" id="brushColor" value="#000000">
+          </div>
+          
+          <div class="control-group">
+            <label for="brushSize">Size:</label>
+            <input type="range" id="brushSize" min="1" max="50" value="5">
+            <span id="brushSizeDisplay">5</span>
+          </div>
+          
+          <div class="control-group">
+            <label for="brushOpacity">Opacity:</label>
+            <input type="range" id="brushOpacity" min="0" max="100" value="100">
+            <span id="brushOpacityDisplay">100%</span>
+          </div>
+          
+          <button class="tool-btn" id="penTool">Pen</button>
+          <button class="tool-btn" id="fillTool">Fill</button>
+          <button class="tool-btn" id="clearCanvas">Clear</button>
+        </div>
+        
+        <button class="submit-art-btn" id="submitArt">Send Art</button>
+        <div id="artStatus"></div>
+      </div>
+
+      <!-- Message Section -->
+      <div class="message-section">
+        <h2>💬 Send A Message Anonymously</h2>
+        
+        <textarea id="messageText" placeholder="Type your message here..."></textarea>
+        
+        <button class="submit-message-btn" id="submitMessage">Send Message</button>
+        <div id="messageStatus"></div>
+      </div>
     </div>
   </div>
 
+<script src="canvas-encoder.js"></script>
 <script>
+// Background animation
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 let dots = [];
@@ -217,6 +446,7 @@ function animate() {
 }
 animate();
 
+// Pronounce button functionality
 document.getElementById("pronounceBtn").addEventListener("click", function() {
   const audio = document.getElementById("nameAudio");
   const allElements = document.querySelectorAll("body *");
@@ -229,11 +459,11 @@ document.getElementById("pronounceBtn").addEventListener("click", function() {
     let elapsed = currentTime - startTime;
 
     if (elapsed < 1000) {
-      requestAnimationFrame(shakeFrame); // wait first second
+      requestAnimationFrame(shakeFrame);
       return;
     }
 
-    let shakeProgress = (elapsed - 1000) / 4000; // from 0 to 1
+    let shakeProgress = (elapsed - 1000) / 4000;
     if (shakeProgress > 1) shakeProgress = 1;
 
     let intensity = shakeProgress * 10;
@@ -251,6 +481,298 @@ document.getElementById("pronounceBtn").addEventListener("click", function() {
 
   requestAnimationFrame(shakeFrame);
 });
+
+// Drawing canvas functionality
+const drawingCanvas = document.getElementById('drawingCanvas');
+const drawingCtx = drawingCanvas.getContext('2d');
+let isDrawing = false;
+let currentTool = 'pen';
+let lastX = 0;
+let lastY = 0;
+
+// Initialize canvas with white background
+drawingCtx.fillStyle = 'white';
+drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+
+// Tool selection
+document.getElementById('penTool').addEventListener('click', function() {
+  currentTool = 'pen';
+  document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+  this.classList.add('active');
+});
+
+document.getElementById('fillTool').addEventListener('click', function() {
+  currentTool = 'fill';
+  document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+  this.classList.add('active');
+});
+
+document.getElementById('clearCanvas').addEventListener('click', function() {
+  drawingCtx.fillStyle = 'white';
+  drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+});
+
+// Brush controls
+document.getElementById('brushSize').addEventListener('input', function() {
+  document.getElementById('brushSizeDisplay').textContent = this.value;
+});
+
+document.getElementById('brushOpacity').addEventListener('input', function() {
+  document.getElementById('brushOpacityDisplay').textContent = this.value + '%';
+});
+
+// Drawing functions
+function startDrawing(e) {
+  if (currentTool === 'fill') {
+    floodFill(e.offsetX, e.offsetY);
+    return;
+  }
+  
+  isDrawing = true;
+  [lastX, lastY] = [e.offsetX, e.offsetY];
+}
+
+function draw(e) {
+  if (!isDrawing || currentTool !== 'pen') return;
+  
+  const brushSize = document.getElementById('brushSize').value;
+  const brushColor = document.getElementById('brushColor').value;
+  const brushOpacity = document.getElementById('brushOpacity').value / 100;
+  
+  drawingCtx.globalCompositeOperation = 'source-over';
+  drawingCtx.lineWidth = brushSize;
+  drawingCtx.lineCap = 'round';
+  drawingCtx.strokeStyle = brushColor;
+  drawingCtx.globalAlpha = brushOpacity;
+  
+  drawingCtx.beginPath();
+  drawingCtx.moveTo(lastX, lastY);
+  drawingCtx.lineTo(e.offsetX, e.offsetY);
+  drawingCtx.stroke();
+  
+  [lastX, lastY] = [e.offsetX, e.offsetY];
+}
+
+function stopDrawing() {
+  isDrawing = false;
+}
+
+// Flood fill algorithm
+function floodFill(x, y) {
+  const brushColor = document.getElementById('brushColor').value;
+  const fillColor = hexToRgb(brushColor);
+  
+  const imageData = drawingCtx.getImageData(0, 0, drawingCanvas.width, drawingCanvas.height);
+  const data = imageData.data;
+  
+  const targetColor = getPixelColor(data, x, y, drawingCanvas.width);
+  
+  if (colorsMatch(targetColor, fillColor)) return;
+  
+  const stack = [[x, y]];
+  
+  while (stack.length > 0) {
+    const [currentX, currentY] = stack.pop();
+    
+    if (currentX < 0 || currentX >= drawingCanvas.width || 
+        currentY < 0 || currentY >= drawingCanvas.height) continue;
+    
+    const currentColor = getPixelColor(data, currentX, currentY, drawingCanvas.width);
+    
+    if (!colorsMatch(currentColor, targetColor)) continue;
+    
+    setPixelColor(data, currentX, currentY, drawingCanvas.width, fillColor);
+    
+    stack.push([currentX + 1, currentY]);
+    stack.push([currentX - 1, currentY]);
+    stack.push([currentX, currentY + 1]);
+    stack.push([currentX, currentY - 1]);
+  }
+  
+  drawingCtx.putImageData(imageData, 0, 0);
+}
+
+function hexToRgb(hex) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16),
+    a: 255
+  } : null;
+}
+
+function getPixelColor(data, x, y, width) {
+  const index = (y * width + x) * 4;
+  return {
+    r: data[index],
+    g: data[index + 1],
+    b: data[index + 2],
+    a: data[index + 3]
+  };
+}
+
+function setPixelColor(data, x, y, width, color) {
+  const index = (y * width + x) * 4;
+  data[index] = color.r;
+  data[index + 1] = color.g;
+  data[index + 2] = color.b;
+  data[index + 3] = color.a;
+}
+
+function colorsMatch(color1, color2) {
+  return color1.r === color2.r && color1.g === color2.g && 
+         color1.b === color2.b && color1.a === color2.a;
+}
+
+// Event listeners for drawing
+drawingCanvas.addEventListener('mousedown', startDrawing);
+drawingCanvas.addEventListener('mousemove', draw);
+drawingCanvas.addEventListener('mouseup', stopDrawing);
+drawingCanvas.addEventListener('mouseout', stopDrawing);
+
+// Touch events for mobile
+drawingCanvas.addEventListener('touchstart', function(e) {
+  e.preventDefault();
+  const touch = e.touches[0];
+  const rect = drawingCanvas.getBoundingClientRect();
+  const mouseEvent = new MouseEvent('mousedown', {
+    clientX: touch.clientX,
+    clientY: touch.clientY
+  });
+  drawingCanvas.dispatchEvent(mouseEvent);
+});
+
+drawingCanvas.addEventListener('touchmove', function(e) {
+  e.preventDefault();
+  const touch = e.touches[0];
+  const rect = drawingCanvas.getBoundingClientRect();
+  const mouseEvent = new MouseEvent('mousemove', {
+    clientX: touch.clientX,
+    clientY: touch.clientY
+  });
+  drawingCanvas.dispatchEvent(mouseEvent);
+});
+
+drawingCanvas.addEventListener('touchend', function(e) {
+  e.preventDefault();
+  const mouseEvent = new MouseEvent('mouseup', {});
+  drawingCanvas.dispatchEvent(mouseEvent);
+});
+
+// Submit art functionality
+document.getElementById('submitArt').addEventListener('click', function() {
+  const artStatus = document.getElementById('artStatus');
+  
+  // Check if canvas is mostly empty (just white background)
+  const imageData = drawingCtx.getImageData(0, 0, drawingCanvas.width, drawingCanvas.height);
+  const data = imageData.data;
+  let hasDrawing = false;
+  
+  for (let i = 0; i < data.length; i += 4) {
+    if (data[i] !== 255 || data[i + 1] !== 255 || data[i + 2] !== 255) {
+      hasDrawing = true;
+      break;
+    }
+  }
+  
+  if (!hasDrawing) {
+    artStatus.innerHTML = '<div class="status-warning">Please draw something before submitting!</div>';
+    return;
+  }
+  
+  // Convert canvas to base64 PNG
+  const dataURL = drawingCanvas.toDataURL('image/png');
+  
+  // Send to Discord webhook
+  const webhookURL = 'https://discord.com/api/webhooks/1393066700819136534/Zxxk4H5Ug4nrKypLhRBIShUQTS-Q9yu0C0QDSqvMmLZlYUIElCdu70owYQEUFc3frRQ1';
+  
+  const payload = {
+    content: "New anonymous art submission!",
+    embeds: [{
+      title: "Anonymous Art",
+      image: {
+        url: "attachment://art.png"
+      },
+      color: 0x00ff00,
+      timestamp: new Date().toISOString()
+    }]
+  };
+  
+  // Convert base64 to blob
+  fetch(dataURL)
+    .then(res => res.blob())
+    .then(blob => {
+      const formData = new FormData();
+      formData.append('file', blob, 'art.png');
+      formData.append('payload_json', JSON.stringify(payload));
+      
+      return fetch(webhookURL, {
+        method: 'POST',
+        body: formData
+      });
+    })
+    .then(response => {
+      if (response.ok) {
+        artStatus.innerHTML = '<div class="status-success">Your art has been sent to ME...!</div>';
+        // Clear canvas after successful submission
+        drawingCtx.fillStyle = 'white';
+        drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+      } else {
+        throw new Error('Failed to send art');
+      }
+    })
+    .catch(error => {
+      artStatus.innerHTML = '<div class="status-error">Failed to send art. Please try again.</div>';
+      console.error('Error:', error);
+    });
+});
+
+// Submit message functionality
+document.getElementById('submitMessage').addEventListener('click', function() {
+  const messageText = document.getElementById('messageText').value.trim();
+  const messageStatus = document.getElementById('messageStatus');
+  
+  if (messageText.length <= 1) {
+    messageStatus.innerHTML = '<div class="status-error">Message must be longer than one character!</div>';
+    return;
+  }
+  
+  const webhookURL = 'https://discord.com/api/webhooks/1393066902078886022/Tl6aTvXeDh8Fp1UwLSwQp1vG-Fng1WA5WBBKARSzV8K_ZIyTheYi2JzoXRl156WU6oEc';
+  
+  const payload = {
+    content: "New anonymous message!",
+    embeds: [{
+      title: "Anonymous Message",
+      description: messageText,
+      color: 0x0099ff,
+      timestamp: new Date().toISOString()
+    }]
+  };
+  
+  fetch(webhookURL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  })
+  .then(response => {
+    if (response.ok) {
+      messageStatus.innerHTML = '<div class="status-success">Your message has been sent to ME...!</div>';
+      document.getElementById('messageText').value = '';
+    } else {
+      throw new Error('Failed to send message');
+    }
+  })
+  .catch(error => {
+    messageStatus.innerHTML = '<div class="status-error">Failed to send message. Please try again.</div>';
+    console.error('Error:', error);
+  });
+});
+
+// Set pen as default tool
+document.getElementById('penTool').classList.add('active');
 </script>
 </body>
 </html>
