@@ -206,7 +206,7 @@
       transition: background 0.3s ease;
     }
 
-    .submit-art-btn:hover {
+    .submit-art-btn:hover:not(:disabled) {
       background: #218838;
     }
 
@@ -255,7 +255,7 @@
       transition: background 0.3s ease;
     }
 
-    .submit-message-btn:hover {
+    .submit-message-btn:hover:not(:disabled) {
       background: #138496;
     }
 
@@ -288,6 +288,22 @@
       background: #fff3cd;
       color: #856404;
       border: 1px solid #ffeaa7;
+    }
+
+    /* Loading spinner */
+    .loading-spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
   </style>
 </head>
@@ -708,6 +724,7 @@ drawingCanvas.addEventListener('touchend', function(e) {
 // Submit art functionality
 document.getElementById('submitArt').addEventListener('click', function() {
   const artStatus = document.getElementById('artStatus');
+  const submitBtn = document.getElementById('submitArt');
   
   // Check if canvas is mostly empty (just white background)
   const imageData = drawingCtx.getImageData(0, 0, drawingCanvas.width, drawingCanvas.height);
@@ -725,6 +742,11 @@ document.getElementById('submitArt').addEventListener('click', function() {
     artStatus.innerHTML = '<div class="status-warning">Please draw something before submitting!</div>';
     return;
   }
+  
+  // Disable button and show loading state
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<span class="loading-spinner"></span>Sending...';
+  artStatus.innerHTML = '';
   
   // Convert canvas to base64 PNG
   const dataURL = drawingCanvas.toDataURL('image/png');
@@ -771,6 +793,11 @@ document.getElementById('submitArt').addEventListener('click', function() {
     .catch(error => {
       artStatus.innerHTML = '<div class="status-error">Failed to send doodle. Please try again.</div>';
       console.error('Error:', error);
+    })
+    .finally(() => {
+      // Re-enable button and restore original text
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Send Doodle';
     });
 });
 
@@ -778,11 +805,17 @@ document.getElementById('submitArt').addEventListener('click', function() {
 document.getElementById('submitMessage').addEventListener('click', function() {
   const messageText = document.getElementById('messageText').value.trim();
   const messageStatus = document.getElementById('messageStatus');
+  const submitBtn = document.getElementById('submitMessage');
   
   if (messageText.length <= 1) {
     messageStatus.innerHTML = '<div class="status-error">Message must be longer than one character!</div>';
     return;
   }
+  
+  // Disable button and show loading state
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<span class="loading-spinner"></span>Sending...';
+  messageStatus.innerHTML = '';
   
   const webhookURL = 'https://discord.com/api/webhooks/1393066902078886022/Tl6aTvXeDh8Fp1UwLSwQp1vG-Fng1WA5WBBKARSzV8K_ZIyTheYi2JzoXRl156WU6oEc';
   
@@ -814,6 +847,11 @@ document.getElementById('submitMessage').addEventListener('click', function() {
   .catch(error => {
     messageStatus.innerHTML = '<div class="status-error">Failed to send message. Please try again.</div>';
     console.error('Error:', error);
+  })
+  .finally(() => {
+    // Re-enable button and restore original text
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = 'Send Message';
   });
 });
 
