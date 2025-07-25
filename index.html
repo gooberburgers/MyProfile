@@ -432,7 +432,7 @@ function checkBanStatus() {
     method: 'GET'
   })
   .then(response => {
-    if (response.status === 403) {
+    if (response.status === 7842) {
       triggerAftermathMode();
     }
   })
