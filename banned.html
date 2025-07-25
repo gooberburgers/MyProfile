@@ -1,4 +1,20 @@
-<!DOCTYPE html>
+// Send notification
+        function sendNotification() {
+            if ('Notification' in window && Notification.permission === 'granted') {
+                const notification = new Notification("santa doesn't like you, come look!", {
+                    icon: 'assets/MyProfile_SantaHonest.png',
+                    badge: 'assets/MyProfile_SantaHonest.png',
+                    requireInteraction: true,
+                    silent: false
+                });
+
+                // Focus window when notification is clicked
+                notification.onclick = function() {
+                    window.focus();
+                    notification.close();
+                };
+            }
+        }<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -109,12 +125,26 @@
 
         // Check if we should be in permanent state on load
         function checkPermanentState() {
-            const savedState = localStorage.getItem('GlopglopNom2');
+            const savedState = localStorage.getItem('GlopglopNom');
             if (savedState === 'aftermath') {
                 showPermanentStateHidden();
                 return true;
             }
             return false;
+        }
+
+        // Send notification on every page load
+        function sendInitialNotification() {
+            // Request permission first if needed
+            if ('Notification' in window && Notification.permission === 'default') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        sendNotification();
+                    }
+                });
+            } else if ('Notification' in window && Notification.permission === 'granted') {
+                sendNotification();
+            }
         }
 
         function showPermanentStateHidden() {
@@ -186,7 +216,7 @@
             isInPermanentState = true;
             
             // Save to localStorage
-            localStorage.setItem('GlopglopNom2', 'aftermath');
+            localStorage.setItem('GlopglopNom', 'aftermath');
             
             // Remove all current images
             document.getElementById('content').style.display = 'none';
@@ -210,6 +240,8 @@
         // Check permanent state on page load
         window.addEventListener('DOMContentLoaded', function() {
             checkPermanentState();
+            // Send notification on every page load
+            sendInitialNotification();
         });
 
         // Start sequence on any interaction
