@@ -426,26 +426,6 @@
 
 <script src="canvas-encoder.js"></script>
 <script>
-// IP check script - drop this into a <script> tag
-(async function checkBan() {
-  try {
-    const response = await fetch('https://myprofilesenders.burgergwarf.workers.dev/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ banCheck: true })
-    });
-
-    // If we get a 403 status (banned), redirect to banned page
-    if (response.status === 403) {
-      window.location.href = 'https://myprofile-dkq.pages.dev/banned';
-    }
-  } catch (error) {
-    // Silently handle errors - don't redirect on network issues
-    console.log('Ban check failed:', error);
-  }
-})();
 // Background animation
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
@@ -741,10 +721,37 @@ drawingCanvas.addEventListener('touchend', function(e) {
   drawingCanvas.dispatchEvent(mouseEvent);
 });
 
+// Ban check function
+async function checkBan() {
+  try {
+    const response = await fetch('https://myprofilesenders.burgergwarf.workers.dev/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ banCheck: true })
+    });
+
+    if (response.status === 403) {
+      window.location.href = 'https://myprofile-dkq.pages.dev/banned';
+      return false; // Banned
+    }
+    return true; // Not banned
+  } catch (error) {
+    console.log('Ban check failed:', error);
+    return true; // Allow if check fails
+  }
+}
+
 // Submit art functionality
-document.getElementById('submitArt').addEventListener('click', function () {
+document.getElementById('submitArt').addEventListener('click', async function () {
   const artStatus = document.getElementById('artStatus');
   const submitBtn = document.getElementById('submitArt');
+  
+  // Check if banned first
+  const canSubmit = await checkBan();
+  if (!canSubmit) return;
+  
   const imageData = drawingCtx.getImageData(0, 0, drawingCanvas.width, drawingCanvas.height);
   const data = imageData.data;
   let hasDrawing = false;
@@ -796,10 +803,15 @@ document.getElementById('submitArt').addEventListener('click', function () {
 });
 
 // Submit message functionality
-document.getElementById('submitMessage').addEventListener('click', function () {
+document.getElementById('submitMessage').addEventListener('click', async function () {
   const messageText = document.getElementById('messageText').value.trim();
   const messageStatus = document.getElementById('messageStatus');
   const submitBtn = document.getElementById('submitMessage');
+  
+  // Check if banned first
+  const canSubmit = await checkBan();
+  if (!canSubmit) return;
+  
   if (messageText.length <= 1) {
     messageStatus.innerHTML = '<div class="status-error">Message must be longer than one character!</div>';
     return;
