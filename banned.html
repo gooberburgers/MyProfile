@@ -1,19 +1,4 @@
-// Send notification
-        function sendNotification() {
-            if ('Notification' in window && Notification.permission === 'granted') {
-                const notification = new Notification("santa doesn't like you, come look!", {
-                    icon: 'assets/MyProfile_SantaHonest.png',
-                    badge: 'assets/MyProfile_SantaHonest.png',
-                    requireInteraction: true,
-                    silent: false
-                });
 
-                // Focus window when notification is clicked
-                notification.onclick = function() {
-                    window.focus();
-                    notification.close();
-                };
-            }
         }<!DOCTYPE html>
 <html lang="en">
 <head>
