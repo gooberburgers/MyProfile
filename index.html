@@ -725,29 +725,23 @@ drawingCanvas.addEventListener('touchend', function(e) {
 document.getElementById('submitArt').addEventListener('click', function () {
   const artStatus = document.getElementById('artStatus');
   const submitBtn = document.getElementById('submitArt');
-
   const imageData = drawingCtx.getImageData(0, 0, drawingCanvas.width, drawingCanvas.height);
   const data = imageData.data;
   let hasDrawing = false;
-
   for (let i = 0; i < data.length; i += 4) {
     if (data[i] !== 255 || data[i + 1] !== 255 || data[i + 2] !== 255) {
       hasDrawing = true;
       break;
     }
   }
-
   if (!hasDrawing) {
     artStatus.innerHTML = '<div class="status-warning">Please draw something before submitting!</div>';
     return;
   }
-
   submitBtn.disabled = true;
   submitBtn.innerHTML = '<span class="loading-spinner"></span>Sending...';
   artStatus.innerHTML = '';
-
   const dataURL = drawingCanvas.toDataURL('image/png');
-
   fetch("https://myprofilesenders.burgergwarf.workers.dev/", {
     method: "POST",
     headers: {
@@ -757,18 +751,22 @@ document.getElementById('submitArt').addEventListener('click', function () {
       image: dataURL
     })
   })
-    .then(response => {
+    .then(async response => {
       if (response.ok) {
         artStatus.innerHTML = '<div class="status-success">Your doodle has been sent to ME...!</div>';
         drawingCtx.fillStyle = 'white';
         drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
         saveCanvasState();
       } else {
-        throw new Error('Failed to send doodle');
+        // Get the error message from the server
+        const errorMessage = await response.text();
+        throw new Error(errorMessage);
       }
     })
     .catch(error => {
-      artStatus.innerHTML = '<div class="status-error">Failed to send doodle. Please try again.</div>';
+      // Display the actual error message from the server
+      const errorText = error.message || 'Failed to send doodle. Please try again.';
+      artStatus.innerHTML = `<div class="status-error">${errorText}</div>`;
       console.error('Error:', error);
     })
     .finally(() => {
@@ -782,16 +780,13 @@ document.getElementById('submitMessage').addEventListener('click', function () {
   const messageText = document.getElementById('messageText').value.trim();
   const messageStatus = document.getElementById('messageStatus');
   const submitBtn = document.getElementById('submitMessage');
-
   if (messageText.length <= 1) {
     messageStatus.innerHTML = '<div class="status-error">Message must be longer than one character!</div>';
     return;
   }
-
   submitBtn.disabled = true;
   submitBtn.innerHTML = '<span class="loading-spinner"></span>Sending...';
   messageStatus.innerHTML = '';
-
   fetch("https://myprofilesenders.burgergwarf.workers.dev/", {
     method: "POST",
     headers: {
@@ -801,16 +796,20 @@ document.getElementById('submitMessage').addEventListener('click', function () {
       message: messageText
     })
   })
-    .then(response => {
+    .then(async response => {
       if (response.ok) {
         messageStatus.innerHTML = '<div class="status-success">Your message has been sent to ME...!</div>';
         document.getElementById('messageText').value = '';
       } else {
-        throw new Error('Failed to send message');
+        // Get the error message from the server
+        const errorMessage = await response.text();
+        throw new Error(errorMessage);
       }
     })
     .catch(error => {
-      messageStatus.innerHTML = '<div class="status-error">Failed to send message. Please try again.</div>';
+      // Display the actual error message from the server
+      const errorText = error.message || 'Failed to send message. Please try again.';
+      messageStatus.innerHTML = `<div class="status-error">${errorText}</div>`;
       console.error('Error:', error);
     })
     .finally(() => {
@@ -818,7 +817,6 @@ document.getElementById('submitMessage').addEventListener('click', function () {
       submitBtn.innerHTML = 'Send Message';
     });
 });
-
 
 // Set pen as default tool
 document.getElementById('penTool').classList.add('active');
