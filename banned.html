@@ -118,20 +118,6 @@
             return false;
         }
 
-        // Send notification on every page load
-        function sendInitialNotification() {
-            // Request permission first if needed
-            if ('Notification' in window && Notification.permission === 'default') {
-                Notification.requestPermission().then(permission => {
-                    if (permission === 'granted') {
-                        sendNotification();
-                    }
-                });
-            } else if ('Notification' in window && Notification.permission === 'granted') {
-                sendNotification();
-            }
-        }
-
         function showPermanentStateHidden() {
             isInPermanentState = true;
             
@@ -225,8 +211,6 @@
         // Check permanent state on page load
         window.addEventListener('DOMContentLoaded', function() {
             checkPermanentState();
-            // Send notification on every page load
-            sendInitialNotification();
         });
 
         // Start sequence on any interaction
