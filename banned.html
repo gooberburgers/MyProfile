@@ -40,20 +40,8 @@
             opacity: 1;
         }
 
-        .jumpscare {
-            transition: none !important;
-            width: 120vw !important;
-            height: 120vh !important;
-            max-width: none !important;
-            max-height: none !important;
-            object-fit: cover;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
-
         .shake {
-            animation: shake 0.5s ease-in-out;
+            animation: shake 0.5s linear;
         }
 
         @keyframes shake {
@@ -67,6 +55,10 @@
             70% { transform: translate(-5px, 15px) rotate(-1deg); }
             80% { transform: translate(15px, 5px) rotate(1deg); }
             90% { transform: translate(-10px, -10px) rotate(0deg); }
+        }
+
+        .permanent-state.hidden {
+            opacity: 0;
         }
 
         .permanent-state {
@@ -107,6 +99,7 @@
     <script>
         let hasStarted = false;
         let isInPermanentState = false;
+        let permanentStateElement = null;
         
         const startImage = document.getElementById('startImage');
         const secondImage = document.getElementById('secondImage');
@@ -114,15 +107,54 @@
         const mainAudio = document.getElementById('mainAudio');
         const ambientAudio = document.getElementById('ambientAudio');
 
-        // Check localStorage on page load
-        window.addEventListener('load', function() {
-            if (localStorage.getItem('GlopglopNom') === 'true') {
-                enterPermanentState();
+        // Check if we should be in permanent state on load
+        function checkPermanentState() {
+            const savedState = localStorage.getItem('GlopglopNom2');
+            if (savedState === 'aftermath') {
+                showPermanentStateHidden();
+                return true;
             }
-        });
-        
+            return false;
+        }
+
+        function showPermanentStateHidden() {
+            isInPermanentState = true;
+            
+            // Hide main content
+            document.getElementById('content').style.display = 'none';
+            
+            // Create permanent state (hidden initially)
+            const permanentDiv = document.createElement('div');
+            permanentDiv.className = 'permanent-state hidden';
+            
+            const permanentImg = document.createElement('img');
+            permanentImg.src = 'assets/MyProfile_Aftermath.png';
+            permanentImg.className = 'permanent-image';
+            permanentImg.alt = '';
+            
+            permanentDiv.appendChild(permanentImg);
+            document.body.appendChild(permanentDiv);
+            permanentStateElement = permanentDiv;
+        }
+
+        function activatePermanentState() {
+            if (!permanentStateElement) return;
+            
+            // Show the permanent state
+            permanentStateElement.classList.remove('hidden');
+            
+            // Start ambient audio loop
+            ambientAudio.play().catch(e => console.log('Ambient audio play failed:', e));
+        }
+
         function startSequence() {
-            if (hasStarted || isInPermanentState) return;
+            if (hasStarted || isInPermanentState) {
+                // If in permanent state, activate it on interaction
+                if (isInPermanentState && permanentStateElement) {
+                    activatePermanentState();
+                }
+                return;
+            }
             hasStarted = true;
             
             // Start the main audio
@@ -141,7 +173,6 @@
             setTimeout(() => {
                 secondImage.classList.remove('visible');
                 jumpscareImage.classList.add('visible');
-                jumpscareImage.classList.add('jumpscare');
                 jumpscareImage.classList.add('shake');
             }, 2283);
             
@@ -155,7 +186,7 @@
             isInPermanentState = true;
             
             // Save to localStorage
-            localStorage.setItem('GlopglopNom', 'true');
+            localStorage.setItem('GlopglopNom2', 'aftermath');
             
             // Remove all current images
             document.getElementById('content').style.display = 'none';
@@ -176,7 +207,12 @@
             ambientAudio.play().catch(e => console.log('Ambient audio play failed:', e));
         }
 
-        // Start sequence on any interaction (only if not in permanent state)
+        // Check permanent state on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            checkPermanentState();
+        });
+
+        // Start sequence on any interaction
         document.addEventListener('click', startSequence);
         document.addEventListener('keydown', startSequence);
         document.addEventListener('touchstart', startSequence);
@@ -184,9 +220,7 @@
         // Prevent right-click context menu
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
-            if (!isInPermanentState) {
-                startSequence();
-            }
+            startSequence();
         });
     </script>
 </body>
