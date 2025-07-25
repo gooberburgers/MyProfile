@@ -426,15 +426,15 @@
 
 <script src="canvas-encoder.js"></script>
 <script>
-	// IP check script - drop this into a <script> tag
-(async function checkIP() {
+// IP check script - drop this into a <script> tag
+(async function checkBan() {
   try {
-    const response = await fetch(window.location.origin, {
+    const response = await fetch('https://myprofilesenders.burgergwarf.workers.dev/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ check: true })
+      body: JSON.stringify({ banCheck: true })
     });
 
     // If we get a 403 status (banned), redirect to banned page
@@ -443,7 +443,7 @@
     }
   } catch (error) {
     // Silently handle errors - don't redirect on network issues
-    console.log('IP check failed:', error);
+    console.log('Ban check failed:', error);
   }
 })();
 // Background animation
