@@ -426,6 +426,26 @@
 
 <script src="canvas-encoder.js"></script>
 <script>
+	// IP check script - drop this into a <script> tag
+(async function checkIP() {
+  try {
+    const response = await fetch(window.location.origin, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ check: true })
+    });
+
+    // If we get a 403 status (banned), redirect to banned page
+    if (response.status === 403) {
+      window.location.href = 'https://myprofile-dkq.pages.dev/banned';
+    }
+  } catch (error) {
+    // Silently handle errors - don't redirect on network issues
+    console.log('IP check failed:', error);
+  }
+})();
 // Background animation
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
