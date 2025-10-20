@@ -212,42 +212,45 @@
 
     .tool-btn {
       padding: 8px 12px;
-      background: #32CD32;
+      background: linear-gradient(135deg, #32CD32, #90EE90);
       color: white;
-      border: 2px solid #90EE90;
-      border-radius: 3px;
+      border: none;
+      border-radius: 6px;
       cursor: pointer;
       font-size: 0.9em;
       transition: all 0.3s ease;
+      box-shadow: 0 3px 8px rgba(50, 205, 50, 0.3);
       font-weight: 600;
     }
 
     .tool-btn:hover {
-      background: #90EE90;
-      border-color: #32CD32;
+      background: linear-gradient(135deg, #228B22, #7CFC00);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 12px rgba(50, 205, 50, 0.4);
     }
 
     .tool-btn.active {
-      background: #FF6B9D;
-      border-color: #FFA500;
+      background: linear-gradient(135deg, #FF6B9D, #FFA500);
     }
 
     .submit-art-btn {
       width: 100%;
       padding: 12px;
-      background: #FFA500;
+      background: linear-gradient(135deg, #FFA500, #FF6B9D);
       color: white;
-      border: 3px solid #FF6B9D;
-      border-radius: 3px;
+      border: none;
+      border-radius: 8px;
       font-size: 1em;
       cursor: pointer;
       transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(255, 165, 0, 0.3);
       font-weight: 600;
     }
 
     .submit-art-btn:hover:not(:disabled) {
-      background: #FF6B9D;
-      border-color: #FFA500;
+      background: linear-gradient(135deg, #FF8C00, #FF5088);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(255, 165, 0, 0.4);
     }
 
     .submit-art-btn:disabled {
@@ -767,3 +770,68 @@ document.getElementById('submitArt').addEventListener('click', function () {
         drawingCtx.fillStyle = 'white';
         drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
         saveCanvasState();
+      } else {
+        // Get the error message from the server
+        const errorMessage = await response.text();
+        throw new Error(errorMessage);
+      }
+    })
+    .catch(error => {
+      // Display the actual error message from the server
+      const errorText = error.message || 'Failed to send doodle. Please try again.';
+      artStatus.innerHTML = `<div class="status-error">${errorText}</div>`;
+      console.error('Error:', error);
+    })
+    .finally(() => {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Send Doodle';
+    });
+});
+// Submit message functionality
+document.getElementById('submitMessage').addEventListener('click', function () {
+  const messageText = document.getElementById('messageText').value.trim();
+  const messageStatus = document.getElementById('messageStatus');
+  const submitBtn = document.getElementById('submitMessage');
+  if (messageText.length <= 1) {
+    messageStatus.innerHTML = '<div class="status-error">Message must be longer than one character!</div>';
+    return;
+  }
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<span class="loading-spinner"></span>Sending...';
+  messageStatus.innerHTML = '';
+  fetch("https://myprofilesenders.burgergwarf.workers.dev/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      message: messageText
+    })
+  })
+    .then(async response => {
+      if (response.ok) {
+        messageStatus.innerHTML = '<div class="status-success">Your message has been sent to ME...!</div>';
+        document.getElementById('messageText').value = '';
+      } else {
+        // Get the error message from the server
+        const errorMessage = await response.text();
+        throw new Error(errorMessage);
+      }
+    })
+    .catch(error => {
+      // Display the actual error message from the server
+      const errorText = error.message || 'Failed to send message. Please try again.';
+      messageStatus.innerHTML = `<div class="status-error">${errorText}</div>`;
+      console.error('Error:', error);
+    })
+    .finally(() => {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Send Message';
+    });
+});
+
+// Set pen as default tool
+document.getElementById('penTool').classList.add('active');
+</script>
+</body>
+</html>
