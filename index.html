@@ -489,7 +489,7 @@
           <div class="profile-info">
             <h1>omegadogey (dogey)</h1>
             <button id="pronounceBtn">pronounce</button>
-            <audio id="nameAudio" src="assets/my name.mp3"></audio>
+            <audio id="nameAudio" src="assets/myname.wav"></audio>
           </div>
         </div>
         <p>[texas > usa]</p>
@@ -709,39 +709,9 @@ animate();
 // Pronounce button functionality
 document.getElementById("pronounceBtn").addEventListener("click", function() {
   const audio = document.getElementById("nameAudio");
-  const allElements = document.querySelectorAll("body *");
-
   audio.play();
-
-  let startTime = performance.now();
-
-  function shakeFrame(currentTime) {
-    let elapsed = currentTime - startTime;
-
-    if (elapsed < 1000) {
-      requestAnimationFrame(shakeFrame);
-      return;
-    }
-
-    let shakeProgress = (elapsed - 1000) / 4000;
-    if (shakeProgress > 1) shakeProgress = 1;
-
-    let intensity = shakeProgress * 10;
-
-    allElements.forEach(el => {
-      el.style.transform = `translate(${(Math.random() - 0.5) * intensity}px, ${(Math.random() - 0.5) * intensity}px)`;
-    });
-
-    if (elapsed < 5000) {
-      requestAnimationFrame(shakeFrame);
-    } else {
-      allElements.forEach(el => el.style.transform = "none");
-    }
-  }
-
-  requestAnimationFrame(shakeFrame);
 });
-
+	
 // Drawing canvas functionality
 const drawingCanvas = document.getElementById('drawingCanvas');
 const drawingCtx = drawingCanvas.getContext('2d');
