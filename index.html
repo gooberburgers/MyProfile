@@ -143,7 +143,7 @@
 body {
   background: linear-gradient(#a0c4ff, #caffbf);
   padding: 30px;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive;
   margin: 0;
 }
 
@@ -310,7 +310,7 @@ button:not(.socials button),
   border-radius: 3px;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
   color: #222;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive;
   font-size: 9pt;
   min-height: 23px;
   padding: 0 12px;
@@ -504,6 +504,17 @@ button:disabled:before,
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+/* Typewriter effect styles */
+.typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.typewriter-container {
+  overflow: hidden;
+}
   </style>
 </head>
 
@@ -579,7 +590,7 @@ button:disabled:before,
       </div>
 
       <div class="group-box">
-        <h2>[media/socials]</h2>
+        <h2>[Social Media...]</h2>
         <div class="socials">
 
           <a href="https://www.roblox.com/users/2938203100/profile" target="_blank" class="button">
@@ -671,6 +682,39 @@ button:disabled:before,
 
 <script src="canvas-encoder.js"></script>
 <script>
+
+// Typewriter effect function
+function typewriterEffect() {
+  const elementsToType = document.querySelectorAll('h1, h2, p, li, a, label, button, .title-bar-text');
+  const charDelay = 15; // Milliseconds per character (decently fast)
+  
+  elementsToType.forEach((element, index) => {
+    // Skip if element is empty or only whitespace
+    const text = element.textContent.trim();
+    if (!text) return;
+    
+    // Store original text and clear element
+    const originalText = element.textContent;
+    element.textContent = '';
+    element.style.opacity = '1';
+    
+    // Type out the text (all elements start at the same time)
+    let charIndex = 0;
+    const typeInterval = setInterval(() => {
+      if (charIndex < originalText.length) {
+        element.textContent += originalText[charIndex];
+        charIndex++;
+      } else {
+        clearInterval(typeInterval);
+      }
+    }, charDelay);
+  });
+}
+
+// Start typewriter effect when page loads
+window.addEventListener('load', () => {
+  typewriterEffect();
+});
 
 // IP check script with continuous monitoring
 (async function continuousBanCheck() {
