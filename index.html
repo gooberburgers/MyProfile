@@ -715,6 +715,7 @@ document.getElementById("pronounceBtn").addEventListener("click", function() {
 });
 	
 // Drawing canvas functionality
+// Drawing canvas functionality
 const drawingCanvas = document.getElementById('drawingCanvas');
 const drawingCtx = drawingCanvas.getContext('2d');
 let isDrawing = false;
@@ -790,20 +791,50 @@ document.getElementById('brushOpacity').addEventListener('input', function() {
   document.getElementById('brushOpacityDisplay').textContent = this.value + '%';
 });
 
+// Get coordinates relative to canvas
+function getCanvasCoordinates(e) {
+  const rect = drawingCanvas.getBoundingClientRect();
+  const scaleX = drawingCanvas.width / rect.width;
+  const scaleY = drawingCanvas.height / rect.height;
+  
+  let clientX, clientY;
+  
+  if (e.touches && e.touches.length > 0) {
+    clientX = e.touches[0].clientX;
+    clientY = e.touches[0].clientY;
+  } else {
+    clientX = e.clientX;
+    clientY = e.clientY;
+  }
+  
+  return {
+    x: (clientX - rect.left) * scaleX,
+    y: (clientY - rect.top) * scaleY
+  };
+}
+
 // Drawing functions
 function startDrawing(e) {
+  e.preventDefault();
+  
+  const coords = getCanvasCoordinates(e);
+  
   if (currentTool === 'fill') {
-    floodFill(e.offsetX, e.offsetY);
+    floodFill(Math.floor(coords.x), Math.floor(coords.y));
     return;
   }
   
   isDrawing = true;
-  [lastX, lastY] = [e.offsetX, e.offsetY];
+  lastX = coords.x;
+  lastY = coords.y;
 }
 
 function draw(e) {
   if (!isDrawing || currentTool !== 'pen') return;
   
+  e.preventDefault();
+  
+  const coords = getCanvasCoordinates(e);
   const brushSize = document.getElementById('brushSize').value;
   const brushColor = document.getElementById('brushColor').value;
   const brushOpacity = document.getElementById('brushOpacity').value / 100;
@@ -816,14 +847,16 @@ function draw(e) {
   
   drawingCtx.beginPath();
   drawingCtx.moveTo(lastX, lastY);
-  drawingCtx.lineTo(e.offsetX, e.offsetY);
+  drawingCtx.lineTo(coords.x, coords.y);
   drawingCtx.stroke();
   
-  [lastX, lastY] = [e.offsetX, e.offsetY];
+  lastX = coords.x;
+  lastY = coords.y;
 }
 
-function stopDrawing() {
+function stopDrawing(e) {
   if (isDrawing) {
+    e.preventDefault();
     isDrawing = false;
     saveCanvasState();
   }
@@ -898,23 +931,17 @@ function colorsMatch(color1, color2) {
          color1.b === color2.b && color1.a === color2.a;
 }
 
-// Event listeners for drawing
+// Mouse event listeners for drawing
 drawingCanvas.addEventListener('mousedown', startDrawing);
 drawingCanvas.addEventListener('mousemove', draw);
 drawingCanvas.addEventListener('mouseup', stopDrawing);
-drawingCanvas.addEventListener('mouseout', stopDrawing);
+drawingCanvas.addEventListener('mouseleave', stopDrawing);
 
 // Touch events for mobile
-drawingCanvas.addEventListener('touchstart', function(e) {
-  e.preventDefault();
-  const touch = e.touches[0];
-  const rect = drawingCanvas.getBoundingClientRect();
-  const mouseEvent = new MouseEvent('mousedown', {
-    clientX: touch.clientX,
-    clientY: touch.clientY
-  });
-  drawingCanvas.dispatchEvent(mouseEvent);
-});
+drawingCanvas.addEventListener('touchstart', startDrawing, { passive: false });
+drawingCanvas.addEventListener('touchmove', draw, { passive: false });
+drawingCanvas.addEventListener('touchend', stopDrawing, { passive: false });
+drawingCanvas.addEventListener('touchcancel', stopDrawing, { passive: false });
 
 drawingCanvas.addEventListener('touchmove', function(e) {
   e.preventDefault();
