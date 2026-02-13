@@ -9,8 +9,6 @@
 
   <link rel="stylesheet" href="7.css">
   <style>
-
-
 /* Gerald Section Styles */
 .gerald-section {
   position: fixed;
@@ -142,307 +140,370 @@
   }
 }
 
-    body {
-      background: linear-gradient(#a0c4ff, #caffbf);
-      padding: 30px;
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-    }
-    .window {
-      width: 600px;
-      margin: 0 auto;
-      animation: fadeIn 1.5s ease-in-out;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .group-box {
-      margin-bottom: 20px;
-    }
-    h2 {
-      margin-bottom: 8px;
-    }
-    ul {
-      margin: 0;
-      padding-left: 20px;
-    }
-    .roblox-links a {
-      display: inline-block;
-      margin-right: 10px;
-    }
-    
-    .profile-header {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 15px;
-    }
-    
-    .profile-header img {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      border: 3px solid #0066cc;
-    }
-    
-    .profile-info h1 {
-      font-size: 1.8em;
-      margin: 0;
-      color: #0066cc;
-    }
-    
-    #pronounceBtn {
-      margin-top: 5px;
-      padding: 6px 12px;
-      background-color: #0066cc;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.9em;
-      transition: background-color 0.3s ease;
-    }
-    
-    #pronounceBtn:hover {
-      background-color: #0052a3;
-    }
-    
-    .socials {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    
-    .socials a {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-      color: #0066cc;
-      transition: transform 0.3s ease;
-      font-size: 0.9em;
-    }
-    
-    .socials a:hover {
-      transform: scale(1.05);
-    }
-    
-    .socials img {
-      width: 20px;
-      height: 20px;
-    }
-    
-    #bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      opacity: 0.3;
-    }
+body {
+  background: linear-gradient(#a0c4ff, #caffbf);
+  padding: 30px;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+}
 
-    /* Art Section Styles */
-    .art-section {
-      margin-top: 30px;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(10px);
-    }
+.window {
+  width: 600px;
+  margin: 0 auto;
+  animation: fadeIn 1.5s ease-in-out;
+}
 
-    .art-section h2 {
-      color: #0066cc;
-      margin-bottom: 15px;
-      text-align: center;
-    }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-    .canvas-container {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      margin-bottom: 15px;
-    }
+.group-box {
+  margin-bottom: 20px;
+}
 
-    #drawingCanvas {
+h2 {
+  margin-bottom: 8px;
+}
+
+ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.roblox-links a {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.profile-header img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 3px solid #0066cc;
+}
+
+.profile-info h1 {
+  font-size: 1.8em;
+  margin: 0;
+  color: #0066cc;
+}
+
+.socials {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.socials a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #0066cc;
+  transition: transform 0.3s ease;
+  font-size: 0.9em;
+}
+
+.socials a:hover {
+  transform: scale(1.05);
+}
+
+.socials img {
+  width: 20px;
+  height: 20px;
+}
+
+#bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  opacity: 0.3;
+}
+
+/* Art Section Styles */
+.art-section {
+  margin-top: 30px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.art-section h2 {
+  color: #0066cc;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.canvas-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+#drawingCanvas {
   border: 2px solid #0066cc;
   border-radius: 8px;
   cursor: crosshair;
   background: white;
   position: relative;
   z-index: 1;
-  touch-action: none; /* ADD THIS LINE */
+  touch-action: none;
 }
 
-    .art-controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 15px;
-      padding: 10px;
-      background: rgba(255, 255, 255, 0.4);
-      border-radius: 8px;
-      backdrop-filter: blur(5px);
-    }
+.art-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+}
 
-    .control-group {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
 
-    .control-group label {
-      font-size: 0.9em;
-      color: #333;
-      font-weight: 500;
-    }
+.control-group label {
+  font-size: 0.9em;
+  color: #333;
+  font-weight: 500;
+}
 
-    input[type="color"] {
-      width: 40px;
-      height: 30px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+input[type="color"] {
+  width: 40px;
+  height: 30px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
-    input[type="range"] {
-      width: 80px;
-    }
+input[type="range"] {
+  width: 80px;
+}
 
-    .tool-btn {
-      padding: 8px 12px;
-      background: #0066cc;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.9em;
-      transition: background 0.3s ease;
-    }
+/* Enhanced Aero-style buttons */
+.tool-btn, 
+button:not(.socials button),
+.submit-art-btn,
+.submit-message-btn,
+#pronounceBtn {
+  background: linear-gradient(to bottom, #f2f2f2 45%, #ebebeb 45%, #cfcfcf);
+  border: 1px solid #8e8f8f;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+  color: #222;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 9pt;
+  min-height: 23px;
+  padding: 0 12px;
+  position: relative;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 
-    .tool-btn:hover {
-      background: #0052a3;
-    }
+.tool-btn:before,
+button:not(.socials button):before,
+.submit-art-btn:before,
+.submit-message-btn:before,
+#pronounceBtn:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #eaf6fd 45%, #bee6fd 45%, #a7d9f5);
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: -1;
+}
 
-    .tool-btn.active {
-      background: #ff6b6b;
-    }
+.tool-btn:hover:before,
+button:not(.socials button):hover:before,
+.submit-art-btn:hover:not(:disabled):before,
+.submit-message-btn:hover:not(:disabled):before,
+#pronounceBtn:hover:before {
+  opacity: 1;
+}
 
-    .submit-art-btn {
-      width: 100%;
-      padding: 12px;
-      background: #28a745;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 1em;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
+.tool-btn:hover,
+button:not(.socials button):hover,
+.submit-art-btn:hover:not(:disabled),
+.submit-message-btn:hover:not(:disabled),
+#pronounceBtn:hover {
+  border-color: #3c7fb1;
+}
 
-    .submit-art-btn:hover:not(:disabled) {
-      background: #218838;
-    }
+.tool-btn:active,
+button:not(.socials button):active,
+.submit-art-btn:active:not(:disabled),
+.submit-message-btn:active:not(:disabled),
+#pronounceBtn:active {
+  background: linear-gradient(to bottom, #e5f4fc, #c4e5f6 30% 50%, #98d1ef 50%, #68b3db);
+  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.2), inset -1px 1px 0 rgba(0, 0, 0, 0.1);
+  border-color: #6d91ab;
+}
 
-    .submit-art-btn:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
+.tool-btn.active {
+  background: linear-gradient(to bottom, #e5f4fc, #c4e5f6 30% 50%, #98d1ef 50%, #68b3db);
+  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.2), inset -1px 1px 0 rgba(0, 0, 0, 0.1);
+  border-color: #6d91ab;
+}
 
-    /* Message Section Styles */
-    .message-section {
-      margin-top: 20px;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(10px);
-    }
+.submit-art-btn,
+.submit-message-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 1em;
+}
 
-    .message-section h2 {
-      color: #0066cc;
-      margin-bottom: 15px;
-      text-align: center;
-    }
+.submit-art-btn {
+  background: linear-gradient(to bottom, #d4f5d4 45%, #b8e6b8 45%, #9dd09d);
+  border-color: #5a9a5a;
+}
 
-    #messageText {
-      width: 100%;
-      height: 100px;
-      padding: 10px;
-      border: 2px solid #0066cc;
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 0.9em;
-      resize: vertical;
-      margin-bottom: 15px;
-    }
+.submit-art-btn:before {
+  background: linear-gradient(to bottom, #e0f7e0 45%, #c8edc8 45%, #a8d5a8);
+}
 
-    .submit-message-btn {
-      width: 100%;
-      padding: 12px;
-      background: #17a2b8;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 1em;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
+.submit-art-btn:hover:not(:disabled) {
+  border-color: #4a8a4a;
+}
 
-    .submit-message-btn:hover:not(:disabled) {
-      background: #138496;
-    }
+.submit-art-btn:active:not(:disabled) {
+  background: linear-gradient(to bottom, #b8e6b8, #9dd09d 30% 50%, #82bd82 50%, #67a767);
+}
 
-    .submit-message-btn:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
+.submit-message-btn {
+  background: linear-gradient(to bottom, #d4e8f5 45%, #b8d9eb 45%, #9dcce0);
+  border-color: #5a8fa0;
+}
 
-    .status-message {
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 6px;
-      text-align: center;
-      font-weight: 500;
-    }
+.submit-message-btn:before {
+  background: linear-gradient(to bottom, #e0f0f7 45%, #c8e3f0 45%, #a8d3e6);
+}
 
-    .status-success {
-      background: #d4edda;
-      color: #155724;
-      border: 1px solid #c3e6cb;
-    }
+.submit-message-btn:hover:not(:disabled) {
+  border-color: #4a7f90;
+}
 
-    .status-error {
-      background: #f8d7da;
-      color: #721c24;
-      border: 1px solid #f5c6cb;
-    }
+.submit-message-btn:active:not(:disabled) {
+  background: linear-gradient(to bottom, #b8d9eb, #9dcce0 30% 50%, #82bad4 50%, #67a8c8);
+}
 
-    .status-warning {
-      background: #fff3cd;
-      color: #856404;
-      border: 1px solid #ffeaa7;
-    }
+button:disabled,
+.submit-art-btn:disabled,
+.submit-message-btn:disabled {
+  background: #f4f4f4;
+  border-color: #aeb2b5;
+  color: #838383;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
 
-    /* Loading spinner */
-    .loading-spinner {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      border: 2px solid #ffffff;
-      border-radius: 50%;
-      border-top-color: transparent;
-      animation: spin 1s ease-in-out infinite;
-      margin-right: 8px;
-    }
+button:disabled:before,
+.submit-art-btn:disabled:before,
+.submit-message-btn:disabled:before {
+  display: none;
+}
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+#pronounceBtn {
+  margin-top: 5px;
+  padding: 6px 12px;
+  font-size: 0.9em;
+}
+
+/* Message Section Styles */
+.message-section {
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.message-section h2 {
+  color: #0066cc;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+#messageText {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 2px solid #0066cc;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.9em;
+  resize: vertical;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+.status-message {
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.status-success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.status-error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.status-warning {
+  background: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeaa7;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s ease-in-out infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
   </style>
 </head>
 
@@ -495,6 +556,7 @@
           <li>Games: ROBLOX, Pressure, Super Check Point, Regretevator</li>
           <li>Aesthetics: old imagery/media, 90's aesthetics, win vista/frutiger aero, 2016-2019 ROBLOX</li>
 		  <li>Heavily Interested: Rabbits or Bunnys hehehe send me images of them hehehoohohoo..f</li>
+		  <li>Artists: 🌟 STOMACH BOOK, Femtanyl, Tyler The Creator</li>
 		  <img src="https://github.com/gooberburgers/MyProfile/blob/main/assets/EvilAssMango.png?raw=true" alt="Evil Ass Mango" width="400">
         </ul>
       </div>
@@ -581,9 +643,11 @@
             <span id="brushOpacityDisplay">100%</span>
           </div>
           
-          <button class="tool-btn" id="penTool">Pen</button>
+          <button class="tool-btn active" id="penTool">Pen</button>
+          <button class="tool-btn" id="eraserTool">Eraser</button>
           <button class="tool-btn" id="fillTool">Fill</button>
           <button class="tool-btn" id="undoBtn">Undo</button>
+          <button class="tool-btn" id="redoBtn">Redo</button>
           <button class="tool-btn" id="clearCanvas">Clear</button>
         </div>
         
@@ -606,42 +670,7 @@
 <script src="canvas-encoder.js"></script>
 <script>
 
-// Gerald functionality
-let geraldActivated = false;
-
-document.getElementById('geraldTrigger').addEventListener('click', function() {
-  if (geraldActivated) return;
-  
-  geraldActivated = true;
-  this.classList.add('clicked');
-  
-  const geraldCharacter = document.getElementById('geraldCharacter');
-  const geraldOverlay = document.getElementById('geraldOverlay');
-  const geraldAudio = document.getElementById('geraldAudio');
-  
-  // Show overlay to block interactions
-  geraldOverlay.classList.add('active');
-  
-  // Slide Gerald in
-  geraldCharacter.classList.add('active');
-  
-  // Play audio after slide-in animation (2 seconds)
-  setTimeout(() => {
-    geraldAudio.play();
-    
-    // After audio finishes (23.50 seconds), slide Gerald out
-    setTimeout(() => {
-      geraldCharacter.classList.remove('active');
-      
-      // Remove overlay after Gerald slides out (2 seconds)
-      setTimeout(() => {
-        geraldOverlay.classList.remove('active');
-      }, 2000);
-    }, 23500);
-  }, 2000);
-});
-
-	// IP check script with continuous monitoring - drop this into a <script> tag
+// IP check script with continuous monitoring
 (async function continuousBanCheck() {
   async function checkBan() {
     try {
@@ -653,22 +682,18 @@ document.getElementById('geraldTrigger').addEventListener('click', function() {
         body: JSON.stringify({ banCheck: true })
       });
 
-      // If we get a 403 status (banned), redirect to banned page
       if (response.status === 403) {
         window.location.href = 'https://myprofile-dkq.pages.dev/banned';
       }
     } catch (error) {
-      // Silently handle errors - don't redirect on network issues
       console.log('Ban check failed:', error);
     }
   }
 
-  // Initial check when page loads
   await checkBan();
-
-  // Check every 5 seconds
   setInterval(checkBan, 5000);
 })();
+
 // Background animation
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
@@ -715,8 +740,7 @@ document.getElementById("pronounceBtn").addEventListener("click", function() {
   audio.play();
 });
 	
-// Drawing canvas functionality
-// Drawing canvas functionality
+// Enhanced Drawing canvas functionality
 const drawingCanvas = document.getElementById('drawingCanvas');
 const drawingCtx = drawingCanvas.getContext('2d');
 let isDrawing = false;
@@ -738,6 +762,12 @@ document.getElementById('penTool').addEventListener('click', function() {
   this.classList.add('active');
 });
 
+document.getElementById('eraserTool').addEventListener('click', function() {
+  currentTool = 'eraser';
+  document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+  this.classList.add('active');
+});
+
 document.getElementById('fillTool').addEventListener('click', function() {
   currentTool = 'fill';
   document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
@@ -754,6 +784,14 @@ document.getElementById('clearCanvas').addEventListener('click', function() {
 document.getElementById('undoBtn').addEventListener('click', function() {
   if (historyIndex > 0) {
     historyIndex--;
+    restoreCanvasState();
+  }
+});
+
+// Redo functionality
+document.getElementById('redoBtn').addEventListener('click', function() {
+  if (historyIndex < canvasHistory.length - 1) {
+    historyIndex++;
     restoreCanvasState();
   }
 });
@@ -831,13 +869,13 @@ function startDrawing(e) {
 }
 
 function draw(e) {
-  if (!isDrawing || currentTool !== 'pen') return;
+  if (!isDrawing || (currentTool !== 'pen' && currentTool !== 'eraser')) return;
   
   e.preventDefault();
   
   const coords = getCanvasCoordinates(e);
   const brushSize = document.getElementById('brushSize').value;
-  const brushColor = document.getElementById('brushColor').value;
+  const brushColor = currentTool === 'eraser' ? '#ffffff' : document.getElementById('brushColor').value;
   const brushOpacity = document.getElementById('brushOpacity').value / 100;
   
   drawingCtx.globalCompositeOperation = 'source-over';
@@ -944,23 +982,6 @@ drawingCanvas.addEventListener('touchmove', draw, { passive: false });
 drawingCanvas.addEventListener('touchend', stopDrawing, { passive: false });
 drawingCanvas.addEventListener('touchcancel', stopDrawing, { passive: false });
 
-drawingCanvas.addEventListener('touchmove', function(e) {
-  e.preventDefault();
-  const touch = e.touches[0];
-  const rect = drawingCanvas.getBoundingClientRect();
-  const mouseEvent = new MouseEvent('mousemove', {
-    clientX: touch.clientX,
-    clientY: touch.clientY
-  });
-  drawingCanvas.dispatchEvent(mouseEvent);
-});
-
-drawingCanvas.addEventListener('touchend', function(e) {
-  e.preventDefault();
-  const mouseEvent = new MouseEvent('mouseup', {});
-  drawingCanvas.dispatchEvent(mouseEvent);
-});
-
 // Submit art functionality
 document.getElementById('submitArt').addEventListener('click', function () {
   const artStatus = document.getElementById('artStatus');
@@ -998,13 +1019,11 @@ document.getElementById('submitArt').addEventListener('click', function () {
         drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
         saveCanvasState();
       } else {
-        // Get the error message from the server
         const errorMessage = await response.text();
         throw new Error(errorMessage);
       }
     })
     .catch(error => {
-      // Display the actual error message from the server
       const errorText = error.message || 'Failed to send doodle. Please try again.';
       artStatus.innerHTML = `<div class="status-error">${errorText}</div>`;
       console.error('Error:', error);
@@ -1014,6 +1033,7 @@ document.getElementById('submitArt').addEventListener('click', function () {
       submitBtn.innerHTML = 'Send Doodle';
     });
 });
+
 // Submit message functionality
 document.getElementById('submitMessage').addEventListener('click', function () {
   const messageText = document.getElementById('messageText').value.trim();
@@ -1040,13 +1060,11 @@ document.getElementById('submitMessage').addEventListener('click', function () {
         messageStatus.innerHTML = '<div class="status-success">Your message has been sent to ME...!</div>';
         document.getElementById('messageText').value = '';
       } else {
-        // Get the error message from the server
         const errorMessage = await response.text();
         throw new Error(errorMessage);
       }
     })
     .catch(error => {
-      // Display the actual error message from the server
       const errorText = error.message || 'Failed to send message. Please try again.';
       messageStatus.innerHTML = `<div class="status-error">${errorText}</div>`;
       console.error('Error:', error);
@@ -1057,8 +1075,36 @@ document.getElementById('submitMessage').addEventListener('click', function () {
     });
 });
 
-// Set pen as default tool
-document.getElementById('penTool').classList.add('active');
+// Gerald functionality (if geraldTrigger element exists)
+const geraldTrigger = document.getElementById('geraldTrigger');
+if (geraldTrigger) {
+  let geraldActivated = false;
+  geraldTrigger.addEventListener('click', function() {
+    if (geraldActivated) return;
+    
+    geraldActivated = true;
+    this.classList.add('clicked');
+    
+    const geraldCharacter = document.getElementById('geraldCharacter');
+    const geraldOverlay = document.getElementById('geraldOverlay');
+    const geraldAudio = document.getElementById('geraldAudio');
+    
+    geraldOverlay.classList.add('active');
+    geraldCharacter.classList.add('active');
+    
+    setTimeout(() => {
+      if (geraldAudio) geraldAudio.play();
+      
+      setTimeout(() => {
+        geraldCharacter.classList.remove('active');
+        
+        setTimeout(() => {
+          geraldOverlay.classList.remove('active');
+        }, 2000);
+      }, 23500);
+    }, 2000);
+  });
+}
 </script>
 </body>
 </html>
