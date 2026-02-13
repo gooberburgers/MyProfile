@@ -4,12 +4,10 @@
   <meta charset="UTF-8">
   <title>omegadogey</title>
 
-  <!-- Site Icon (Favicon) -->
   <link rel="icon" type="image/png" href="assets/roblox.png">
 
   <link rel="stylesheet" href="7.css">
   <style>
-/* Gerald Section Styles */
 .gerald-section {
   position: fixed;
   right: 30px;
@@ -130,7 +128,6 @@
   display: block;
 }
 
-/* Responsive adjustments */
 @media (max-width: 1000px) {
   .gerald-section {
     position: relative;
@@ -229,7 +226,6 @@ ul {
   opacity: 0.3;
 }
 
-/* Art Section Styles */
 .art-section {
   margin-top: 30px;
   padding: 20px;
@@ -299,7 +295,6 @@ input[type="range"] {
   width: 80px;
 }
 
-/* Enhanced Aero-style buttons */
 .tool-btn, 
 button:not(.socials button),
 .submit-art-btn,
@@ -434,7 +429,6 @@ button:disabled:before,
   font-size: 0.9em;
 }
 
-/* Message Section Styles */
 .message-section {
   margin-top: 20px;
   padding: 20px;
@@ -489,7 +483,6 @@ button:disabled:before,
   border: 1px solid #ffeaa7;
 }
 
-/* Loading spinner */
 .loading-spinner {
   display: inline-block;
   width: 16px;
@@ -505,7 +498,6 @@ button:disabled:before,
   to { transform: rotate(360deg); }
 }
 
-/* Typewriter effect styles */
 .typewriter {
   overflow: hidden;
   white-space: nowrap;
@@ -518,10 +510,8 @@ button:disabled:before,
   </style>
 </head>
 
-<!-- Gerald Overlay -->
 <div id="geraldOverlay"></div>
 
-<!-- Gerald Character -->
 <div id="geraldCharacter">
   <div id="geraldBase">
     <div id="geraldHead">
@@ -529,6 +519,13 @@ button:disabled:before,
     </div>
   </div>
 </div>
+
+<audio id="uiSound01" src="assets/MyProfile_UI01.mp3" preload="auto"></audio>
+<audio id="uiSound02" src="assets/MyProfile_UI02.mp3" preload="auto"></audio>
+<audio id="uiSound03" src="assets/MyProfile_UI03.mp3" preload="auto"></audio>
+<audio id="uiSound04" src="assets/MyProfile_UI04.mp3" preload="auto"></audio>
+<audio id="uiSound05" src="assets/MyProfile_UI05.mp3" preload="auto" loop></audio>
+<audio id="uiSound06" src="assets/MyProfile_UI06.mp3" preload="auto"></audio>
 
 <body>
   <canvas id="bg"></canvas>
@@ -568,7 +565,7 @@ button:disabled:before,
           <li>Aesthetics: old imagery/media, 90's aesthetics, win vista/frutiger aero, 2016-2019 ROBLOX</li>
 		  <li>Heavily Interested: Rabbits or Bunnys hehehe send me images of them hehehoohohoo..f</li>
 		  <li>Artists: 🌟 STOMACH BOOK, Femtanyl, Tyler The Creator</li>
-		  <a href="https://myprofilesenders.burgergwarf.workers.dev/" target="_blank">
+		  <a href="https://myprofilesenders.burgergwarf.workers.dev/" target="_blank" class="clickable-link">
   <img src="https://github.com/gooberburgers/MyProfile/blob/main/assets/EvilAssMango.png?raw=true" alt="Evil Ass Mango" width="150">
 </a>
         </ul>
@@ -593,31 +590,31 @@ button:disabled:before,
         <h2>[Social Media...]</h2>
         <div class="socials">
 
-          <a href="https://www.roblox.com/users/2938203100/profile" target="_blank" class="button">
+          <a href="https://www.roblox.com/users/2938203100/profile" target="_blank" class="button clickable-link">
             <img src="https://frutigeraeroarchive.org/images/icons/aero_artists/daniele63/roblox.ico" alt="roblox"> Alt Account 1/4 [PRIMARY!]
           </a>
 
-		  <a href="https://www.youtube.com/@omegadogey/videos" target="_blank" class="button">
+		  <a href="https://www.youtube.com/@omegadogey/videos" target="_blank" class="button clickable-link">
             <img src="https://frutigeraeroarchive.org/images/icons/mobile/ios/youtube.png" alt="youtube"> YouTube
           </a>
 
-          <a href="https://www.roblox.com/users/1269656918/profile" target="_blank" class="button">
+          <a href="https://www.roblox.com/users/1269656918/profile" target="_blank" class="button clickable-link">
             <img src="https://frutigeraeroarchive.org/images/icons/aero_artists/daniele63/roblox.ico" alt="roblox"> Alt Account 2/4 [Very VERY inactive]
           </a>
 
-          <a href="https://www.roblox.com/users/3613822810/profile" target="_blank" class="button">
+          <a href="https://www.roblox.com/users/3613822810/profile" target="_blank" class="button clickable-link">
             <img src="https://frutigeraeroarchive.org/images/icons/aero_artists/daniele63/roblox.ico" alt="roblox"> Alt Account 3/4 [Very VERY inactive]
           </a>
 
-          <a href="https://www.roblox.com/users/3010382631/profile" target="_blank" class="button">
+          <a href="https://www.roblox.com/users/3010382631/profile" target="_blank" class="button clickable-link">
             <img src="https://frutigeraeroarchive.org/images/icons/aero_artists/daniele63/roblox.ico" alt="roblox"> Alt Account 4/4 [Very VERY inactive]
           </a>
 
-          <a href="https://www.roblox.com/games/125432105048317/Bone-Calcium-MANIA" target="_blank" class="button">
+          <a href="https://www.roblox.com/games/125432105048317/Bone-Calcium-MANIA" target="_blank" class="button clickable-link">
             <img src="https://frutigeraeroarchive.org/images/icons/aero_artists/daniele63/roblox.ico" alt="roblox"> Game [BONE CALCIUM MANIA!]
           </a>
 
-		  <a href="https://discord.gg/dn7j7wmPyf" target="_blank" class="button">
+		  <a href="https://discord.gg/dn7j7wmPyf" target="_blank" class="button clickable-link">
             <img src="https://frutigeraeroarchive.org/images/icons/communication/discord1.ico" alt="discord"> Discord Server [BONE CALCIUM MANIA!]
           </a>
           
@@ -630,7 +627,6 @@ button:disabled:before,
 		<p><em>or if you could just so pretty please like an angel in the sky support my work! i love attention! that's up to YOU to decide!</em></p>
       </div>
 
-      <!-- Art Section -->
       <div class="art-section">
         <h2>[send a doodle of you MURDERING me /joke]</h2>
         
@@ -641,7 +637,7 @@ button:disabled:before,
         <div class="art-controls">
           <div class="control-group">
             <label for="brushColor">Color:</label>
-            <input type="color" id="brushColor" value="#00000000">
+            <input type="color" id="brushColor" value="#000000">
           </div>
           
           <div class="control-group">
@@ -668,7 +664,6 @@ button:disabled:before,
         <div id="artStatus"></div>
       </div>
 
-      <!-- Message Section -->
       <div class="message-section">
         <h2>[send a THREAT... towards my family /joke]</h2>
         
@@ -682,23 +677,83 @@ button:disabled:before,
 
 <script src="canvas-encoder.js"></script>
 <script>
+const uiSounds = {
+  click: document.getElementById('uiSound01'),
+  success: document.getElementById('uiSound02'),
+  hover: document.getElementById('uiSound03'),
+  penRelease: document.getElementById('uiSound04'),
+  drawing: document.getElementById('uiSound05'),
+  fill: document.getElementById('uiSound06')
+};
 
-// Typewriter effect function
+function playSound(sound, volume = 1.0) {
+  if (sound) {
+    const clone = sound.cloneNode();
+    clone.volume = volume;
+    clone.play().catch(e => console.log('Sound play failed:', e));
+  }
+}
+
+function fadeInAudio(audio, duration = 100) {
+  audio.volume = 0;
+  audio.play().catch(e => console.log('Sound play failed:', e));
+  
+  let vol = 0;
+  const step = 0.05;
+  const interval = duration / (1 / step);
+  
+  const fadeInterval = setInterval(() => {
+    if (vol < 1) {
+      vol += step;
+      audio.volume = Math.min(vol, 1);
+    } else {
+      clearInterval(fadeInterval);
+    }
+  }, interval);
+}
+
+function fadeOutAudio(audio, duration = 100) {
+  let vol = audio.volume;
+  const step = 0.05;
+  const interval = duration / (vol / step);
+  
+  const fadeInterval = setInterval(() => {
+    if (vol > 0) {
+      vol -= step;
+      audio.volume = Math.max(vol, 0);
+    } else {
+      audio.pause();
+      clearInterval(fadeInterval);
+    }
+  }, interval);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const allButtons = document.querySelectorAll('button, .clickable-link');
+  
+  allButtons.forEach(button => {
+    button.addEventListener('mouseenter', () => {
+      playSound(uiSounds.hover, 0.5);
+    });
+    
+    button.addEventListener('click', () => {
+      playSound(uiSounds.click, 0.7);
+    });
+  });
+});
+
 function typewriterEffect() {
   const elementsToType = document.querySelectorAll('h1, h2, p, li, a, label, button, .title-bar-text');
-  const charDelay = 15; // Milliseconds per character (decently fast)
+  const charDelay = 15;
   
   elementsToType.forEach((element, index) => {
-    // Skip if element is empty or only whitespace
     const text = element.textContent.trim();
     if (!text) return;
     
-    // Store original text and clear element
     const originalText = element.textContent;
     element.textContent = '';
     element.style.opacity = '1';
     
-    // Type out the text (all elements start at the same time)
     let charIndex = 0;
     const typeInterval = setInterval(() => {
       if (charIndex < originalText.length) {
@@ -711,12 +766,10 @@ function typewriterEffect() {
   });
 }
 
-// Start typewriter effect when page loads
 window.addEventListener('load', () => {
   typewriterEffect();
 });
 
-// IP check script with continuous monitoring
 (async function continuousBanCheck() {
   async function checkBan() {
     try {
@@ -740,7 +793,6 @@ window.addEventListener('load', () => {
   setInterval(checkBan, 5000);
 })();
 
-// Background animation
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 let dots = [];
@@ -780,13 +832,11 @@ function animate() {
 }
 animate();
 
-// Pronounce button functionality
 document.getElementById("pronounceBtn").addEventListener("click", function() {
   const audio = document.getElementById("nameAudio");
   audio.play();
 });
 	
-// Enhanced Drawing canvas functionality
 const drawingCanvas = document.getElementById('drawingCanvas');
 const drawingCtx = drawingCanvas.getContext('2d');
 let isDrawing = false;
@@ -796,12 +846,10 @@ let lastY = 0;
 let canvasHistory = [];
 let historyIndex = -1;
 
-// Initialize canvas with white background and save initial state
 drawingCtx.fillStyle = 'white';
 drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
 saveCanvasState();
 
-// Tool selection
 document.getElementById('penTool').addEventListener('click', function() {
   currentTool = 'pen';
   document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
@@ -826,7 +874,6 @@ document.getElementById('clearCanvas').addEventListener('click', function() {
   saveCanvasState();
 });
 
-// Undo functionality
 document.getElementById('undoBtn').addEventListener('click', function() {
   if (historyIndex > 0) {
     historyIndex--;
@@ -834,7 +881,6 @@ document.getElementById('undoBtn').addEventListener('click', function() {
   }
 });
 
-// Redo functionality
 document.getElementById('redoBtn').addEventListener('click', function() {
   if (historyIndex < canvasHistory.length - 1) {
     historyIndex++;
@@ -842,7 +888,6 @@ document.getElementById('redoBtn').addEventListener('click', function() {
   }
 });
 
-// Save canvas state to history
 function saveCanvasState() {
   historyIndex++;
   if (historyIndex < canvasHistory.length) {
@@ -850,14 +895,12 @@ function saveCanvasState() {
   }
   canvasHistory.push(drawingCanvas.toDataURL());
   
-  // Limit history to 50 states to prevent memory issues
   if (canvasHistory.length > 50) {
     canvasHistory.shift();
     historyIndex--;
   }
 }
 
-// Restore canvas state from history
 function restoreCanvasState() {
   const img = new Image();
   img.onload = function() {
@@ -867,7 +910,6 @@ function restoreCanvasState() {
   img.src = canvasHistory[historyIndex];
 }
 
-// Brush controls
 document.getElementById('brushSize').addEventListener('input', function() {
   document.getElementById('brushSizeDisplay').textContent = this.value;
 });
@@ -876,7 +918,6 @@ document.getElementById('brushOpacity').addEventListener('input', function() {
   document.getElementById('brushOpacityDisplay').textContent = this.value + '%';
 });
 
-// Get coordinates relative to canvas
 function getCanvasCoordinates(e) {
   const rect = drawingCanvas.getBoundingClientRect();
   const scaleX = drawingCanvas.width / rect.width;
@@ -898,13 +939,13 @@ function getCanvasCoordinates(e) {
   };
 }
 
-// Drawing functions
 function startDrawing(e) {
   e.preventDefault();
   
   const coords = getCanvasCoordinates(e);
   
   if (currentTool === 'fill') {
+    playSound(uiSounds.fill, 0.8);
     floodFill(Math.floor(coords.x), Math.floor(coords.y));
     return;
   }
@@ -912,6 +953,10 @@ function startDrawing(e) {
   isDrawing = true;
   lastX = coords.x;
   lastY = coords.y;
+  
+  if (currentTool === 'pen' || currentTool === 'eraser') {
+    fadeInAudio(uiSounds.drawing, 100);
+  }
 }
 
 function draw(e) {
@@ -944,10 +989,14 @@ function stopDrawing(e) {
     e.preventDefault();
     isDrawing = false;
     saveCanvasState();
+    
+    if (currentTool === 'pen' || currentTool === 'eraser') {
+      fadeOutAudio(uiSounds.drawing, 100);
+      playSound(uiSounds.penRelease, 0.6);
+    }
   }
 }
 
-// Flood fill algorithm
 function floodFill(x, y) {
   const brushColor = document.getElementById('brushColor').value;
   const fillColor = hexToRgb(brushColor);
@@ -1016,19 +1065,16 @@ function colorsMatch(color1, color2) {
          color1.b === color2.b && color1.a === color2.a;
 }
 
-// Mouse event listeners for drawing
 drawingCanvas.addEventListener('mousedown', startDrawing);
 drawingCanvas.addEventListener('mousemove', draw);
 drawingCanvas.addEventListener('mouseup', stopDrawing);
 drawingCanvas.addEventListener('mouseleave', stopDrawing);
 
-// Touch events for mobile
 drawingCanvas.addEventListener('touchstart', startDrawing, { passive: false });
 drawingCanvas.addEventListener('touchmove', draw, { passive: false });
 drawingCanvas.addEventListener('touchend', stopDrawing, { passive: false });
 drawingCanvas.addEventListener('touchcancel', stopDrawing, { passive: false });
 
-// Submit art functionality
 document.getElementById('submitArt').addEventListener('click', function () {
   const artStatus = document.getElementById('artStatus');
   const submitBtn = document.getElementById('submitArt');
@@ -1060,6 +1106,7 @@ document.getElementById('submitArt').addEventListener('click', function () {
   })
     .then(async response => {
       if (response.ok) {
+        playSound(uiSounds.success, 0.8);
         artStatus.innerHTML = '<div class="status-success">Your doodle has been sent to ME...!</div>';
         drawingCtx.fillStyle = 'white';
         drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
@@ -1080,7 +1127,6 @@ document.getElementById('submitArt').addEventListener('click', function () {
     });
 });
 
-// Submit message functionality
 document.getElementById('submitMessage').addEventListener('click', function () {
   const messageText = document.getElementById('messageText').value.trim();
   const messageStatus = document.getElementById('messageStatus');
@@ -1103,6 +1149,7 @@ document.getElementById('submitMessage').addEventListener('click', function () {
   })
     .then(async response => {
       if (response.ok) {
+        playSound(uiSounds.success, 0.8);
         messageStatus.innerHTML = '<div class="status-success">Your message has been sent to ME...!</div>';
         document.getElementById('messageText').value = '';
       } else {
@@ -1121,7 +1168,6 @@ document.getElementById('submitMessage').addEventListener('click', function () {
     });
 });
 
-// Gerald functionality (if geraldTrigger element exists)
 const geraldTrigger = document.getElementById('geraldTrigger');
 if (geraldTrigger) {
   let geraldActivated = false;
