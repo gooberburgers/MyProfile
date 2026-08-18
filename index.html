@@ -1,524 +1,561 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>omegadogey</title>
-
-  <link rel="icon" type="image/png" href="assets/roblox.png">
-
-  <link rel="stylesheet" href="7.css">
-  <style>
-.gerald-section {
-  position: fixed;
-  right: 30px;
-  top: 30px;
-  width: 500px;
-  z-index: 100;
+<meta charset="UTF-8">
+<title>dogey</title>
+<link rel="icon" type="image/png" href="assets/boneburger.png">
+<link rel="stylesheet" href="7.css">
+<style>
+:root{
+  --bg-top:#0a1230;
+  --bg-bottom:#122a52;
+  --panel-bg:#12162c;
+  --text-main:#e7ecff;
+  --text-dim:#aab4d6;
+  --accent:#7fb0ff;
+  --canvas-viewport-bg:#232a48;
+  --btn-bg:#232a48;
 }
 
-.gerald-window {
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-  backdrop-filter: blur(10px);
+*{box-sizing:border-box;}
+
+body{
+  background:linear-gradient(160deg,var(--bg-top),var(--bg-bottom));
+  padding:30px;
+  font-family:'Comic Sans MS','Comic Sans',cursive;
+  font-weight:300;
+  margin:0;
+  color:var(--text-main);
+  min-height:100vh;
+  overflow-x:hidden;
 }
 
-.gerald-window .title-bar {
-  background: linear-gradient(180deg, #0066cc, #0052a3);
-  color: white;
-  padding: 8px 12px;
-  font-weight: 600;
-  font-size: 0.9em;
+*{
+  font-family:'Comic Sans MS','Comic Sans',cursive;
+  font-weight:300;
 }
 
-.gerald-window .window-body {
-  padding: 15px;
+#bg{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
 }
 
-.gerald-window img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  cursor: pointer;
-  transition: transform 0.3s ease;
+#sparkleLayer{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
+  pointer-events:none;
+  image-rendering:pixelated;
+  image-rendering:crisp-edges;
 }
 
-.gerald-window img:hover {
-  transform: scale(1.02);
+.window{
+  width:600px;
+  margin:0 auto;
+  animation:fadeIn 1.5s ease-in-out;
 }
 
-.gerald-window img.clicked {
-  cursor: not-allowed;
-  opacity: 0.7;
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
 }
 
-.gerald-window h3 {
-  color: #000000;
-  margin-bottom: 10px;
-  font-size: 1em;
+.window-body{
+  background:var(--panel-bg) !important;
+  color:var(--text-main);
+  border-top:none !important;
 }
 
-.gerald-window p {
-  font-size: 0.85em;
-  line-height: 1.5;
-  color: #333;
-  margin: 0;
+.window-body fieldset,
+.window-body .group-box{
+  border-color:rgba(255,255,255,0.12) !important;
+  box-shadow:none !important;
 }
 
-/* Gerald Character Animation */
-#geraldCharacter {
-  position: fixed;
-  bottom: -600px;
-  right: 50px;
-  width: 400px;
-  height: 600px;
-  z-index: 9999;
-  pointer-events: none;
-  transition: bottom 2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+.title-bar-text{
+  text-shadow:none !important;
 }
 
-#geraldCharacter.active {
-  bottom: -100px;
+h1,h2,h3{
+  color:var(--text-main);
 }
 
-#geraldBase {
-  position: relative;
-  width: 100%;
-  height: 100%;
+h2{
+  margin-bottom:8px;
 }
 
-#geraldHead {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  animation: geraldShake 0.1s infinite;
+p, li{
+  color:var(--text-dim);
 }
 
-#geraldHead img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+ul{
+  margin:0;
+  padding-left:20px;
 }
 
-@keyframes geraldShake {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  25% { transform: translate(1px, -1px) rotate(0.5deg); }
-  50% { transform: translate(-1px, 1px) rotate(-0.5deg); }
-  75% { transform: translate(1px, 1px) rotate(0.3deg); }
-  100% { transform: translate(0, 0) rotate(0deg); }
+.profile-header{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  margin-bottom:15px;
 }
 
-/* Overlay to block interactions */
-#geraldOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.3);
-  z-index: 9998;
-  display: none;
+.profile-header img{
+  width:60px;
+  height:60px;
+  border-radius:50%;
 }
 
-#geraldOverlay.active {
-  display: block;
+.profile-info h1{
+  font-size:1.8em;
+  margin:0;
 }
 
-@media (max-width: 1000px) {
-  .gerald-section {
-    position: relative;
-    right: auto;
-    top: auto;
-    margin: 20px auto;
-  }
+.socials{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
 }
 
-body {
-  background: linear-gradient(#a0c4ff, #caffbf);
-  padding: 30px;
-  font-family: 'Comic Sans MS', 'Comic Sans', cursive;
-  margin: 0;
+.socials a{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  text-decoration:none;
+  color:var(--text-main);
+  transition:transform .3s ease;
+  font-size:.9em;
 }
 
-.window {
-  width: 600px;
-  margin: 0 auto;
-  animation: fadeIn 1.5s ease-in-out;
+.socials a:hover{
+  transform:scale(1.05);
+  color:var(--accent);
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+.socials img{
+  width:20px;
+  height:20px;
 }
 
-.group-box {
-  margin-bottom: 20px;
+.art-section, .message-section{
+  margin-top:30px;
 }
 
-h2 {
-  margin-bottom: 8px;
+.art-section h2, .message-section h2{
+  margin-bottom:15px;
+  text-align:center;
 }
 
-ul {
-  margin: 0;
-  padding-left: 20px;
-}
-
-.roblox-links a {
-  display: inline-block;
-  margin-right: 10px;
-}
-
-.profile-header {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 15px;
-}
-
-.profile-header img {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  border: 3px solid #000000;
-}
-
-.profile-info h1 {
-  font-size: 1.8em;
-  margin: 0;
-  color: #000000;
-}
-
-.socials {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.socials a {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
-  color: #000000;
-  transition: transform 0.3s ease;
-  font-size: 0.9em;
-}
-
-.socials a:hover {
-  transform: scale(1.05);
-}
-
-.socials img {
-  width: 20px;
-  height: 20px;
-}
-
-#bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  opacity: 0.3;
-}
-
-.art-section {
-  margin-top: 30px;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-}
-
-.art-section h2 {
-  color: #000000;
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-.canvas-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 15px;
-}
-
-#drawingCanvas {
-  border: 2px solid #000000;
-  border-radius: 8px;
-  cursor: crosshair;
-  background: white;
-  position: relative;
-  z-index: 1;
-  touch-action: none;
-}
-
-.art-controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 15px;
-  padding: 10px;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 8px;
-  backdrop-filter: blur(5px);
-}
-
-.control-group {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.control-group label {
-  font-size: 0.9em;
-  color: #333;
-  font-weight: 500;
-}
-
-input[type="color"] {
-  width: 40px;
-  height: 30px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-input[type="range"] {
-  width: 80px;
-}
-
-.tool-btn, 
+.tool-btn,
 button:not(.socials button),
 .submit-art-btn,
 .submit-message-btn,
-#pronounceBtn {
-  background: linear-gradient(to bottom, #f2f2f2 45%, #ebebeb 45%, #cfcfcf);
-  border: 1px solid #8e8f8f;
-  border-radius: 3px;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
-  color: #222;
-  font-family: 'Comic Sans MS', 'Comic Sans', cursive;
-  font-size: 9pt;
-  min-height: 23px;
-  padding: 0 12px;
-  position: relative;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.tool-btn:before,
-button:not(.socials button):before,
-.submit-art-btn:before,
-.submit-message-btn:before,
-#pronounceBtn:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom, #eaf6fd 45%, #bee6fd 45%, #a7d9f5);
-  border-radius: 3px;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
-  opacity: 0;
-  transition: opacity 0.3s;
-  z-index: -1;
-}
-
-.tool-btn:hover:before,
-button:not(.socials button):hover:before,
-.submit-art-btn:hover:not(:disabled):before,
-.submit-message-btn:hover:not(:disabled):before,
-#pronounceBtn:hover:before {
-  opacity: 1;
+#pronounceBtn{
+  background:linear-gradient(to bottom,#4c5c8a 0%,#3a4972 45%,#2c3860 46%,#38466e 100%);
+  border:1px solid #1c2440;
+  border-radius:5px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.35),
+    inset 0 0 0 1px rgba(255,255,255,0.06),
+    0 1px 2px rgba(0,0,0,0.4);
+  color:var(--text-main);
+  font-family:'Comic Sans MS','Comic Sans',cursive;
+  font-weight:300;
+  font-size:9pt;
+  min-height:23px;
+  padding:0 12px;
+  position:relative;
+  text-align:center;
+  cursor:pointer;
+  transition:all .15s ease;
 }
 
 .tool-btn:hover,
 button:not(.socials button):hover,
 .submit-art-btn:hover:not(:disabled),
 .submit-message-btn:hover:not(:disabled),
-#pronounceBtn:hover {
-  border-color: #3c7fb1;
+#pronounceBtn:hover{
+  border-color:var(--accent);
+  background:linear-gradient(to bottom,#5d70a8 0%,#48588c 45%,#374672 46%,#455578 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.45),
+    inset 0 0 0 1px rgba(255,255,255,0.1),
+    0 0 6px rgba(127,176,255,0.35),
+    0 1px 2px rgba(0,0,0,0.4);
 }
 
 .tool-btn:active,
 button:not(.socials button):active,
 .submit-art-btn:active:not(:disabled),
 .submit-message-btn:active:not(:disabled),
-#pronounceBtn:active {
-  background: linear-gradient(to bottom, #e5f4fc, #c4e5f6 30% 50%, #98d1ef 50%, #68b3db);
-  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.2), inset -1px 1px 0 rgba(0, 0, 0, 0.1);
-  border-color: #6d91ab;
+#pronounceBtn:active{
+  background:linear-gradient(to bottom,#2c3860 0%,#38466e 45%,#4c5c8a 100%);
+  box-shadow:
+    inset 0 1px 3px rgba(0,0,0,0.5);
 }
 
-.tool-btn.active {
-  background: linear-gradient(to bottom, #e5f4fc, #c4e5f6 30% 50%, #98d1ef 50%, #68b3db);
-  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.2), inset -1px 1px 0 rgba(0, 0, 0, 0.1);
-  border-color: #6d91ab;
+.tool-btn.active{
+  background:linear-gradient(to bottom,#6f9de8 0%,#4a76c9 45%,#3860ac 46%,#4570c4 100%);
+  border-color:#a9cbff;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.5),
+    0 0 8px rgba(127,176,255,0.6);
 }
 
 .submit-art-btn,
-.submit-message-btn {
-  width: 100%;
-  padding: 12px;
-  font-size: 1em;
+.submit-message-btn{
+  width:100%;
+  padding:12px;
+  font-size:1em;
 }
 
-.submit-art-btn {
-  background: linear-gradient(to bottom, #d4f5d4 45%, #b8e6b8 45%, #9dd09d);
-  border-color: #5a9a5a;
+.submit-art-btn{
+  background:linear-gradient(to bottom,#5cb377 0%,#3f8f57 45%,#2e7042 46%,#3c8a4f 100%);
+  border-color:#1c4227;
 }
 
-.submit-art-btn:before {
-  background: linear-gradient(to bottom, #e0f7e0 45%, #c8edc8 45%, #a8d5a8);
+.submit-art-btn:hover:not(:disabled){
+  background:linear-gradient(to bottom,#6fc98a 0%,#4ba566 45%,#38804d 46%,#489e5d 100%);
 }
 
-.submit-art-btn:hover:not(:disabled) {
-  border-color: #4a8a4a;
+.submit-art-btn:active:not(:disabled){
+  background:linear-gradient(to bottom,#2e7042 0%,#3c8a4f 45%,#5cb377 100%);
 }
 
-.submit-art-btn:active:not(:disabled) {
-  background: linear-gradient(to bottom, #b8e6b8, #9dd09d 30% 50%, #82bd82 50%, #67a767);
+.submit-message-btn{
+  background:linear-gradient(to bottom,#5c9ac9 0%,#3f76a8 45%,#2e5a86 46%,#3c6d99 100%);
+  border-color:#1c3552;
 }
 
-.submit-message-btn {
-  background: linear-gradient(to bottom, #d4e8f5 45%, #b8d9eb 45%, #9dcce0);
-  border-color: #5a8fa0;
+.submit-message-btn:hover:not(:disabled){
+  background:linear-gradient(to bottom,#6fb0e0 0%,#4b8ac0 45%,#38699a 46%,#4880ae 100%);
 }
 
-.submit-message-btn:before {
-  background: linear-gradient(to bottom, #e0f0f7 45%, #c8e3f0 45%, #a8d3e6);
-}
-
-.submit-message-btn:hover:not(:disabled) {
-  border-color: #4a7f90;
-}
-
-.submit-message-btn:active:not(:disabled) {
-  background: linear-gradient(to bottom, #b8d9eb, #9dcce0 30% 50%, #82bad4 50%, #67a8c8);
+.submit-message-btn:active:not(:disabled){
+  background:linear-gradient(to bottom,#2e5a86 0%,#3c6d99 45%,#5c9ac9 100%);
 }
 
 button:disabled,
 .submit-art-btn:disabled,
-.submit-message-btn:disabled {
-  background: #f4f4f4;
-  border-color: #aeb2b5;
-  color: #838383;
-  cursor: not-allowed;
-  opacity: 0.6;
+.submit-message-btn:disabled{
+  background:linear-gradient(to bottom,#3a3d4a,#2a2d38);
+  border-color:#454a5e;
+  color:#767c92;
+  cursor:not-allowed;
+  opacity:.6;
+  box-shadow:none;
 }
 
-button:disabled:before,
-.submit-art-btn:disabled:before,
-.submit-message-btn:disabled:before {
-  display: none;
+#pronounceBtn{
+  margin-top:5px;
+  padding:6px 12px;
+  font-size:.9em;
 }
 
-#pronounceBtn {
-  margin-top: 5px;
-  padding: 6px 12px;
-  font-size: 0.9em;
+#messageText{
+  width:100%;
+  height:100px;
+  padding:10px;
+  font-family:inherit;
+  font-size:.9em;
+  resize:vertical;
+  margin-bottom:15px;
+  box-sizing:border-box;
+  background:rgba(255,255,255,0.05);
+  color:var(--text-main);
 }
 
-.message-section {
-  margin-top: 20px;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
+.status-message{
+  padding:10px;
+  margin-top:10px;
+  border-radius:6px;
+  text-align:center;
+  font-weight:500;
 }
 
-.message-section h2 {
-  color: #000000;
-  margin-bottom: 15px;
-  text-align: center;
+.status-success{
+  background:rgba(60,140,80,0.25);
+  color:#8fe3a3;
+  border:1px solid rgba(60,140,80,0.5);
 }
 
-#messageText {
-  width: 100%;
-  height: 100px;
-  padding: 10px;
-  border: 2px solid #000000;
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 0.9em;
-  resize: vertical;
-  margin-bottom: 15px;
-  box-sizing: border-box;
+.status-error{
+  background:rgba(160,50,50,0.25);
+  color:#ff9d9d;
+  border:1px solid rgba(160,50,50,0.5);
 }
 
-.status-message {
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 6px;
-  text-align: center;
-  font-weight: 500;
+.status-warning{
+  background:rgba(160,130,30,0.25);
+  color:#ffd97d;
+  border:1px solid rgba(160,130,30,0.5);
 }
 
-.status-success {
-  background: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
+.status-cooldown{
+  background:rgba(60,90,160,0.25);
+  color:#a9c6ff;
+  border:1px solid rgba(60,90,160,0.5);
+  font-variant-numeric:tabular-nums;
 }
 
-.status-error {
-  background: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
+.loading-spinner{
+  display:inline-block;
+  width:16px;
+  height:16px;
+  border:2px solid #ffffff;
+  border-radius:50%;
+  border-top-color:transparent;
+  animation:spin 1s ease-in-out infinite;
+  margin-right:8px;
 }
 
-.status-warning {
-  background: #fff3cd;
-  color: #856404;
-  border: 1px solid #ffeaa7;
+@keyframes spin{
+  to{transform:rotate(360deg);}
 }
 
-.loading-spinner {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  border: 2px solid #ffffff;
-  border-radius: 50%;
-  border-top-color: transparent;
-  animation: spin 1s ease-in-out infinite;
-  margin-right: 8px;
+.draw-app{
+  display:flex;
+  gap:10px;
+  height:520px;
+  overflow:hidden;
+  position:relative;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+.draw-app.fullscreen-active{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  z-index:99999;
+  background:var(--canvas-viewport-bg);
+  padding:10px;
 }
 
-.typewriter {
-  overflow: hidden;
-  white-space: nowrap;
-  display: inline-block;
+.draw-sidepanel{
+  width:180px;
+  flex-shrink:0;
+  background:var(--btn-bg);
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  overflow-y:auto;
 }
 
-.typewriter-container {
-  overflow: hidden;
+.draw-control{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
 }
-  </style>
+
+.draw-control label{
+  font-size:.75em;
+  color:var(--text-dim);
+  display:flex;
+  justify-content:space-between;
+}
+
+.draw-control input[type="range"]{
+  width:100%;
+}
+
+.draw-tool-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+}
+
+.draw-tool-row .tool-btn{
+  width:100%;
+  padding:6px 4px;
+  font-size:.8em;
+}
+
+.draw-divider{
+  height:1px;
+  background:rgba(255,255,255,0.1);
+  margin:2px 0;
+}
+
+.draw-viewport-wrap{
+  flex:1;
+  position:relative;
+  background:var(--canvas-viewport-bg);
+  overflow:hidden;
+  touch-action:none;
+  cursor:crosshair;
+}
+
+.draw-canvas-stage{
+  position:absolute;
+  top:0;
+  left:0;
+  transform-origin:0 0;
+}
+
+.draw-canvas-stage canvas{
+  display:block;
+  background:#fff;
+  box-shadow:0 0 0 1px rgba(0,0,0,0.4),0 4px 12px rgba(0,0,0,0.4);
+}
+
+.draw-viewport-controls{
+  position:absolute;
+  bottom:10px;
+  right:10px;
+  display:flex;
+  gap:6px;
+  z-index:5;
+}
+
+.draw-viewport-controls button{
+  min-height:28px;
+  padding:0 10px;
+  font-size:.8em;
+}
+
+.draw-zoom-readout{
+  position:absolute;
+  bottom:10px;
+  left:10px;
+  background:rgba(0,0,0,0.5);
+  color:#cfd6f0;
+  font-size:.75em;
+  padding:3px 8px;
+  border-radius:4px;
+  z-index:5;
+  font-family:monospace;
+}
+
+.crop-modal-backdrop{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:100000;
+  opacity:0;
+  pointer-events:none;
+  visibility:hidden;
+  transition:opacity 0.08s ease, visibility 0.08s ease;
+}
+
+.crop-modal-backdrop.open{
+  opacity:1;
+  pointer-events:auto;
+  visibility:visible;
+}
+
+.fullscreen-active .crop-modal-backdrop{
+  align-items:flex-end;
+  justify-content:center;
+  padding-bottom:20px;
+}
+
+.crop-field{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  margin-bottom:8px;
+}
+
+.crop-field label{
+  font-size:.75em;
+  color:var(--text-dim);
+}
+
+.crop-field input{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:4px;
+  color:var(--text-main);
+  padding:6px 8px;
+  font-family:inherit;
+  font-weight:300;
+  width:100%;
+}
+
+.crop-modal-actions{
+  display:flex;
+  gap:8px;
+  margin-top:4px;
+}
+
+.crop-modal-actions button{
+  flex:1;
+}
+
+.color-popover .window-body{
+  background:var(--btn-bg) !important;
+}
+
+.color-popover input[type="range"]{
+  width:100%;
+}
+
+.color-popover-fields{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.color-popover-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.color-popover-row label{
+  font-size:.75em;
+  color:var(--text-dim);
+  width:16px;
+}
+
+.color-popover-row input[type="number"]{
+  width:55px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:4px;
+  color:var(--text-main);
+  padding:4px 6px;
+  font-family:inherit;
+}
+
+.color-popover-preview{
+  width:100%;
+  height:28px;
+  border:1px solid rgba(255,255,255,0.2);
+  border-radius:4px;
+}
+
+@media (max-width:1000px){
+  .window{
+    width:95%;
+  }
+  .draw-app{
+    flex-direction:column;
+    height:auto;
+  }
+  .draw-sidepanel{
+    width:100%;
+    flex-direction:row;
+    flex-wrap:wrap;
+  }
+  .draw-viewport-wrap{
+    height:420px;
+  }
+}
+</style>
 </head>
-
-<div id="geraldOverlay"></div>
-
-<div id="geraldCharacter">
-  <div id="geraldBase">
-    <div id="geraldHead">
-      <img src="assets/geraldHimself.png" alt="Gerald">
-    </div>
-  </div>
-</div>
 
 <audio id="uiSound01" src="assets/MyProfile_UI01.mp3" preload="auto"></audio>
 <audio id="uiSound02" src="assets/MyProfile_UI02.mp3" preload="auto"></audio>
@@ -528,154 +565,176 @@ button:disabled:before,
 <audio id="uiSound06" src="assets/MyProfile_UI06.mp3" preload="auto"></audio>
 
 <body>
-  <canvas id="bg"></canvas>
-  
-  <div class="window active">
-    <div class="title-bar">
-      <div class="title-bar-text">introduction.txt</div>
-    </div>
-    <div class="window-body">
-      <div class="group-box">
-        <div class="profile-header">
-          <img src="https://files.catbox.moe/mywwfn.png" alt="me">
-          <div class="profile-info">
-            <h1>omegadogey (dogey, dogesterious)</h1>
-            <button id="pronounceBtn">pronounce</button>
-            <audio id="nameAudio" src="assets/dogeyname.mp3"></audio>
-          </div>
-        </div>
-        <p>[Texas > USA]</p>
-		<p>[Age: 15] 5/23/2011 🎂</p>
-      </div>
+<canvas id="bg"></canvas>
+<canvas id="sparkleLayer"></canvas>
 
-      <div class="group-box">
-        <h2>[Before you Interact...]</h2>
-        <ul>
-		  <li>I like talking to people who are open-minded or are just genuinely normal people</li>
-		  <li>Don't get mad at me for the things I don't like nor want to do please <3</li>
-        </ul>
-      </div>
-
-      <div class="group-box">
-        <h2>[I like...]</h2>
-        <ul>
-          <li>Safe Spaces</li>
-          <li>Games: ROBLOX, GMod, ENA Dream BBQ</li>
-		  <li>Series: ENA, TADC (The Amazing Digital Circus), MD (Murder Drones), HFJone (CheesyHFJ One), TNM (The Nightly Manor) & etc</li>
-          <li>Aesthetics: old imagery/media, 90's aesthetics, win vista/frutiger aero & 2011-2019 ROBLOX</li>
-		  <li>Heavily Interested: Rabbits or Bunnys hehehe send me images of them hehehoohohoo..f</li>
-		  <li>Music Artists: 🌟 STOMACH BOOK (my absolute #1 favorite...), Femtanyl, etc</li>
-		  <li>I'm very picky with interests BUT I definitely have some in the back in my mind that I haven't listed off here</li>
-<a href="https://youtu.be/mZNyS9aZU4g" target="_blank" class="clickable-link">
-  <img src="https://static.wikia.nocookie.net/character-stats-and-profiles/images/c/c5/The_Neighbor.png" alt="your neighbor" width="150">
-</a>
-        </ul>
-      </div>
-
-      <div class="group-box">
-        <h2>[Hobbies & Talent...]</h2>
-        <ul>
-          <li>Project Directing, Music Composing, Animation, Modelling/Blender, Scripting, VFX, Sound Design, Storywriting, Graphic Design/GFX, Art (not a master), Editing HTML. :0)</li>
-        </ul>
-      </div>
-
-	  <div class="group-box">
-        <h2>[Mental Issues...]</h2>
-        <ul>
-		  <li>Nothing too crazy, however until you meet me I will list these off, not making myself heavily present here lol</li>
-        </ul>
-      </div>
-
-      <div class="group-box">
-        <h2>[Social Media...]</h2>
-        <div class="socials">
-
-          <a href="https://www.roblox.com/users/2938203100/profile" target="_blank" class="button clickable-link">
-            <img src="https://frutigeraeroarchive.org/images/icons/aero_artists/daniele63/roblox.ico" alt="roblox"> Alt Account 1/4 [PRIMARY!]
-          </a>
-
-		  <a href="https://www.youtube.com/@omegadogey/videos" target="_blank" class="button clickable-link">
-            <img src="https://frutigeraeroarchive.org/images/icons/mobile/ios/youtube.png" alt="youtube"> YouTube
-          </a>
-
-          <a href="https://www.roblox.com/users/1269656918/profile" target="_blank" class="button clickable-link">
-            <img src="https://frutigeraeroarchive.org/images/icons/aero_artists/daniele63/roblox.ico" alt="roblox"> Alt Account 2/4 [Very VERY inactive]
-          </a>
-
-          <a href="https://www.roblox.com/users/3613822810/profile" target="_blank" class="button clickable-link">
-            <img src="https://frutigeraeroarchive.org/images/icons/aero_artists/daniele63/roblox.ico" alt="roblox"> Alt Account 3/4 [Very VERY inactive]
-          </a>
-
-          <a href="https://www.roblox.com/users/3010382631/profile" target="_blank" class="button clickable-link">
-            <img src="https://frutigeraeroarchive.org/images/icons/aero_artists/daniele63/roblox.ico" alt="roblox"> Alt Account 4/4 [Very VERY inactive]
-          </a>
-
-          <a href="https://www.roblox.com/games/125432105048317/Bone-Calcium-MANIA" target="_blank" class="button clickable-link">
-            <img src="https://frutigeraeroarchive.org/images/icons/aero_artists/daniele63/roblox.ico" alt="roblox"> Game [BONE CALCIUM MANIA!]
-          </a>
-
-		  <a href="https://discord.gg/dn7j7wmPyf" target="_blank" class="button clickable-link">
-            <img src="https://frutigeraeroarchive.org/images/icons/communication/discord1.ico" alt="discord"> Discord Server [BONE CALCIUM MANIA!]
-          </a>
-          
-        </div>
-      </div>
-      
-      <div class="group-box">
-        <p><em>absolutely GREAT-TASTIC! you've explored into me, hmm..!</em></p>
-        <p><em>why not get a taste of sending me some art mail or message?! go for it! you're FULLY welcome!</em></p>
-		<p><em>or if you could just so pretty please like an angel in the sky support my work! i love attention! that's up to YOU to decide!</em></p>
-      </div>
-
-      <div class="art-section">
-        <h2>[send a doodle of you MURDERING me /joke]</h2>
-        
-        <div class="canvas-container">
-          <canvas id="drawingCanvas" width="500" height="400"></canvas>
-        </div>
-        
-        <div class="art-controls">
-          <div class="control-group">
-            <label for="brushColor">Color:</label>
-            <input type="color" id="brushColor" value="#000000">
-          </div>
-          
-          <div class="control-group">
-            <label for="brushSize">Size:</label>
-            <input type="range" id="brushSize" min="1" max="50" value="5">
-            <span id="brushSizeDisplay">5</span>
-          </div>
-          
-          <div class="control-group">
-            <label for="brushOpacity">Opacity:</label>
-            <input type="range" id="brushOpacity" min="0" max="100" value="100">
-            <span id="brushOpacityDisplay">100%</span>
-          </div>
-          
-          <button class="tool-btn active" id="penTool">Pen</button>
-          <button class="tool-btn" id="eraserTool">Eraser</button>
-          <button class="tool-btn" id="fillTool">Fill</button>
-          <button class="tool-btn" id="undoBtn">Undo</button>
-          <button class="tool-btn" id="redoBtn">Redo</button>
-          <button class="tool-btn" id="clearCanvas">Clear</button>
-        </div>
-        
-        <button class="submit-art-btn" id="submitArt">Send Doodle</button>
-        <div id="artStatus"></div>
-      </div>
-
-      <div class="message-section">
-        <h2>[send a THREAT... towards my family /joke]</h2>
-        
-        <textarea id="messageText" placeholder="Type your message here..."></textarea>
-        
-        <button class="submit-message-btn" id="submitMessage">Send Message</button>
-        <div id="messageStatus"></div>
-      </div>
-    </div>
+<div class="window active">
+  <div class="title-bar">
+    <div class="title-bar-text">dogey</div>
   </div>
+  <div class="window-body">
+    <fieldset class="group-box">
+      <div class="profile-header">
+        <img src="assets/boneburger.png" alt="me">
+        <div class="profile-info">
+          <h1>dogey [dogesterious]</h1>
+          <button id="pronounceBtn">pronounce</button>
+          <audio id="nameAudio" src="assets/MyProfile_Pronun.mp3"></audio>
+        </div>
+      </div>
+      <p>[english]</p>
+      <p>5/23/2011</p>
+    </fieldset>
 
-<script src="canvas-encoder.js"></script>
+    <fieldset class="group-box">
+      <ul>
+	  <a href="https://res.cloudinary.com/jerrick/image/upload/d_642250b563292b35f27461a7.png,f_jpg,fl_progressive,q_auto,w_1024/6346602b66cd05001ec25f3c.png" target="_blank" class="clickable-link">
+          <img src="assets\lovelovelovelove.gif" alt="your neighbor" width="150">
+        </a>
+        <a href="https://youtu.be/mZNyS9aZU4g" target="_blank" class="clickable-link">
+          <img src="https://static.wikia.nocookie.net/character-stats-and-profiles/images/c/c5/The_Neighbor.png" alt="your neighbor" width="9">
+        </a>
+      </ul>
+    </fieldset>
+
+    <fieldset class="group-box">
+      <legend>[talents]</legend>
+      <ul>
+        <li>game-devving, composing, animating, modelling, lua-luau coder, vfx, sfx, storywriter, gfx, art (not a master), html</li>
+      </ul>
+    </fieldset>
+	
+    <fieldset class="group-box">
+      <legend>[socials]</legend>
+      <div class="socials">
+        <a href="https://www.roblox.com/users/2938203100/profile" target="_blank" class="button clickable-link">
+          <img src="https://frutigeraeroarchive.org/images/icons/aero_artists/daniele63/roblox.ico" alt="roblox"> roblox
+        </a>
+        <a href="https://www.youtube.com/@omegadogey/videos" target="_blank" class="button clickable-link">
+          <img src="https://frutigeraeroarchive.org/images/icons/mobile/ios/youtube.png" alt="youtube"> youtube
+        </a>
+        <a href="https://www.roblox.com/games/125432105048317/Bone-Calcium-MANIA" target="_blank" class="button clickable-link">
+          <img src="https://frutigeraeroarchive.org/images/icons/aero_artists/daniele63/roblox.ico" alt="roblox"> bone calcium mania
+        </a>
+      </div>
+    </fieldset>
+
+    <fieldset class="group-box">
+      <p><em>profile QoL update</em></p>
+    </fieldset>
+
+    <fieldset class="art-section group-box">
+      <legend>[send me art]</legend>
+
+      <div class="draw-app" id="drawApp">
+        <div class="draw-sidepanel">
+          <div class="draw-control">
+            <label>Color</label>
+            <button class="tool-btn" id="colorSwatchBtn" style="height:28px;background:#000000;border:1px solid #1c2440;"></button>
+          </div>
+          <div class="draw-control">
+            <label>Size <span id="brushSizeDisplay">5</span></label>
+            <input type="range" id="brushSize" min="1" max="80" value="5">
+          </div>
+          <div class="draw-control">
+            <label>Opacity <span id="brushOpacityDisplay">100%</span></label>
+            <input type="range" id="brushOpacity" min="1" max="100" value="100">
+          </div>
+          <div class="draw-control">
+            <label>Stabilizer <span id="stabilizerDisplay">0</span></label>
+            <input type="range" id="stabilizer" min="0" max="90" value="0">
+          </div>
+          <div class="draw-divider"></div>
+          <div class="draw-tool-row">
+            <button class="tool-btn active" id="penTool">pen</button>
+            <button class="tool-btn" id="eraserTool">erasser</button>
+            <button class="tool-btn" id="fillTool">fill</button>
+            <button class="tool-btn" id="panTool">pan</button>
+          </div>
+          <div class="draw-divider"></div>
+          <div class="draw-tool-row">
+            <button class="tool-btn" id="undoBtn">undo</button>
+            <button class="tool-btn" id="redoBtn">redo</button>
+          </div>
+          <div class="draw-tool-row">
+            <button class="tool-btn" id="clearCanvas">erase canvas</button>
+            <button class="tool-btn" id="resetViewBtn">reset view</button>
+          </div>
+          <div class="draw-divider"></div>
+          <button class="tool-btn" id="fullscreenBtn">fullscreen</button>
+          <button class="tool-btn" id="cropBtn">crop</button>
+        </div>
+
+        <div class="draw-viewport-wrap" id="drawViewport">
+          <div class="draw-canvas-stage" id="drawStage">
+            <canvas id="drawingCanvas" width="900" height="650"></canvas>
+          </div>
+          <div class="draw-zoom-readout" id="zoomReadout">100%</div>
+          <div class="draw-viewport-controls">
+            <button id="zoomOutBtn">-</button>
+            <button id="zoomInBtn">+</button>
+          </div>
+        </div>
+
+        <div class="crop-modal-backdrop" id="cropModalBackdrop">
+          <div class="window color-popover" style="width:260px;">
+            <div class="title-bar">
+              <div class="title-bar-text">Crop Canvas</div>
+            </div>
+            <div class="window-body">
+              <div class="crop-field">
+                <label>Width (max 1000)</label>
+                <input type="number" id="cropWidth" min="1" max="1000">
+              </div>
+              <div class="crop-field">
+                <label>Height (max 1000)</label>
+                <input type="number" id="cropHeight" min="1" max="1000">
+              </div>
+              <div class="crop-modal-actions">
+                <button class="tool-btn" id="cropCancelBtn">Cancel</button>
+                <button class="tool-btn" id="cropApplyBtn">Apply</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="crop-modal-backdrop" id="colorModalBackdrop">
+          <div class="window color-popover" style="width:240px;">
+            <div class="title-bar">
+              <div class="title-bar-text">Color Picker</div>
+            </div>
+            <div class="window-body">
+              <canvas id="satValCanvas" width="200" height="140" style="width:100%;display:block;cursor:crosshair;margin-bottom:8px;"></canvas>
+              <canvas id="hueCanvas" width="200" height="16" style="width:100%;display:block;cursor:crosshair;margin-bottom:10px;"></canvas>
+              <div class="color-popover-preview" id="colorPreview"></div>
+              <div class="color-popover-fields" style="margin-top:8px;">
+                <div class="color-popover-row">
+                  <label>Hex</label>
+                  <input type="text" id="hexInput" maxlength="7" style="flex:1;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);border-radius:4px;color:var(--text-main);padding:4px 6px;font-family:inherit;">
+                </div>
+              </div>
+              <div class="crop-modal-actions" style="margin-top:10px;">
+                <button class="tool-btn" id="colorCancelBtn">Cancel</button>
+                <button class="tool-btn" id="colorApplyBtn">Apply</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="submit-art-btn" id="submitArt" style="margin-top:10px;">send doodle</button>
+      <div id="artStatus"></div>
+    </fieldset>
+
+    <fieldset class="message-section group-box">
+      <legend>[send me message]</legend>
+      <textarea id="messageText" placeholder="hi"></textarea>
+      <button class="submit-message-btn" id="submitMessage">send message</button>
+      <div id="messageStatus"></div>
+    </fieldset>
+  </div>
+</div>
+
 <script>
 const uiSounds = {
   click: document.getElementById('uiSound01'),
@@ -690,18 +749,16 @@ function playSound(sound, volume = 1.0) {
   if (sound) {
     const clone = sound.cloneNode();
     clone.volume = volume;
-    clone.play().catch(e => console.log('Sound play failed:', e));
+    clone.play().catch(() => {});
   }
 }
 
 function fadeInAudio(audio, duration = 100) {
   audio.volume = 0;
-  audio.play().catch(e => console.log('Sound play failed:', e));
-  
+  audio.play().catch(() => {});
   let vol = 0;
   const step = 0.05;
   const interval = duration / (1 / step);
-  
   const fadeInterval = setInterval(() => {
     if (vol < 1) {
       vol += step;
@@ -715,8 +772,7 @@ function fadeInAudio(audio, duration = 100) {
 function fadeOutAudio(audio, duration = 100) {
   let vol = audio.volume;
   const step = 0.05;
-  const interval = duration / (vol / step);
-  
+  const interval = duration / (vol / step || 1);
   const fadeInterval = setInterval(() => {
     if (vol > 0) {
       vol -= step;
@@ -730,30 +786,21 @@ function fadeOutAudio(audio, duration = 100) {
 
 document.addEventListener('DOMContentLoaded', () => {
   const allButtons = document.querySelectorAll('button, .clickable-link');
-  
   allButtons.forEach(button => {
-    button.addEventListener('mouseenter', () => {
-      playSound(uiSounds.hover, 0.5);
-    });
-    
-    button.addEventListener('click', () => {
-      playSound(uiSounds.click, 0.7);
-    });
+    button.addEventListener('mouseenter', () => playSound(uiSounds.hover, 0.5));
+    button.addEventListener('click', () => playSound(uiSounds.click, 0.7));
   });
 });
 
 function typewriterEffect() {
-  const elementsToType = document.querySelectorAll('h1, h2, p, li, a, label, button, .title-bar-text');
+  const elementsToType = document.querySelectorAll('h1, h2, p, li, a, label, button, .title-bar-text, legend');
   const charDelay = 15;
-  
-  elementsToType.forEach((element, index) => {
+  elementsToType.forEach((element) => {
     const text = element.textContent.trim();
     if (!text) return;
-    
     const originalText = element.textContent;
     element.textContent = '';
     element.style.opacity = '1';
-    
     let charIndex = 0;
     const typeInterval = setInterval(() => {
       if (charIndex < originalText.length) {
@@ -775,355 +822,994 @@ window.addEventListener('load', () => {
     try {
       const response = await fetch('https://myprofilesenders.burgergwarf.workers.dev/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ banCheck: true })
       });
-
       if (response.status === 403) {
         window.location.href = 'https://myprofile-dkq.pages.dev/banned';
       }
-    } catch (error) {
-      console.log('Ban check failed:', error);
-    }
+    } catch (error) {}
   }
-
   await checkBan();
   setInterval(checkBan, 5000);
 })();
 
-const canvas = document.getElementById("bg");
-const ctx = canvas.getContext("2d");
+document.getElementById("pronounceBtn").addEventListener("click", function() {
+  document.getElementById("nameAudio").play();
+});
+
+const bgCanvas = document.getElementById("bg");
+const bgCtx = bgCanvas.getContext("2d");
 let dots = [];
 
-function resize() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+function resizeBg() {
+  bgCanvas.width = window.innerWidth;
+  bgCanvas.height = window.innerHeight;
 }
-
-window.addEventListener("resize", resize);
-resize();
+window.addEventListener("resize", resizeBg);
+resizeBg();
 
 for (let i = 0; i < 150; i++) {
   dots.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
+    x: Math.random() * bgCanvas.width,
+    y: Math.random() * bgCanvas.height,
     r: Math.random() * 1.5 + 0.5,
     dx: Math.random() * 0.4 - 0.2,
     dy: Math.random() * 0.4 - 0.2
   });
 }
 
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+function animateBg() {
+  bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
   for (let dot of dots) {
-    ctx.beginPath();
-    ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(255, 255, 255, 0.15)";
-    ctx.fill();
+    bgCtx.beginPath();
+    bgCtx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
+    bgCtx.fillStyle = "rgba(200, 215, 255, 0.25)";
+    bgCtx.fill();
     dot.x += dot.dx;
     dot.y += dot.dy;
-
-    if (dot.x < 0 || dot.x > canvas.width) dot.dx *= -1;
-    if (dot.y < 0 || dot.y > canvas.height) dot.dy *= -1;
+    if (dot.x < 0 || dot.x > bgCanvas.width) dot.dx *= -1;
+    if (dot.y < 0 || dot.y > bgCanvas.height) dot.dy *= -1;
   }
-  requestAnimationFrame(animate);
+  requestAnimationFrame(animateBg);
 }
-animate();
+animateBg();
 
-document.getElementById("pronounceBtn").addEventListener("click", function() {
-  const audio = document.getElementById("nameAudio");
-  audio.play();
-});
-	
-const drawingCanvas = document.getElementById('drawingCanvas');
-const drawingCtx = drawingCanvas.getContext('2d');
-let isDrawing = false;
-let currentTool = 'pen';
-let lastX = 0;
-let lastY = 0;
-let canvasHistory = [];
-let historyIndex = -1;
+const sparkleCanvas = document.getElementById("sparkleLayer");
+const sparkleCtx = sparkleCanvas.getContext("2d");
+const PIXEL_SCALE = 4;
+let sparkleLowW, sparkleLowH;
+let sparkles = [];
 
-drawingCtx.fillStyle = 'white';
-drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
-saveCanvasState();
+function resizeSparkle() {
+  sparkleCanvas.width = window.innerWidth;
+  sparkleCanvas.height = window.innerHeight;
+  sparkleLowW = Math.ceil(window.innerWidth / PIXEL_SCALE);
+  sparkleLowH = Math.ceil(window.innerHeight / PIXEL_SCALE);
+  sparkleCtx.imageSmoothingEnabled = false;
+  seedSparkles();
+}
+window.addEventListener("resize", resizeSparkle);
 
-document.getElementById('penTool').addEventListener('click', function() {
-  currentTool = 'pen';
-  document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
-  this.classList.add('active');
-});
-
-document.getElementById('eraserTool').addEventListener('click', function() {
-  currentTool = 'eraser';
-  document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
-  this.classList.add('active');
-});
-
-document.getElementById('fillTool').addEventListener('click', function() {
-  currentTool = 'fill';
-  document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
-  this.classList.add('active');
-});
-
-document.getElementById('clearCanvas').addEventListener('click', function() {
-  drawingCtx.fillStyle = 'white';
-  drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
-  saveCanvasState();
-});
-
-document.getElementById('undoBtn').addEventListener('click', function() {
-  if (historyIndex > 0) {
-    historyIndex--;
-    restoreCanvasState();
-  }
-});
-
-document.getElementById('redoBtn').addEventListener('click', function() {
-  if (historyIndex < canvasHistory.length - 1) {
-    historyIndex++;
-    restoreCanvasState();
-  }
-});
-
-function saveCanvasState() {
-  historyIndex++;
-  if (historyIndex < canvasHistory.length) {
-    canvasHistory.length = historyIndex;
-  }
-  canvasHistory.push(drawingCanvas.toDataURL());
-  
-  if (canvasHistory.length > 50) {
-    canvasHistory.shift();
-    historyIndex--;
+function seedSparkles() {
+  const count = Math.floor((sparkleLowW * sparkleLowH) / 1400);
+  sparkles = [];
+  for (let i = 0; i < count; i++) {
+    sparkles.push({
+      x: Math.random() * sparkleLowW,
+      y: Math.random() * sparkleLowH,
+      phase: Math.random() * Math.PI * 2,
+      speed: 0.02 + Math.random() * 0.04,
+      size: Math.random() < 0.15 ? 2 : 1,
+      hue: Math.random() < 0.5 ? "#ffffff" : "#bfe0ff"
+    });
   }
 }
 
-function restoreCanvasState() {
-  const img = new Image();
-  img.onload = function() {
-    drawingCtx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
-    drawingCtx.drawImage(img, 0, 0);
+const lowCanvas = document.createElement("canvas");
+const lowCtx = lowCanvas.getContext("2d");
+
+function animateSparkles() {
+  if (sparkleLowW && sparkleLowH) {
+    lowCanvas.width = sparkleLowW;
+    lowCanvas.height = sparkleLowH;
+    lowCtx.clearRect(0, 0, sparkleLowW, sparkleLowH);
+    for (let s of sparkles) {
+      s.phase += s.speed;
+      const twinkle = (Math.sin(s.phase) + 1) / 2;
+      const alpha = 0.15 + twinkle * 0.75;
+      lowCtx.fillStyle = s.hue;
+      lowCtx.globalAlpha = alpha;
+      lowCtx.fillRect(Math.floor(s.x), Math.floor(s.y), s.size, s.size);
+    }
+    lowCtx.globalAlpha = 1;
+    sparkleCtx.clearRect(0, 0, sparkleCanvas.width, sparkleCanvas.height);
+    sparkleCtx.drawImage(lowCanvas, 0, 0, sparkleLowW, sparkleLowH, 0, 0, sparkleCanvas.width, sparkleCanvas.height);
+  }
+  requestAnimationFrame(animateSparkles);
+}
+resizeSparkle();
+animateSparkles();
+
+class DrawEngine {
+  constructor(canvas, viewport, stage) {
+    this.canvas = canvas;
+    this.viewport = viewport;
+    this.stage = stage;
+    this.ctx = canvas.getContext("2d");
+    this.bgCanvas = document.createElement("canvas");
+    this.bgCanvas.width = canvas.width;
+    this.bgCanvas.height = canvas.height;
+    this.bgCtx = this.bgCanvas.getContext("2d");
+    this.bgCtx.fillStyle = "#ffffff";
+    this.bgCtx.fillRect(0, 0, canvas.width, canvas.height);
+
+    this.tool = "pen";
+    this.color = "#000000";
+    this.size = 5;
+    this.opacity = 1;
+    this.stabilizerAmount = 0;
+    this.fillExpandPx = 1.5;
+
+    this.history = [];
+    this.redoStack = [];
+    this.currentStroke = null;
+    this.rawPoints = [];
+    this.stabilizedPoint = null;
+
+    this.scale = 1;
+    this.panX = 40;
+    this.panY = 40;
+    this.minScale = 0.1;
+    this.maxScale = 12;
+
+    this.isDrawing = false;
+    this.isPanning = false;
+    this.lastPanPoint = null;
+    this.activePointerId = null;
+
+    this.updateTransform();
+    this.render();
+    this.bindEvents();
+  }
+
+  updateTransform() {
+    this.stage.style.transform = `translate(${this.panX}px, ${this.panY}px) scale(${this.scale})`;
+  }
+
+  screenToCanvas(clientX, clientY) {
+    const rect = this.viewport.getBoundingClientRect();
+    const x = (clientX - rect.left - this.panX) / this.scale;
+    const y = (clientY - rect.top - this.panY) / this.scale;
+    return { x, y };
+  }
+
+  pushHistory(stroke) {
+    this.history.push(stroke);
+    this.redoStack = [];
+  }
+
+  undo() {
+    if (this.history.length === 0) return;
+    this.redoStack.push(this.history.pop());
+    this.render();
+  }
+
+  redo() {
+    if (this.redoStack.length === 0) return;
+    this.history.push(this.redoStack.pop());
+    this.render();
+  }
+
+  clearAll() {
+    this.pushHistory({ type: "clear" });
+    this.render();
+  }
+
+  buildActiveStrokeList() {
+    let active = [];
+    for (const op of this.history) {
+      if (op.type === "clear") {
+        active = [];
+      } else {
+        active.push(op);
+      }
+    }
+    return active;
+  }
+
+  strokeToPath(stroke) {
+    const pts = stroke.points;
+    if (pts.length === 0) return null;
+    if (pts.length === 1) {
+      const p = pts[0];
+      const r = (p.width || stroke.size) / 2;
+      const path = new Path2D();
+      path.arc(p.x, p.y, r, 0, Math.PI * 2);
+      return path;
+    }
+    const left = [];
+    const right = [];
+    for (let i = 0; i < pts.length; i++) {
+      const p = pts[i];
+      const prev = pts[i - 1] || p;
+      const next = pts[i + 1] || p;
+      const dx = next.x - prev.x;
+      const dy = next.y - prev.y;
+      const len = Math.hypot(dx, dy) || 1;
+      const nx = -dy / len;
+      const ny = dx / len;
+      const r = (p.width || stroke.size) / 2;
+      left.push({ x: p.x + nx * r, y: p.y + ny * r });
+      right.push({ x: p.x - nx * r, y: p.y - ny * r });
+    }
+    const path = new Path2D();
+    path.moveTo(left[0].x, left[0].y);
+    for (let i = 1; i < left.length; i++) path.lineTo(left[i].x, left[i].y);
+    for (let i = right.length - 1; i >= 0; i--) path.lineTo(right[i].x, right[i].y);
+    path.closePath();
+    return path;
+  }
+
+  render() {
+    const ctx = this.ctx;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    ctx.drawImage(this.bgCanvas, 0, 0);
+
+    const strokes = this.buildActiveStrokeList();
+    for (const stroke of strokes) {
+      if (stroke.type === "fill") {
+        this.drawFillStroke(ctx, stroke);
+        continue;
+      }
+      const path = this.strokeToPath(stroke);
+      if (!path) continue;
+      ctx.save();
+      if (stroke.tool === "eraser") {
+        ctx.globalCompositeOperation = "destination-out";
+        ctx.globalAlpha = 1;
+      } else {
+        ctx.globalCompositeOperation = "source-over";
+        ctx.globalAlpha = stroke.opacity;
+      }
+      ctx.fillStyle = stroke.color;
+      ctx.fill(path);
+      ctx.restore();
+    }
+
+    if (this.currentStroke && this.currentStroke.points.length > 0) {
+      const path = this.strokeToPath(this.currentStroke);
+      if (path) {
+        ctx.save();
+        if (this.currentStroke.tool === "eraser") {
+          ctx.globalCompositeOperation = "destination-out";
+          ctx.globalAlpha = 1;
+        } else {
+          ctx.globalCompositeOperation = "source-over";
+          ctx.globalAlpha = this.currentStroke.opacity;
+        }
+        ctx.fillStyle = this.currentStroke.color;
+        ctx.fill(path);
+        ctx.restore();
+      }
+    }
+  }
+
+  drawFillStroke(ctx, stroke) {
+    const off = document.createElement("canvas");
+    off.width = stroke.imageData.width;
+    off.height = stroke.imageData.height;
+    const octx = off.getContext("2d");
+    octx.putImageData(stroke.imageData, 0, 0);
+    ctx.save();
+    ctx.globalCompositeOperation = "source-over";
+    ctx.globalAlpha = 1;
+    ctx.drawImage(off, 0, 0);
+    ctx.restore();
+  }
+
+  flatten() {
+    const off = document.createElement("canvas");
+    off.width = this.canvas.width;
+    off.height = this.canvas.height;
+    const octx = off.getContext("2d");
+    octx.drawImage(this.bgCanvas, 0, 0);
+    const strokes = this.buildActiveStrokeList();
+    for (const stroke of strokes) {
+      if (stroke.type === "fill") {
+        this.drawFillStroke(octx, stroke);
+        continue;
+      }
+      const path = this.strokeToPath(stroke);
+      if (!path) continue;
+      octx.save();
+      if (stroke.tool === "eraser") {
+        octx.globalCompositeOperation = "destination-out";
+        octx.globalAlpha = 1;
+      } else {
+        octx.globalCompositeOperation = "source-over";
+        octx.globalAlpha = stroke.opacity;
+      }
+      octx.fillStyle = stroke.color;
+      octx.fill(path);
+      octx.restore();
+    }
+    return off;
+  }
+
+  hasContent() {
+    const strokes = this.buildActiveStrokeList();
+    return strokes.length > 0;
+  }
+
+  resizeCanvas(newWidth, newHeight) {
+    const flat = this.flatten();
+    this.canvas.width = newWidth;
+    this.canvas.height = newHeight;
+    this.bgCanvas.width = newWidth;
+    this.bgCanvas.height = newHeight;
+    this.bgCtx.fillStyle = "#ffffff";
+    this.bgCtx.fillRect(0, 0, newWidth, newHeight);
+    this.bgCtx.drawImage(flat, 0, 0);
+    this.history = [];
+    this.redoStack = [];
+    this.currentStroke = null;
+    this.render();
+    this.resetView();
+  }
+
+  applyStabilizer(rawX, rawY) {
+    const strength = this.stabilizerAmount / 100;
+    if (strength <= 0 || !this.stabilizedPoint) {
+      this.stabilizedPoint = { x: rawX, y: rawY };
+      return this.stabilizedPoint;
+    }
+    const pull = 1 - strength * 0.92;
+    this.stabilizedPoint = {
+      x: this.stabilizedPoint.x + (rawX - this.stabilizedPoint.x) * pull,
+      y: this.stabilizedPoint.y + (rawY - this.stabilizedPoint.y) * pull
+    };
+    return this.stabilizedPoint;
+  }
+
+  startStroke(canvasPoint, pressure) {
+    const width = this.size * (0.3 + pressure * 0.7);
+    this.currentStroke = {
+      type: "stroke",
+      tool: this.tool,
+      color: this.color,
+      opacity: this.opacity,
+      size: this.size,
+      points: [{ x: canvasPoint.x, y: canvasPoint.y, width }]
+    };
+  }
+
+  extendStroke(canvasPoint, pressure) {
+    if (!this.currentStroke) return;
+    const width = this.size * (0.3 + pressure * 0.7);
+    const pts = this.currentStroke.points;
+    const last = pts[pts.length - 1];
+    if (Math.hypot(canvasPoint.x - last.x, canvasPoint.y - last.y) < 0.4) return;
+    pts.push({ x: canvasPoint.x, y: canvasPoint.y, width });
+    this.render();
+  }
+
+  endStroke() {
+    if (this.currentStroke && this.currentStroke.points.length > 0) {
+      this.pushHistory(this.currentStroke);
+    }
+    this.currentStroke = null;
+    this.stabilizedPoint = null;
+    this.render();
+  }
+
+  floodFill(x, y) {
+    const flat = this.flatten();
+    const fctx = flat.getContext("2d");
+    const w = flat.width, h = flat.height;
+    const ix = Math.floor(x), iy = Math.floor(y);
+    if (ix < 0 || iy < 0 || ix >= w || iy >= h) return;
+
+    const srcData = fctx.getImageData(0, 0, w, h).data;
+    const outData = new Uint8ClampedArray(srcData.length);
+
+    const idx = (iy * w + ix) * 4;
+    const target = [srcData[idx], srcData[idx + 1], srcData[idx + 2], srcData[idx + 3]];
+    const fillRgb = this.hexToRgb(this.color);
+    const fillA = Math.round(this.opacity * 255);
+    if (target[0] === fillRgb.r && target[1] === fillRgb.g && target[2] === fillRgb.b && target[3] === fillA) return;
+
+    const tolerance = 32;
+    const tolSq = tolerance * tolerance;
+
+    function matches(i) {
+      const dr = srcData[i] - target[0];
+      const dg = srcData[i + 1] - target[1];
+      const db = srcData[i + 2] - target[2];
+      const da = srcData[i + 3] - target[3];
+      return (dr * dr + dg * dg + db * db + da * da) / 4 <= tolSq;
+    }
+
+    const filled = new Uint8Array(w * h);
+    const stack = [[ix, iy]];
+
+    while (stack.length) {
+      let [cx, cy] = stack.pop();
+      if (cy < 0 || cy >= h) continue;
+
+      let rowIdx = cy * w + cx;
+      if (cx < 0 || cx >= w || filled[rowIdx] || !matches(rowIdx * 4)) continue;
+
+      let left = cx;
+      while (left - 1 >= 0 && !filled[cy * w + (left - 1)] && matches((cy * w + (left - 1)) * 4)) left--;
+      let right = cx;
+      while (right + 1 < w && !filled[cy * w + (right + 1)] && matches((cy * w + (right + 1)) * 4)) right++;
+
+      let spanAboveAdded = false;
+      let spanBelowAdded = false;
+
+      for (let px = left; px <= right; px++) {
+        const pIdx = cy * w + px;
+        filled[pIdx] = 1;
+
+        const aboveIdx = (cy - 1) * w + px;
+        const aboveMatches = cy - 1 >= 0 && !filled[aboveIdx] && matches(aboveIdx * 4);
+        if (aboveMatches && !spanAboveAdded) {
+          stack.push([px, cy - 1]);
+          spanAboveAdded = true;
+        } else if (!aboveMatches) {
+          spanAboveAdded = false;
+        }
+
+        const belowIdx = (cy + 1) * w + px;
+        const belowMatches = cy + 1 < h && !filled[belowIdx] && matches(belowIdx * 4);
+        if (belowMatches && !spanBelowAdded) {
+          stack.push([px, cy + 1]);
+          spanBelowAdded = true;
+        } else if (!belowMatches) {
+          spanBelowAdded = false;
+        }
+      }
+    }
+
+    const expandPx = Math.max(0, Math.round(this.fillExpandPx));
+    let workingMask = filled;
+    if (expandPx > 0) {
+      let mask = filled;
+      for (let pass = 0; pass < expandPx; pass++) {
+        const next = new Uint8Array(mask);
+        for (let yy = 0; yy < h; yy++) {
+          for (let xx = 0; xx < w; xx++) {
+            const i = yy * w + xx;
+            if (mask[i]) continue;
+            let neighborFilled = false;
+            if (xx > 0 && mask[i - 1]) neighborFilled = true;
+            else if (xx < w - 1 && mask[i + 1]) neighborFilled = true;
+            else if (yy > 0 && mask[i - w]) neighborFilled = true;
+            else if (yy < h - 1 && mask[i + w]) neighborFilled = true;
+            if (!neighborFilled) continue;
+
+            const di = i * 4;
+            const a = srcData[di + 3];
+            const isEdgeish = a < 250 || matches(di) === false && (
+              Math.abs(srcData[di] - target[0]) < 90 &&
+              Math.abs(srcData[di + 1] - target[1]) < 90 &&
+              Math.abs(srcData[di + 2] - target[2]) < 90
+            );
+            if (isEdgeish) next[i] = 1;
+          }
+        }
+        mask = next;
+      }
+      workingMask = mask;
+    }
+
+    for (let i = 0; i < w * h; i++) {
+      if (!workingMask[i]) continue;
+      const di = i * 4;
+      outData[di] = fillRgb.r;
+      outData[di + 1] = fillRgb.g;
+      outData[di + 2] = fillRgb.b;
+      outData[di + 3] = fillA;
+    }
+
+    const fillImageData = new ImageData(outData, w, h);
+    this.pushHistory({ type: "fill", imageData: fillImageData, mask: workingMask, opacity: this.opacity, color: this.color });
+    this.render();
+  }
+
+  hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : { r: 0, g: 0, b: 0 };
+  }
+
+  zoomAt(factor, clientX, clientY) {
+    const rect = this.viewport.getBoundingClientRect();
+    const ox = clientX - rect.left;
+    const oy = clientY - rect.top;
+    const before = { x: (ox - this.panX) / this.scale, y: (oy - this.panY) / this.scale };
+    let newScale = this.scale * factor;
+    newScale = Math.min(this.maxScale, Math.max(this.minScale, newScale));
+    this.panX = ox - before.x * newScale;
+    this.panY = oy - before.y * newScale;
+    this.scale = newScale;
+    this.updateTransform();
+    this.updateZoomReadout();
+  }
+
+  resetView() {
+    this.scale = 1;
+    const vw = this.viewport.clientWidth;
+    const vh = this.viewport.clientHeight;
+    this.panX = (vw - this.canvas.width) / 2;
+    this.panY = (vh - this.canvas.height) / 2;
+    this.updateTransform();
+    this.updateZoomReadout();
+  }
+
+  updateZoomReadout() {
+    const readout = document.getElementById("zoomReadout");
+    if (readout) readout.textContent = Math.round(this.scale * 100) + "%";
+  }
+
+  getPressure(e) {
+    if (e.pointerType === "pen" && typeof e.pressure === "number" && e.pressure > 0) {
+      return e.pressure;
+    }
+    if (e.pointerType === "touch") return 0.6;
+    return 0.5;
+  }
+
+  bindEvents() {
+    const vp = this.viewport;
+
+    vp.addEventListener("pointerdown", (e) => {
+      vp.setPointerCapture(e.pointerId);
+      this.activePointerId = e.pointerId;
+      const spacePan = this.tool === "pan" || e.button === 1;
+      if (spacePan) {
+        this.isPanning = true;
+        this.lastPanPoint = { x: e.clientX, y: e.clientY };
+        return;
+      }
+      const p = this.screenToCanvas(e.clientX, e.clientY);
+      if (this.tool === "fill") {
+        playSound(uiSounds.fill, 0.8);
+        this.floodFill(p.x, p.y);
+        return;
+      }
+      this.isDrawing = true;
+      this.stabilizedPoint = null;
+      const stable = this.applyStabilizer(p.x, p.y);
+      this.startStroke(stable, this.getPressure(e));
+      if (this.tool === "pen" || this.tool === "eraser") fadeInAudio(uiSounds.drawing, 100);
+      this.render();
+    });
+
+    vp.addEventListener("pointermove", (e) => {
+      if (this.isPanning && this.lastPanPoint) {
+        const dx = e.clientX - this.lastPanPoint.x;
+        const dy = e.clientY - this.lastPanPoint.y;
+        this.panX += dx;
+        this.panY += dy;
+        this.lastPanPoint = { x: e.clientX, y: e.clientY };
+        this.updateTransform();
+        return;
+      }
+      if (!this.isDrawing) return;
+      const p = this.screenToCanvas(e.clientX, e.clientY);
+      const stable = this.applyStabilizer(p.x, p.y);
+      this.extendStroke(stable, this.getPressure(e));
+    });
+
+    const finishPointer = (e) => {
+      if (this.isPanning) {
+        this.isPanning = false;
+        this.lastPanPoint = null;
+      }
+      if (this.isDrawing) {
+        this.isDrawing = false;
+        this.endStroke();
+        if (this.tool === "pen" || this.tool === "eraser") {
+          fadeOutAudio(uiSounds.drawing, 100);
+          playSound(uiSounds.penRelease, 0.6);
+        }
+      }
+      if (this.activePointerId !== null) {
+        try { vp.releasePointerCapture(this.activePointerId); } catch (err) {}
+        this.activePointerId = null;
+      }
+    };
+
+    vp.addEventListener("pointerup", finishPointer);
+    vp.addEventListener("pointercancel", finishPointer);
+    vp.addEventListener("pointerleave", (e) => {
+      if (this.isDrawing) finishPointer(e);
+    });
+
+    vp.addEventListener("wheel", (e) => {
+      e.preventDefault();
+      const factor = e.deltaY < 0 ? 1.1 : 0.9;
+      this.zoomAt(factor, e.clientX, e.clientY);
+    }, { passive: false });
+
+    vp.addEventListener("contextmenu", (e) => e.preventDefault());
+  }
+}
+
+const drawingCanvas = document.getElementById("drawingCanvas");
+const drawViewport = document.getElementById("drawViewport");
+const drawStage = document.getElementById("drawStage");
+const engine = new DrawEngine(drawingCanvas, drawViewport, drawStage);
+
+window.addEventListener("load", () => {
+  engine.resetView();
+});
+
+function setActiveTool(tool, btn) {
+  engine.tool = tool;
+  document.querySelectorAll(".draw-tool-row .tool-btn").forEach((b) => b.classList.remove("active"));
+  if (btn) btn.classList.add("active");
+  drawViewport.style.cursor = tool === "pan" ? "grab" : (tool === "fill" ? "cell" : "crosshair");
+}
+
+document.getElementById("penTool").addEventListener("click", function() { setActiveTool("pen", this); });
+document.getElementById("eraserTool").addEventListener("click", function() { setActiveTool("eraser", this); });
+document.getElementById("fillTool").addEventListener("click", function() { setActiveTool("fill", this); });
+document.getElementById("panTool").addEventListener("click", function() { setActiveTool("pan", this); });
+
+document.getElementById("clearCanvas").addEventListener("click", function() {
+  engine.clearAll();
+});
+
+document.getElementById("undoBtn").addEventListener("click", function() {
+  engine.undo();
+});
+
+document.getElementById("redoBtn").addEventListener("click", function() {
+  engine.redo();
+});
+
+document.getElementById("resetViewBtn").addEventListener("click", function() {
+  engine.resetView();
+});
+
+document.getElementById("zoomInBtn").addEventListener("click", function() {
+  const rect = drawViewport.getBoundingClientRect();
+  engine.zoomAt(1.2, rect.left + rect.width / 2, rect.top + rect.height / 2);
+});
+
+document.getElementById("zoomOutBtn").addEventListener("click", function() {
+  const rect = drawViewport.getBoundingClientRect();
+  engine.zoomAt(0.8, rect.left + rect.width / 2, rect.top + rect.height / 2);
+});
+
+document.getElementById("brushSize").addEventListener("input", function() {
+  engine.size = parseInt(this.value, 10);
+  document.getElementById("brushSizeDisplay").textContent = this.value;
+});
+
+document.getElementById("brushOpacity").addEventListener("input", function() {
+  engine.opacity = parseInt(this.value, 10) / 100;
+  document.getElementById("brushOpacityDisplay").textContent = this.value + "%";
+});
+
+document.getElementById("stabilizer").addEventListener("input", function() {
+  engine.stabilizerAmount = parseInt(this.value, 10);
+  document.getElementById("stabilizerDisplay").textContent = this.value;
+});
+
+document.getElementById("fullscreenBtn").addEventListener("click", async function() {
+  const app = document.getElementById("drawApp");
+  try {
+    if (!document.fullscreenElement) {
+      await app.requestFullscreen();
+    } else {
+      await document.exitFullscreen();
+    }
+  } catch (err) {}
+});
+
+const cropModalBackdrop = document.getElementById("cropModalBackdrop");
+const cropWidthInput = document.getElementById("cropWidth");
+const cropHeightInput = document.getElementById("cropHeight");
+
+document.getElementById("cropBtn").addEventListener("click", function() {
+  cropWidthInput.value = drawingCanvas.width;
+  cropHeightInput.value = drawingCanvas.height;
+  cropModalBackdrop.classList.add("open");
+});
+
+document.getElementById("cropCancelBtn").addEventListener("click", function() {
+  cropModalBackdrop.classList.remove("open");
+});
+
+document.getElementById("cropApplyBtn").addEventListener("click", function() {
+  let w = parseInt(cropWidthInput.value, 10);
+  let h = parseInt(cropHeightInput.value, 10);
+  if (!Number.isFinite(w) || !Number.isFinite(h)) return;
+  w = Math.min(1000, Math.max(1, w));
+  h = Math.min(1000, Math.max(1, h));
+  engine.resizeCanvas(w, h);
+  cropModalBackdrop.classList.remove("open");
+});
+
+const colorModalBackdrop = document.getElementById("colorModalBackdrop");
+const colorSwatchBtn = document.getElementById("colorSwatchBtn");
+const satValCanvas = document.getElementById("satValCanvas");
+const svCtx = satValCanvas.getContext("2d");
+const hueCanvas = document.getElementById("hueCanvas");
+const hueCtx = hueCanvas.getContext("2d");
+const colorPreview = document.getElementById("colorPreview");
+const hexInput = document.getElementById("hexInput");
+
+let pickerHue = 0;
+let pickerSat = 0;
+let pickerVal = 0;
+let pendingColor = "#000000";
+
+function hsvToRgb(h, s, v) {
+  s /= 100; v /= 100;
+  const c = v * s;
+  const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+  const m = v - c;
+  let r, g, b;
+  if (h < 60) [r, g, b] = [c, x, 0];
+  else if (h < 120) [r, g, b] = [x, c, 0];
+  else if (h < 180) [r, g, b] = [0, c, x];
+  else if (h < 240) [r, g, b] = [0, x, c];
+  else if (h < 300) [r, g, b] = [x, 0, c];
+  else [r, g, b] = [c, 0, x];
+  return {
+    r: Math.round((r + m) * 255),
+    g: Math.round((g + m) * 255),
+    b: Math.round((b + m) * 255)
   };
-  img.src = canvasHistory[historyIndex];
 }
 
-document.getElementById('brushSize').addEventListener('input', function() {
-  document.getElementById('brushSizeDisplay').textContent = this.value;
+function rgbToHsv(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  const d = max - min;
+  let h = 0;
+  if (d !== 0) {
+    if (max === r) h = 60 * (((g - b) / d) % 6);
+    else if (max === g) h = 60 * ((b - r) / d + 2);
+    else h = 60 * ((r - g) / d + 4);
+  }
+  if (h < 0) h += 360;
+  const s = max === 0 ? 0 : (d / max) * 100;
+  const v = max * 100;
+  return { h, s, v };
+}
+
+function rgbToHex(r, g, b) {
+  return "#" + [r, g, b].map(v => v.toString(16).padStart(2, "0")).join("");
+}
+
+function drawHueBar() {
+  const grad = hueCtx.createLinearGradient(0, 0, hueCanvas.width, 0);
+  for (let i = 0; i <= 360; i += 30) {
+    const c = hsvToRgb(i, 100, 100);
+    grad.addColorStop(i / 360, `rgb(${c.r},${c.g},${c.b})`);
+  }
+  hueCtx.fillStyle = grad;
+  hueCtx.fillRect(0, 0, hueCanvas.width, hueCanvas.height);
+  const x = (pickerHue / 360) * hueCanvas.width;
+  hueCtx.strokeStyle = "#ffffff";
+  hueCtx.lineWidth = 2;
+  hueCtx.strokeRect(x - 2, 0, 4, hueCanvas.height);
+}
+
+function drawSatValBox() {
+  const w = satValCanvas.width, h = satValCanvas.height;
+  const hueRgb = hsvToRgb(pickerHue, 100, 100);
+  svCtx.fillStyle = `rgb(${hueRgb.r},${hueRgb.g},${hueRgb.b})`;
+  svCtx.fillRect(0, 0, w, h);
+
+  const whiteGrad = svCtx.createLinearGradient(0, 0, w, 0);
+  whiteGrad.addColorStop(0, "rgba(255,255,255,1)");
+  whiteGrad.addColorStop(1, "rgba(255,255,255,0)");
+  svCtx.fillStyle = whiteGrad;
+  svCtx.fillRect(0, 0, w, h);
+
+  const blackGrad = svCtx.createLinearGradient(0, 0, 0, h);
+  blackGrad.addColorStop(0, "rgba(0,0,0,0)");
+  blackGrad.addColorStop(1, "rgba(0,0,0,1)");
+  svCtx.fillStyle = blackGrad;
+  svCtx.fillRect(0, 0, w, h);
+
+  const px = (pickerSat / 100) * w;
+  const py = (1 - pickerVal / 100) * h;
+  svCtx.beginPath();
+  svCtx.arc(px, py, 5, 0, Math.PI * 2);
+  svCtx.strokeStyle = "#ffffff";
+  svCtx.lineWidth = 2;
+  svCtx.stroke();
+  svCtx.beginPath();
+  svCtx.arc(px, py, 5, 0, Math.PI * 2);
+  svCtx.strokeStyle = "#000000";
+  svCtx.lineWidth = 1;
+  svCtx.stroke();
+}
+
+function updatePreview() {
+  const rgb = hsvToRgb(pickerHue, pickerSat, pickerVal);
+  pendingColor = rgbToHex(rgb.r, rgb.g, rgb.b);
+  colorPreview.style.background = pendingColor;
+  hexInput.value = pendingColor;
+}
+
+function refreshPicker() {
+  drawHueBar();
+  drawSatValBox();
+  updatePreview();
+}
+
+function openColorPicker() {
+  const rgb = engine.hexToRgb(engine.color);
+  const hsv = rgbToHsv(rgb.r, rgb.g, rgb.b);
+  pickerHue = hsv.h;
+  pickerSat = hsv.s;
+  pickerVal = hsv.v;
+  pendingColor = engine.color;
+  refreshPicker();
+  colorModalBackdrop.classList.add("open");
+}
+
+colorSwatchBtn.addEventListener("click", openColorPicker);
+
+function satValPointerHandler(e) {
+  const rect = satValCanvas.getBoundingClientRect();
+  const scaleX = satValCanvas.width / rect.width;
+  const scaleY = satValCanvas.height / rect.height;
+  const x = Math.min(Math.max((e.clientX - rect.left) * scaleX, 0), satValCanvas.width);
+  const y = Math.min(Math.max((e.clientY - rect.top) * scaleY, 0), satValCanvas.height);
+  pickerSat = (x / satValCanvas.width) * 100;
+  pickerVal = (1 - y / satValCanvas.height) * 100;
+  refreshPicker();
+}
+
+function hueBarPointerHandler(e) {
+  const rect = hueCanvas.getBoundingClientRect();
+  const scaleX = hueCanvas.width / rect.width;
+  const x = Math.min(Math.max((e.clientX - rect.left) * scaleX, 0), hueCanvas.width);
+  pickerHue = (x / hueCanvas.width) * 360;
+  refreshPicker();
+}
+
+function bindDragPointer(el, handler) {
+  let dragging = false;
+  el.addEventListener("pointerdown", (e) => {
+    dragging = true;
+    el.setPointerCapture(e.pointerId);
+    handler(e);
+  });
+  el.addEventListener("pointermove", (e) => {
+    if (dragging) handler(e);
+  });
+  el.addEventListener("pointerup", (e) => {
+    dragging = false;
+    try { el.releasePointerCapture(e.pointerId); } catch (err) {}
+  });
+  el.addEventListener("pointercancel", () => { dragging = false; });
+}
+
+bindDragPointer(satValCanvas, satValPointerHandler);
+bindDragPointer(hueCanvas, hueBarPointerHandler);
+
+hexInput.addEventListener("input", function() {
+  let val = this.value.trim();
+  if (!val.startsWith("#")) val = "#" + val;
+  if (/^#[0-9a-fA-F]{6}$/.test(val)) {
+    const rgb = engine.hexToRgb(val);
+    const hsv = rgbToHsv(rgb.r, rgb.g, rgb.b);
+    pickerHue = hsv.h;
+    pickerSat = hsv.s;
+    pickerVal = hsv.v;
+    pendingColor = val;
+    drawHueBar();
+    drawSatValBox();
+    colorPreview.style.background = pendingColor;
+  }
 });
 
-document.getElementById('brushOpacity').addEventListener('input', function() {
-  document.getElementById('brushOpacityDisplay').textContent = this.value + '%';
+document.getElementById("colorCancelBtn").addEventListener("click", function() {
+  colorModalBackdrop.classList.remove("open");
 });
 
-function getCanvasCoordinates(e) {
-  const rect = drawingCanvas.getBoundingClientRect();
-  const scaleX = drawingCanvas.width / rect.width;
-  const scaleY = drawingCanvas.height / rect.height;
-  
-  let clientX, clientY;
-  
-  if (e.touches && e.touches.length > 0) {
-    clientX = e.touches[0].clientX;
-    clientY = e.touches[0].clientY;
+document.getElementById("colorApplyBtn").addEventListener("click", function() {
+  engine.color = pendingColor;
+  colorSwatchBtn.style.background = pendingColor;
+  colorModalBackdrop.classList.remove("open");
+});
+
+document.addEventListener("fullscreenchange", () => {
+  const app = document.getElementById("drawApp");
+  if (document.fullscreenElement === app) {
+    app.classList.add("fullscreen-active");
   } else {
-    clientX = e.clientX;
-    clientY = e.clientY;
+    app.classList.remove("fullscreen-active");
   }
-  
-  return {
-    x: (clientX - rect.left) * scaleX,
-    y: (clientY - rect.top) * scaleY
-  };
-}
+  setTimeout(() => engine.resetView(), 50);
+});
 
-function startDrawing(e) {
-  e.preventDefault();
-  
-  const coords = getCanvasCoordinates(e);
-  
-  if (currentTool === 'fill') {
-    playSound(uiSounds.fill, 0.8);
-    floodFill(Math.floor(coords.x), Math.floor(coords.y));
-    return;
-  }
-  
-  isDrawing = true;
-  lastX = coords.x;
-  lastY = coords.y;
-  
-  if (currentTool === 'pen' || currentTool === 'eraser') {
-    fadeInAudio(uiSounds.drawing, 100);
-  }
-}
-
-function draw(e) {
-  if (!isDrawing || (currentTool !== 'pen' && currentTool !== 'eraser')) return;
-  
-  e.preventDefault();
-  
-  const coords = getCanvasCoordinates(e);
-  const brushSize = document.getElementById('brushSize').value;
-  const brushColor = currentTool === 'eraser' ? '#ffffff' : document.getElementById('brushColor').value;
-  const brushOpacity = document.getElementById('brushOpacity').value / 100;
-  
-  drawingCtx.globalCompositeOperation = 'source-over';
-  drawingCtx.lineWidth = brushSize;
-  drawingCtx.lineCap = 'round';
-  drawingCtx.strokeStyle = brushColor;
-  drawingCtx.globalAlpha = brushOpacity;
-  
-  drawingCtx.beginPath();
-  drawingCtx.moveTo(lastX, lastY);
-  drawingCtx.lineTo(coords.x, coords.y);
-  drawingCtx.stroke();
-  
-  lastX = coords.x;
-  lastY = coords.y;
-}
-
-function stopDrawing(e) {
-  if (isDrawing) {
+document.addEventListener("keydown", (e) => {
+  const active = document.activeElement;
+  if (active && (active.tagName === "TEXTAREA" || active.tagName === "INPUT")) return;
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") {
     e.preventDefault();
-    isDrawing = false;
-    saveCanvasState();
-    
-    if (currentTool === 'pen' || currentTool === 'eraser') {
-      fadeOutAudio(uiSounds.drawing, 100);
-      playSound(uiSounds.penRelease, 0.6);
-    }
+    if (e.shiftKey) engine.redo(); else engine.undo();
   }
-}
-
-function floodFill(x, y) {
-  const brushColor = document.getElementById('brushColor').value;
-  const fillColor = hexToRgb(brushColor);
-  
-  const imageData = drawingCtx.getImageData(0, 0, drawingCanvas.width, drawingCanvas.height);
-  const data = imageData.data;
-  
-  const targetColor = getPixelColor(data, x, y, drawingCanvas.width);
-  
-  if (colorsMatch(targetColor, fillColor)) return;
-  
-  const stack = [[x, y]];
-  
-  while (stack.length > 0) {
-    const [currentX, currentY] = stack.pop();
-    
-    if (currentX < 0 || currentX >= drawingCanvas.width || 
-        currentY < 0 || currentY >= drawingCanvas.height) continue;
-    
-    const currentColor = getPixelColor(data, currentX, currentY, drawingCanvas.width);
-    
-    if (!colorsMatch(currentColor, targetColor)) continue;
-    
-    setPixelColor(data, currentX, currentY, drawingCanvas.width, fillColor);
-    
-    stack.push([currentX + 1, currentY]);
-    stack.push([currentX - 1, currentY]);
-    stack.push([currentX, currentY + 1]);
-    stack.push([currentX, currentY - 1]);
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "y") {
+    e.preventDefault();
+    engine.redo();
   }
-  
-  drawingCtx.putImageData(imageData, 0, 0);
-  saveCanvasState();
-}
+});
 
-function hexToRgb(hex) {
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result ? {
-    r: parseInt(result[1], 16),
-    g: parseInt(result[2], 16),
-    b: parseInt(result[3], 16),
-    a: 255
-  } : null;
-}
+const COOLDOWN_SECONDS = 5;
 
-function getPixelColor(data, x, y, width) {
-  const index = (y * width + x) * 4;
-  return {
-    r: data[index],
-    g: data[index + 1],
-    b: data[index + 2],
-    a: data[index + 3]
+function startCooldown(button, statusEl, defaultLabel) {
+  let remaining = COOLDOWN_SECONDS;
+  button.disabled = true;
+  const tick = () => {
+    statusEl.innerHTML = `<div class="status-cooldown">Please wait ${remaining} second${remaining === 1 ? "" : "s"} before sending again...</div>`;
+    remaining--;
   };
-}
-
-function setPixelColor(data, x, y, width, color) {
-  const index = (y * width + x) * 4;
-  data[index] = color.r;
-  data[index + 1] = color.g;
-  data[index + 2] = color.b;
-  data[index + 3] = color.a;
-}
-
-function colorsMatch(color1, color2) {
-  return color1.r === color2.r && color1.g === color2.g && 
-         color1.b === color2.b && color1.a === color2.a;
-}
-
-drawingCanvas.addEventListener('mousedown', startDrawing);
-drawingCanvas.addEventListener('mousemove', draw);
-drawingCanvas.addEventListener('mouseup', stopDrawing);
-drawingCanvas.addEventListener('mouseleave', stopDrawing);
-
-drawingCanvas.addEventListener('touchstart', startDrawing, { passive: false });
-drawingCanvas.addEventListener('touchmove', draw, { passive: false });
-drawingCanvas.addEventListener('touchend', stopDrawing, { passive: false });
-drawingCanvas.addEventListener('touchcancel', stopDrawing, { passive: false });
-
-document.getElementById('submitArt').addEventListener('click', function () {
-  const artStatus = document.getElementById('artStatus');
-  const submitBtn = document.getElementById('submitArt');
-  const imageData = drawingCtx.getImageData(0, 0, drawingCanvas.width, drawingCanvas.height);
-  const data = imageData.data;
-  let hasDrawing = false;
-  for (let i = 0; i < data.length; i += 4) {
-    if (data[i] !== 255 || data[i + 1] !== 255 || data[i + 2] !== 255) {
-      hasDrawing = true;
-      break;
+  tick();
+  const interval = setInterval(() => {
+    if (remaining < 0) {
+      clearInterval(interval);
+      button.disabled = false;
+      statusEl.innerHTML = "";
+      return;
     }
-  }
-  if (!hasDrawing) {
-    artStatus.innerHTML = '<div class="status-warning">Please draw something before submitting!</div>';
+    tick();
+  }, 1000);
+}
+
+document.getElementById("submitArt").addEventListener("click", function() {
+  const artStatus = document.getElementById("artStatus");
+  const submitBtn = document.getElementById("submitArt");
+
+  if (!engine.hasContent()) {
+    artStatus.innerHTML = '<div class="status-warning">DRAW</div>';
     return;
   }
+
   submitBtn.disabled = true;
   submitBtn.innerHTML = '<span class="loading-spinner"></span>Sending...';
   artStatus.innerHTML = '';
-  const dataURL = drawingCanvas.toDataURL('image/png');
+
+  const flat = engine.flatten();
+  const dataURL = flat.toDataURL('image/png');
+
   fetch("https://myprofilesenders.burgergwarf.workers.dev/", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      image: dataURL
-    })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ image: dataURL })
   })
     .then(async response => {
       if (response.ok) {
         playSound(uiSounds.success, 0.8);
-        artStatus.innerHTML = '<div class="status-success">Your doodle has been sent to ME...!</div>';
-        drawingCtx.fillStyle = 'white';
-        drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
-        saveCanvasState();
+        artStatus.innerHTML = '<div class="status-success">successful [i can not respond this is literally anonymous mail]</div>';
+        submitBtn.innerHTML = 'send doodle';
+        setTimeout(() => startCooldown(submitBtn, artStatus, 'send doodle'), 1200);
       } else {
         const errorMessage = await response.text();
         throw new Error(errorMessage);
       }
     })
     .catch(error => {
-      const errorText = error.message || 'Failed to send doodle. Please try again.';
+      const errorText = error.message || 'something evil happened';
       artStatus.innerHTML = `<div class="status-error">${errorText}</div>`;
-      console.error('Error:', error);
-    })
-    .finally(() => {
       submitBtn.disabled = false;
-      submitBtn.innerHTML = 'Send Doodle';
+      submitBtn.innerHTML = 'send doodle';
     });
 });
 
@@ -1132,7 +1818,7 @@ document.getElementById('submitMessage').addEventListener('click', function () {
   const messageStatus = document.getElementById('messageStatus');
   const submitBtn = document.getElementById('submitMessage');
   if (messageText.length <= 1) {
-    messageStatus.innerHTML = '<div class="status-error">Message must be longer than one character!</div>';
+    messageStatus.innerHTML = '<div class="status-error">no</div>';
     return;
   }
   submitBtn.disabled = true;
@@ -1140,63 +1826,28 @@ document.getElementById('submitMessage').addEventListener('click', function () {
   messageStatus.innerHTML = '';
   fetch("https://myprofilesenders.burgergwarf.workers.dev/", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      message: messageText
-    })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: messageText })
   })
     .then(async response => {
       if (response.ok) {
         playSound(uiSounds.success, 0.8);
-        messageStatus.innerHTML = '<div class="status-success">Your message has been sent to ME...!</div>';
+        messageStatus.innerHTML = '<div class="status-success">successful [i can not respond this is literally anonymous mail]</div>';
         document.getElementById('messageText').value = '';
+        submitBtn.innerHTML = 'send message';
+        setTimeout(() => startCooldown(submitBtn, messageStatus, 'send'), 1200);
       } else {
         const errorMessage = await response.text();
         throw new Error(errorMessage);
       }
     })
     .catch(error => {
-      const errorText = error.message || 'Failed to send message. Please try again.';
+      const errorText = error.message || 'something evil happened';
       messageStatus.innerHTML = `<div class="status-error">${errorText}</div>`;
-      console.error('Error:', error);
-    })
-    .finally(() => {
       submitBtn.disabled = false;
-      submitBtn.innerHTML = 'Send Message';
+      submitBtn.innerHTML = 'send message';
     });
 });
-
-const geraldTrigger = document.getElementById('geraldTrigger');
-if (geraldTrigger) {
-  let geraldActivated = false;
-  geraldTrigger.addEventListener('click', function() {
-    if (geraldActivated) return;
-    
-    geraldActivated = true;
-    this.classList.add('clicked');
-    
-    const geraldCharacter = document.getElementById('geraldCharacter');
-    const geraldOverlay = document.getElementById('geraldOverlay');
-    const geraldAudio = document.getElementById('geraldAudio');
-    
-    geraldOverlay.classList.add('active');
-    geraldCharacter.classList.add('active');
-    
-    setTimeout(() => {
-      if (geraldAudio) geraldAudio.play();
-      
-      setTimeout(() => {
-        geraldCharacter.classList.remove('active');
-        
-        setTimeout(() => {
-          geraldOverlay.classList.remove('active');
-        }, 2000);
-      }, 23500);
-    }, 2000);
-  });
-}
 </script>
 </body>
 </html>
