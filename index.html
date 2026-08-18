@@ -1752,13 +1752,13 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-const COOLDOWN_SECONDS = 5;
+const COOLDOWN_SECONDS = 10;
 
 function startCooldown(button, statusEl, defaultLabel) {
   let remaining = COOLDOWN_SECONDS;
   button.disabled = true;
   const tick = () => {
-    statusEl.innerHTML = `<div class="status-cooldown">Please wait ${remaining} second${remaining === 1 ? "" : "s"} before sending again...</div>`;
+    statusEl.innerHTML = `<div class="status-cooldown">please wait ${remaining} second${remaining === 1 ? "" : "s"} before sending again</div>`;
     remaining--;
   };
   tick();
