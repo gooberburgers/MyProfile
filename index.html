@@ -1783,7 +1783,7 @@ document.getElementById("submitArt").addEventListener("click", function() {
   }
 
   submitBtn.disabled = true;
-  submitBtn.innerHTML = '<span class="loading-spinner"></span>Sending...';
+  submitBtn.innerHTML = '<span class="loading-spinner"></span>sending...';
   artStatus.innerHTML = '';
 
   const flat = engine.flatten();
@@ -1822,7 +1822,7 @@ document.getElementById('submitMessage').addEventListener('click', function () {
     return;
   }
   submitBtn.disabled = true;
-  submitBtn.innerHTML = '<span class="loading-spinner"></span>Sending...';
+  submitBtn.innerHTML = '<span class="loading-spinner"></span>sending...';
   messageStatus.innerHTML = '';
   fetch("https://myprofilesenders.burgergwarf.workers.dev/", {
     method: "POST",
