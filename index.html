@@ -557,12 +557,15 @@ button:disabled,
 </style>
 </head>
 
-<audio id="uiSound01" src="assets/MyProfile_UI01.mp3" preload="auto"></audio>
-<audio id="uiSound02" src="assets/MyProfile_UI02.mp3" preload="auto"></audio>
-<audio id="uiSound03" src="assets/MyProfile_UI03.mp3" preload="auto"></audio>
-<audio id="uiSound04" src="assets/MyProfile_UI04.mp3" preload="auto"></audio>
-<audio id="uiSound05" src="assets/MyProfile_UI05.mp3" preload="auto" loop></audio>
-<audio id="uiSound06" src="assets/MyProfile_UI06.mp3" preload="auto"></audio>
+<audio id="uiSelect" src="assets/UI_Select.mp3" preload="auto"></audio>
+<audio id="uiHover" src="assets/UI_Hover.mp3" preload="auto"></audio>
+<audio id="uiUndo" src="assets/UI_Undo.mp3" preload="auto"></audio>
+<audio id="uiRedo" src="assets/UI_Redo.mp3" preload="auto"></audio>
+<audio id="uiError" src="assets/UI_Error.mp3" preload="auto"></audio>
+<audio id="uiSuccess" src="assets/UI_Success.mp3" preload="auto"></audio>
+<audio id="uiBrush" src="assets/UI_Brush.mp3" preload="auto"></audio>
+<audio id="uiPaint" src="assets/UI_Paint.mp3" preload="auto"></audio>
+<audio id="uiDrawing" src="assets/UI_Drawing.mp3" preload="auto" loop></audio>
 
 <body>
 <canvas id="bg"></canvas>
@@ -737,58 +740,84 @@ button:disabled,
 
 <script>
 const uiSounds = {
-  click: document.getElementById('uiSound01'),
-  success: document.getElementById('uiSound02'),
-  hover: document.getElementById('uiSound03'),
-  penRelease: document.getElementById('uiSound04'),
-  drawing: document.getElementById('uiSound05'),
-  fill: document.getElementById('uiSound06')
+  select: document.getElementById('uiSelect'),
+  hover: document.getElementById('uiHover'),
+  undo: document.getElementById('uiUndo'),
+  redo: document.getElementById('uiRedo'),
+  error: document.getElementById('uiError'),
+  success: document.getElementById('uiSuccess'),
+  brush: document.getElementById('uiBrush'),
+  paint: document.getElementById('uiPaint'),
+  drawing: document.getElementById('uiDrawing')
 };
 
-function playSound(sound, volume = 1.0) {
-  if (sound) {
-    const clone = sound.cloneNode();
-    clone.volume = volume;
-    clone.play().catch(() => {});
-  }
+function randomPitch() {
+  return 1 + (Math.random() * 0.02 - 0.01);
 }
 
-function fadeInAudio(audio, duration = 100) {
+function playSound(sound, volume = 1.0) {
+  if (!sound) return;
+  const clone = sound.cloneNode();
+  clone.volume = volume;
+  clone.playbackRate = randomPitch();
+  clone.play().catch(() => {});
+}
+
+const fadeIntervals = new WeakMap();
+
+function fadeInAudio(audio, duration = 40, targetVolume = 1.0) {
+  if (!audio) return;
+  const existing = fadeIntervals.get(audio);
+  if (existing) clearInterval(existing);
+  audio.pause();
+  audio.currentTime = 0;
+  audio.playbackRate = randomPitch();
   audio.volume = 0;
   audio.play().catch(() => {});
   let vol = 0;
-  const step = 0.05;
-  const interval = duration / (1 / step);
-  const fadeInterval = setInterval(() => {
-    if (vol < 1) {
-      vol += step;
-      audio.volume = Math.min(vol, 1);
+  const steps = 6;
+  const step = targetVolume / steps;
+  const tick = duration / steps;
+  const interval = setInterval(() => {
+    vol += step;
+    if (vol >= targetVolume) {
+      audio.volume = targetVolume;
+      clearInterval(interval);
+      fadeIntervals.delete(audio);
     } else {
-      clearInterval(fadeInterval);
+      audio.volume = vol;
     }
-  }, interval);
+  }, tick);
+  fadeIntervals.set(audio, interval);
 }
 
-function fadeOutAudio(audio, duration = 100) {
+function fadeOutAudio(audio, duration = 40) {
+  if (!audio) return;
+  const existing = fadeIntervals.get(audio);
+  if (existing) clearInterval(existing);
   let vol = audio.volume;
-  const step = 0.05;
-  const interval = duration / (vol / step || 1);
-  const fadeInterval = setInterval(() => {
-    if (vol > 0) {
-      vol -= step;
-      audio.volume = Math.max(vol, 0);
-    } else {
+  const steps = 6;
+  const step = (vol || 0.6) / steps;
+  const tick = duration / steps;
+  const interval = setInterval(() => {
+    vol -= step;
+    if (vol <= 0) {
+      audio.volume = 0;
       audio.pause();
-      clearInterval(fadeInterval);
+      clearInterval(interval);
+      fadeIntervals.delete(audio);
+    } else {
+      audio.volume = vol;
     }
-  }, interval);
+  }, tick);
+  fadeIntervals.set(audio, interval);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   const allButtons = document.querySelectorAll('button, .clickable-link');
   allButtons.forEach(button => {
     button.addEventListener('mouseenter', () => playSound(uiSounds.hover, 0.5));
-    button.addEventListener('click', () => playSound(uiSounds.click, 0.7));
+    button.addEventListener('click', () => playSound(uiSounds.select, 0.7));
   });
 });
 
@@ -937,12 +966,16 @@ class DrawEngine {
     this.viewport = viewport;
     this.stage = stage;
     this.ctx = canvas.getContext("2d");
-    this.bgCanvas = document.createElement("canvas");
-    this.bgCanvas.width = canvas.width;
-    this.bgCanvas.height = canvas.height;
-    this.bgCtx = this.bgCanvas.getContext("2d");
-    this.bgCtx.fillStyle = "#ffffff";
-    this.bgCtx.fillRect(0, 0, canvas.width, canvas.height);
+
+    this.bakedInk = document.createElement("canvas");
+    this.bakedInk.width = canvas.width;
+    this.bakedInk.height = canvas.height;
+    this.bakedInkCtx = this.bakedInk.getContext("2d");
+
+    this.inkBuffer = document.createElement("canvas");
+    this.inkBuffer.width = canvas.width;
+    this.inkBuffer.height = canvas.height;
+    this.inkBufferCtx = this.inkBuffer.getContext("2d");
 
     this.tool = "pen";
     this.color = "#000000";
@@ -967,6 +1000,7 @@ class DrawEngine {
     this.isPanning = false;
     this.lastPanPoint = null;
     this.activePointerId = null;
+    this.strokeAudible = false;
 
     this.updateTransform();
     this.render();
@@ -982,6 +1016,10 @@ class DrawEngine {
     const x = (clientX - rect.left - this.panX) / this.scale;
     const y = (clientY - rect.top - this.panY) / this.scale;
     return { x, y };
+  }
+
+  inBounds(pt) {
+    return pt.x >= 0 && pt.y >= 0 && pt.x <= this.canvas.width && pt.y <= this.canvas.height;
   }
 
   pushHistory(stroke) {
@@ -1051,51 +1089,6 @@ class DrawEngine {
     return path;
   }
 
-  render() {
-    const ctx = this.ctx;
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    ctx.drawImage(this.bgCanvas, 0, 0);
-
-    const strokes = this.buildActiveStrokeList();
-    for (const stroke of strokes) {
-      if (stroke.type === "fill") {
-        this.drawFillStroke(ctx, stroke);
-        continue;
-      }
-      const path = this.strokeToPath(stroke);
-      if (!path) continue;
-      ctx.save();
-      if (stroke.tool === "eraser") {
-        ctx.globalCompositeOperation = "destination-out";
-        ctx.globalAlpha = 1;
-      } else {
-        ctx.globalCompositeOperation = "source-over";
-        ctx.globalAlpha = stroke.opacity;
-      }
-      ctx.fillStyle = stroke.color;
-      ctx.fill(path);
-      ctx.restore();
-    }
-
-    if (this.currentStroke && this.currentStroke.points.length > 0) {
-      const path = this.strokeToPath(this.currentStroke);
-      if (path) {
-        ctx.save();
-        if (this.currentStroke.tool === "eraser") {
-          ctx.globalCompositeOperation = "destination-out";
-          ctx.globalAlpha = 1;
-        } else {
-          ctx.globalCompositeOperation = "source-over";
-          ctx.globalAlpha = this.currentStroke.opacity;
-        }
-        ctx.fillStyle = this.currentStroke.color;
-        ctx.fill(path);
-        ctx.restore();
-      }
-    }
-  }
-
   drawFillStroke(ctx, stroke) {
     const off = document.createElement("canvas");
     off.width = stroke.imageData.width;
@@ -1109,32 +1102,68 @@ class DrawEngine {
     ctx.restore();
   }
 
+  drawStrokeOnto(ctx, stroke) {
+    if (stroke.type === "fill") {
+      this.drawFillStroke(ctx, stroke);
+      return;
+    }
+    const path = this.strokeToPath(stroke);
+    if (!path) return;
+    ctx.save();
+    if (stroke.tool === "eraser") {
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.globalAlpha = 1;
+    } else {
+      ctx.globalCompositeOperation = "source-over";
+      ctx.globalAlpha = stroke.opacity;
+    }
+    ctx.fillStyle = stroke.color;
+    ctx.fill(path);
+    ctx.restore();
+  }
+
+  buildInk(ctx, w, h) {
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    ctx.save();
+    ctx.globalCompositeOperation = "source-over";
+    ctx.globalAlpha = 1;
+    ctx.drawImage(this.bakedInk, 0, 0);
+    ctx.restore();
+    const strokes = this.buildActiveStrokeList();
+    for (const stroke of strokes) this.drawStrokeOnto(ctx, stroke);
+    if (this.currentStroke && this.currentStroke.points.length > 0) {
+      this.drawStrokeOnto(ctx, this.currentStroke);
+    }
+  }
+
+  composeOnto(targetCtx, w, h) {
+    targetCtx.setTransform(1, 0, 0, 1, 0, 0);
+    targetCtx.clearRect(0, 0, w, h);
+    targetCtx.fillStyle = "#ffffff";
+    targetCtx.fillRect(0, 0, w, h);
+    if (this.inkBuffer.width !== w || this.inkBuffer.height !== h) {
+      this.inkBuffer.width = w;
+      this.inkBuffer.height = h;
+    }
+    this.buildInk(this.inkBufferCtx, w, h);
+    targetCtx.save();
+    targetCtx.globalCompositeOperation = "source-over";
+    targetCtx.globalAlpha = 1;
+    targetCtx.drawImage(this.inkBuffer, 0, 0);
+    targetCtx.restore();
+  }
+
+  render() {
+    this.composeOnto(this.ctx, this.canvas.width, this.canvas.height);
+  }
+
   flatten() {
     const off = document.createElement("canvas");
     off.width = this.canvas.width;
     off.height = this.canvas.height;
     const octx = off.getContext("2d");
-    octx.drawImage(this.bgCanvas, 0, 0);
-    const strokes = this.buildActiveStrokeList();
-    for (const stroke of strokes) {
-      if (stroke.type === "fill") {
-        this.drawFillStroke(octx, stroke);
-        continue;
-      }
-      const path = this.strokeToPath(stroke);
-      if (!path) continue;
-      octx.save();
-      if (stroke.tool === "eraser") {
-        octx.globalCompositeOperation = "destination-out";
-        octx.globalAlpha = 1;
-      } else {
-        octx.globalCompositeOperation = "source-over";
-        octx.globalAlpha = stroke.opacity;
-      }
-      octx.fillStyle = stroke.color;
-      octx.fill(path);
-      octx.restore();
-    }
+    this.composeOnto(octx, off.width, off.height);
     return off;
   }
 
@@ -1147,11 +1176,12 @@ class DrawEngine {
     const flat = this.flatten();
     this.canvas.width = newWidth;
     this.canvas.height = newHeight;
-    this.bgCanvas.width = newWidth;
-    this.bgCanvas.height = newHeight;
-    this.bgCtx.fillStyle = "#ffffff";
-    this.bgCtx.fillRect(0, 0, newWidth, newHeight);
-    this.bgCtx.drawImage(flat, 0, 0);
+    this.bakedInk.width = newWidth;
+    this.bakedInk.height = newHeight;
+    this.bakedInkCtx.clearRect(0, 0, newWidth, newHeight);
+    this.bakedInkCtx.drawImage(flat, 0, 0);
+    this.inkBuffer.width = newWidth;
+    this.inkBuffer.height = newHeight;
     this.history = [];
     this.redoStack = [];
     this.currentStroke = null;
@@ -1379,15 +1409,21 @@ class DrawEngine {
       }
       const p = this.screenToCanvas(e.clientX, e.clientY);
       if (this.tool === "fill") {
-        playSound(uiSounds.fill, 0.8);
-        this.floodFill(p.x, p.y);
+        if (this.inBounds(p)) {
+          playSound(uiSounds.paint, 0.8);
+          this.floodFill(p.x, p.y);
+        }
         return;
       }
       this.isDrawing = true;
       this.stabilizedPoint = null;
       const stable = this.applyStabilizer(p.x, p.y);
       this.startStroke(stable, this.getPressure(e));
-      if (this.tool === "pen" || this.tool === "eraser") fadeInAudio(uiSounds.drawing, 100);
+      this.strokeAudible = this.inBounds(stable);
+      if (this.strokeAudible && (this.tool === "pen" || this.tool === "eraser")) {
+        playSound(uiSounds.brush, 0.7);
+        fadeInAudio(uiSounds.drawing, 40, 0.6);
+      }
       this.render();
     });
 
@@ -1404,6 +1440,11 @@ class DrawEngine {
       if (!this.isDrawing) return;
       const p = this.screenToCanvas(e.clientX, e.clientY);
       const stable = this.applyStabilizer(p.x, p.y);
+      if (!this.strokeAudible && this.inBounds(stable) && (this.tool === "pen" || this.tool === "eraser")) {
+        this.strokeAudible = true;
+        playSound(uiSounds.brush, 0.7);
+        fadeInAudio(uiSounds.drawing, 40, 0.6);
+      }
       this.extendStroke(stable, this.getPressure(e));
     });
 
@@ -1414,11 +1455,13 @@ class DrawEngine {
       }
       if (this.isDrawing) {
         this.isDrawing = false;
+        const wasAudible = this.strokeAudible && (this.tool === "pen" || this.tool === "eraser");
         this.endStroke();
-        if (this.tool === "pen" || this.tool === "eraser") {
-          fadeOutAudio(uiSounds.drawing, 100);
-          playSound(uiSounds.penRelease, 0.6);
+        if (wasAudible) {
+          fadeOutAudio(uiSounds.drawing, 40);
+          playSound(uiSounds.brush, 0.7);
         }
+        this.strokeAudible = false;
       }
       if (this.activePointerId !== null) {
         try { vp.releasePointerCapture(this.activePointerId); } catch (err) {}
@@ -1468,10 +1511,12 @@ document.getElementById("clearCanvas").addEventListener("click", function() {
 });
 
 document.getElementById("undoBtn").addEventListener("click", function() {
+  playSound(uiSounds.undo, 0.8);
   engine.undo();
 });
 
 document.getElementById("redoBtn").addEventListener("click", function() {
+  playSound(uiSounds.redo, 0.8);
   engine.redo();
 });
 
@@ -1744,10 +1789,11 @@ document.addEventListener("keydown", (e) => {
   if (active && (active.tagName === "TEXTAREA" || active.tagName === "INPUT")) return;
   if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") {
     e.preventDefault();
-    if (e.shiftKey) engine.redo(); else engine.undo();
+    if (e.shiftKey) { playSound(uiSounds.redo, 0.8); engine.redo(); } else { playSound(uiSounds.undo, 0.8); engine.undo(); }
   }
   if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "y") {
     e.preventDefault();
+    playSound(uiSounds.redo, 0.8);
     engine.redo();
   }
 });
@@ -1778,6 +1824,7 @@ document.getElementById("submitArt").addEventListener("click", function() {
   const submitBtn = document.getElementById("submitArt");
 
   if (!engine.hasContent()) {
+    playSound(uiSounds.error, 0.8);
     artStatus.innerHTML = '<div class="status-warning">DRAW</div>';
     return;
   }
@@ -1807,6 +1854,7 @@ document.getElementById("submitArt").addEventListener("click", function() {
     })
     .catch(error => {
       const errorText = error.message || 'something evil happened';
+      playSound(uiSounds.error, 0.8);
       artStatus.innerHTML = `<div class="status-error">${errorText}</div>`;
       submitBtn.disabled = false;
       submitBtn.innerHTML = 'send doodle';
@@ -1818,6 +1866,7 @@ document.getElementById('submitMessage').addEventListener('click', function () {
   const messageStatus = document.getElementById('messageStatus');
   const submitBtn = document.getElementById('submitMessage');
   if (messageText.length <= 1) {
+    playSound(uiSounds.error, 0.8);
     messageStatus.innerHTML = '<div class="status-error">no</div>';
     return;
   }
@@ -1843,6 +1892,7 @@ document.getElementById('submitMessage').addEventListener('click', function () {
     })
     .catch(error => {
       const errorText = error.message || 'something evil happened';
+      playSound(uiSounds.error, 0.8);
       messageStatus.innerHTML = `<div class="status-error">${errorText}</div>`;
       submitBtn.disabled = false;
       submitBtn.innerHTML = 'send message';
