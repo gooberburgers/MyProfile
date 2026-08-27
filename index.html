@@ -112,6 +112,33 @@ ul{
 .profile-info h1{
   font-size:1.8em;
   margin:0;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.pronoun-tag{
+  font-size:.5em;
+  color:var(--text-dim);
+  opacity:.55;
+  font-weight:300;
+}
+
+.discord-tag{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:.78em;
+  color:var(--text-dim);
+  opacity:.5;
+  margin-top:2px;
+  cursor:default;
+  width:fit-content;
+}
+
+.discord-tag img{
+  width:14px;
+  height:14px;
 }
 
 .socials{
@@ -140,6 +167,48 @@ ul{
   height:20px;
 }
 
+.link-icon{
+  width:14px;
+  height:14px;
+  display:inline-block;
+  vertical-align:middle;
+  flex-shrink:0;
+}
+
+.friends-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.friends-list a,
+.friends-list span.friend-noflink{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  text-decoration:none;
+  color:var(--accent);
+  transition:transform .3s ease;
+  font-size:.9em;
+  width:fit-content;
+}
+
+.friends-list a:hover{
+  transform:scale(1.05);
+  color:#a9cbff;
+}
+
+.friends-list span.friend-noflink{
+  color:var(--accent);
+  cursor:default;
+}
+
+.friend-x-icon{
+  width:14px;
+  height:14px;
+  flex-shrink:0;
+}
+
 .art-section, .message-section{
   margin-top:30px;
 }
@@ -150,7 +219,7 @@ ul{
 }
 
 .tool-btn,
-button:not(.socials button),
+button:not(.socials button):not(.friends-list button),
 .submit-art-btn,
 .submit-message-btn,
 #pronounceBtn{
@@ -174,7 +243,7 @@ button:not(.socials button),
 }
 
 .tool-btn:hover,
-button:not(.socials button):hover,
+button:not(.socials button):not(.friends-list button):hover,
 .submit-art-btn:hover:not(:disabled),
 .submit-message-btn:hover:not(:disabled),
 #pronounceBtn:hover{
@@ -188,7 +257,7 @@ button:not(.socials button):hover,
 }
 
 .tool-btn:active,
-button:not(.socials button):active,
+button:not(.socials button):not(.friends-list button):active,
 .submit-art-btn:active:not(:disabled),
 .submit-message-btn:active:not(:disabled),
 #pronounceBtn:active{
@@ -580,9 +649,13 @@ button:disabled,
       <div class="profile-header">
         <img src="assets/boneburger.png" alt="me">
         <div class="profile-info">
-          <h1>dogey [dogesterious]</h1>
+          <h1>dogey [dogesterious] <span class="pronoun-tag">(he/him)</span></h1>
           <button id="pronounceBtn">pronounce</button>
           <audio id="nameAudio" src="assets/MyProfile_Pronun.mp3"></audio>
+          <div class="discord-tag" title="Discord">
+            <img src="Assets/disc.svg" alt="discord">
+            <span>omegadogey</span>
+          </div>
         </div>
       </div>
       <p>[english]</p>
@@ -606,18 +679,57 @@ button:disabled,
         <li>game-devving, composing, animating, modelling, lua-luau coder, vfx, sfx, storywriter, gfx, art (not a master), html</li>
       </ul>
     </fieldset>
+
+    <fieldset class="group-box">
+      <legend>[friends]</legend>
+      <div class="friends-list">
+        <a href="https://www.youtube.com/@RainbowKittens858" target="_blank" class="clickable-link">
+          <img src="Assets/linkicon.svg" alt="" class="link-icon">rainbow [rainbowkittens]
+        </a>
+        <a href="https://www.youtube.com/@NEOENA200" target="_blank" class="clickable-link">
+          <img src="Assets/linkicon.svg" alt="" class="link-icon">neo [neoghoost]
+        </a>
+        <a href="https://thetoofussilverwind.straw.page/" target="_blank" class="clickable-link">
+          <img src="Assets/linkicon.svg" alt="" class="link-icon">tofu [tofu silverwind]
+        </a>
+        <span class="friend-noflink">
+          <svg class="friend-x-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <line x1="4" y1="4" x2="20" y2="20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="20" y1="4" x2="4" y2="20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>pollenface
+        </span>
+        <a href="https://www.roblox.com/users/3732831000/profile" target="_blank" class="clickable-link">
+          <img src="Assets/linkicon.svg" alt="" class="link-icon">lorey [maria, cover]
+        </a>
+        <a href="https://www.roblox.com/users/699320611/profile" target="_blank" class="clickable-link">
+          <img src="Assets/linkicon.svg" alt="" class="link-icon">zard [zard1338]
+        </a>
+        <a href="https://www.youtube.com/@pumpkyrofl" target="_blank" class="clickable-link">
+          <img src="Assets/linkicon.svg" alt="" class="link-icon">pumpky [pumpkyrofl]
+        </a>
+        <a href="http://youtube.com/@ChrisAvenuee" target="_blank" class="clickable-link">
+          <img src="Assets/linkicon.svg" alt="" class="link-icon">chris [chrischino]
+        </a>
+        <a href="https://www.youtube.com/@mister-c7s" target="_blank" class="clickable-link">
+          <img src="Assets/linkicon.svg" alt="" class="link-icon">mister [mister_b15]
+        </a>
+        <a href="https://www.youtube.com/channel/UCrpqVczl_AtAU6FArS6fHng" target="_blank" class="clickable-link">
+          <img src="Assets/linkicon.svg" alt="" class="link-icon">excessive [expandedpastel]
+        </a>
+      </div>
+    </fieldset>
 	
     <fieldset class="group-box">
       <legend>[socials]</legend>
       <div class="socials">
         <a href="https://www.roblox.com/users/2938203100/profile" target="_blank" class="button clickable-link">
-          <img src="https://frutigeraeroarchive.org/images/icons/aero_artists/daniele63/roblox.ico" alt="roblox"> roblox
+          <img src="Assets/linkicon.svg" alt="link"> roblox
         </a>
         <a href="https://www.youtube.com/@omegadogey/videos" target="_blank" class="button clickable-link">
-          <img src="https://frutigeraeroarchive.org/images/icons/mobile/ios/youtube.png" alt="youtube"> youtube
+          <img src="Assets/linkicon.svg" alt="link"> youtube
         </a>
         <a href="https://www.roblox.com/games/125432105048317/Bone-Calcium-MANIA" target="_blank" class="button clickable-link">
-          <img src="https://frutigeraeroarchive.org/images/icons/aero_artists/daniele63/roblox.ico" alt="roblox"> bone calcium mania
+          <img src="Assets/linkicon.svg" alt="link"> bone calcium mania
         </a>
       </div>
     </fieldset>
